@@ -9,12 +9,16 @@ namespace ControllerInterface.Controllers
         #region Public Fields & Properties
 
         public bool IsConnected { get; set; }
-        public bool A_Button { get; set; }
-        public bool B_Button { get; set; }
-        public bool X_Button { get; set; }
-        public bool Y_Button { get; set; }
-        public bool RB_Button { get; set; }
-        public bool LB_Button { get; set; }
+        public bool AButton { get; set; }
+        public bool BButton { get; set; }
+        public bool XButton { get; set; }
+        public bool YButton { get; set; }
+        public bool RbButton { get; set; }
+        public bool LbButton { get; set; }
+        public bool DpadUpButton { get; set; }
+        public bool DpadDownButton { get; set; }
+        public bool DpadLeftButton { get; set; }
+        public bool DpadRightButton { get; set; }
 
         #endregion
 
@@ -50,7 +54,7 @@ namespace ControllerInterface.Controllers
             }
             catch (SharpDXException e)
             {
-                _logger.LogInformation(e.Message);
+                _logger.LogInformation(e, "No Controller is connected.");
                 IsConnected = false;
                 return;
             }
@@ -60,12 +64,16 @@ namespace ControllerInterface.Controllers
             IsConnected = Controller.IsConnected;
 
             //Buttons
-            A_Button = (_gamepad.Buttons & GamepadButtonFlags.A) != 0;
-            B_Button = (_gamepad.Buttons & GamepadButtonFlags.B) != 0;
-            X_Button = (_gamepad.Buttons & GamepadButtonFlags.X) != 0;
-            Y_Button = (_gamepad.Buttons & GamepadButtonFlags.Y) != 0;
-            RB_Button = (_gamepad.Buttons & GamepadButtonFlags.RightShoulder) != 0;
-            LB_Button = (_gamepad.Buttons & GamepadButtonFlags.LeftShoulder) != 0;
+            AButton = (_gamepad.Buttons & GamepadButtonFlags.A) != 0;
+            BButton = (_gamepad.Buttons & GamepadButtonFlags.B) != 0;
+            XButton = (_gamepad.Buttons & GamepadButtonFlags.X) != 0;
+            YButton = (_gamepad.Buttons & GamepadButtonFlags.Y) != 0;
+            RbButton = (_gamepad.Buttons & GamepadButtonFlags.RightShoulder) != 0;
+            LbButton = (_gamepad.Buttons & GamepadButtonFlags.LeftShoulder) != 0;
+            DpadUpButton = (_gamepad.Buttons & GamepadButtonFlags.DPadUp) != 0;
+            DpadDownButton = (_gamepad.Buttons & GamepadButtonFlags.DPadDown) != 0;
+            DpadLeftButton = (_gamepad.Buttons & GamepadButtonFlags.DPadLeft) != 0;
+            DpadRightButton = (_gamepad.Buttons & GamepadButtonFlags.DPadRight) != 0;
         }
 
         #endregion

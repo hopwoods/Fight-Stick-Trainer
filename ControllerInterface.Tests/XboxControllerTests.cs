@@ -35,7 +35,7 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.A_Button, Is.True);
+        Assert.That(Controller.AButton, Is.True);
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.B_Button, Is.True);
+        Assert.That(Controller.BButton, Is.True);
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.X_Button, Is.True);
+        Assert.That(Controller.XButton, Is.True);
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.Y_Button, Is.True);
+        Assert.That(Controller.YButton, Is.True);
     }
 
     [Test]
@@ -79,7 +79,7 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.RB_Button, Is.True);
+        Assert.That(Controller.RbButton, Is.True);
     }
 
     [Test]
@@ -90,7 +90,51 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.LB_Button, Is.True);
+        Assert.That(Controller.LbButton, Is.True);
+    }
+
+    [Test]
+    public void ControllerDpadUpButtonPressed()
+    {
+        Controller = CreateMockController(); ;
+        Controller.Update();
+
+
+        Controller.Received().Update();
+        Assert.That(Controller.DpadUpButton, Is.True);
+    }
+
+    [Test]
+    public void ControllerDpadDownButtonPressed()
+    {
+        Controller = CreateMockController(); ;
+        Controller.Update();
+
+
+        Controller.Received().Update();
+        Assert.That(Controller.DpadDownButton, Is.True);
+    }
+
+    [Test]
+    public void ControllerDpadLeftButtonPressed()
+    {
+        Controller = CreateMockController(); ;
+        Controller.Update();
+
+
+        Controller.Received().Update();
+        Assert.That(Controller.DpadLeftButton, Is.True);
+    }
+
+    [Test]
+    public void ControllerDpadRightButtonPressed()
+    {
+        Controller = CreateMockController(); ;
+        Controller.Update();
+
+
+        Controller.Received().Update();
+        Assert.That(Controller.DpadRightButton, Is.True);
     }
 
 
@@ -101,12 +145,16 @@ public class XboxControllerTests
             .Do(x =>
             {
                 controller.IsConnected = true;
-                controller.A_Button = true;
-                controller.B_Button = true;
-                controller.X_Button = true;
-                controller.Y_Button = true;
-                controller.RB_Button = true;
-                controller.LB_Button = true;
+                controller.AButton = true;
+                controller.BButton = true;
+                controller.XButton = true;
+                controller.YButton = true;
+                controller.RbButton = true;
+                controller.LbButton = true;
+                controller.DpadUpButton = true;
+                controller.DpadDownButton = true;
+                controller.DpadLeftButton = true;
+                controller.DpadRightButton = true;
             });
 
         return controller;

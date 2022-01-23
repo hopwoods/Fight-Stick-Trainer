@@ -13,10 +13,50 @@ public interface IXboxController: IController
     /// <summary>
     /// The A Button
     /// </summary>
-    bool A_Button { get; set; }
-    bool B_Button { get; set; }
-    bool X_Button { get; set; }
-    bool Y_Button { get; set; }
-    bool RB_Button { get; set; }
-    bool LB_Button { get; set; }
+    bool AButton { get; set; }
+
+    /// <summary>
+    /// The B Button
+    /// </summary>
+    bool BButton { get; set; }
+
+    /// <summary>
+    /// The X Button
+    /// </summary>
+    bool XButton { get; set; }
+
+    /// <summary>
+    /// The Y Button
+    /// </summary>
+    bool YButton { get; set; }
+
+    /// <summary>
+    /// The Right Shoulder Button
+    /// </summary>
+    bool RbButton { get; set; }
+
+    /// <summary>
+    /// The Left Shoulder Button
+    /// </summary>
+    bool LbButton { get; set; }
+
+    /// <summary>
+    /// Up on the DPad
+    /// </summary>
+    bool DpadUpButton { get; set; }
+
+    /// <summary>
+    /// Down on the DPad
+    /// </summary>
+    bool DpadDownButton { get; set; }
+
+    /// <summary>
+    /// Left on the DPad
+    /// </summary>
+    bool DpadLeftButton { get; set; }
+
+    /// <summary>
+    /// Right on the DPad
+    /// </summary>
+    bool DpadRightButton { get; set; }
 }
