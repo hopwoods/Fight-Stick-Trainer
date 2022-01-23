@@ -1,4 +1,5 @@
 using ControllerInterface.Controllers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -6,21 +7,23 @@ namespace ControllerHost;
 
 public class ControllerPollerService : IHostedService, IDisposable
 {
+    private readonly IConfiguration _configuration;
     private readonly ILogger<ControllerPollerService> _logger;
     private Timer _timer = null!;
     private IXboxController Controller { get; set; }
 
-    public ControllerPollerService(ILogger<ControllerPollerService> logger, IXboxController controller)
+    public ControllerPollerService(ILogger<ControllerPollerService> logger, IXboxController controller, IConfiguration configuration)
     {
         _logger = logger;
         Controller = controller;
+        _configuration = configuration;
     }
 
     public Task StartAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("Timed Hosted Service running.");
 
-        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(10));
+        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(int.Parse(_configuration["ControllerSettings:PollingRate"])));
 
         return Task.CompletedTask;
     }
