@@ -7,8 +7,10 @@ namespace ControllerInterface.Controllers
         #region Public Fields & Properties
 
         public bool IsConnected { get; set; }
-
         public bool AButton { get; set; }
+        public bool BButton { get; set; }
+        public bool XButton { get; set; }
+        public bool YButton { get; set; }
 
         #endregion
 
@@ -35,13 +37,25 @@ namespace ControllerInterface.Controllers
 
         public void Update()
         {
-            _state = Controller.GetState();
+            try
+            {
+                _state = Controller.GetState();
+            }
+            catch (Exception e)
+            {
+                IsConnected = false;
+                return;
+            }
+            
             _gamepad = _state.Gamepad;
 
             IsConnected = Controller.IsConnected;
 
             //Buttons
             AButton = (_gamepad.Buttons & GamepadButtonFlags.A) != 0;
+            BButton = (_gamepad.Buttons & GamepadButtonFlags.B) != 0;
+            XButton = (_gamepad.Buttons & GamepadButtonFlags.X) != 0;
+            YButton = (_gamepad.Buttons & GamepadButtonFlags.X) != 0;
         }
 
         #endregion

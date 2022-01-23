@@ -38,6 +38,39 @@ public class XboxControllerTests
         Assert.That(Controller.AButton, Is.True);
     }
 
+    [Test]
+    public void ControllerBButtonPressed()
+    {
+        Controller = CreateMockController(); ;
+        Controller.Update();
+
+
+        Controller.Received().Update();
+        Assert.That(Controller.BButton, Is.True);
+    }
+
+    [Test]
+    public void ControllerXButtonPressed()
+    {
+        Controller = CreateMockController(); ;
+        Controller.Update();
+
+
+        Controller.Received().Update();
+        Assert.That(Controller.XButton, Is.True);
+    }
+
+    [Test]
+    public void ControllerYButtonPressed()
+    {
+        Controller = CreateMockController(); ;
+        Controller.Update();
+
+
+        Controller.Received().Update();
+        Assert.That(Controller.YButton, Is.True);
+    }
+
 
     private static IXboxController CreateMockController()
     {
@@ -47,6 +80,9 @@ public class XboxControllerTests
             {
                 controller.IsConnected = true;
                 controller.AButton = true;
+                controller.BButton = true;
+                controller.XButton = true;
+                controller.YButton = true;
             });
 
         return controller;

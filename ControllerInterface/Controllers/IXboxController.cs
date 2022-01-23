@@ -14,4 +14,7 @@ public interface IXboxController: IController
     /// The A Button
     /// </summary>
     bool AButton { get; set; }
+    bool BButton { get; set; }
+    bool XButton { get; set; }
+    bool YButton { get; set; }
 }
