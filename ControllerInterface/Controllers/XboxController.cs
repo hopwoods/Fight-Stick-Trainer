@@ -55,7 +55,7 @@ namespace ControllerInterface.Controllers
             AButton = (_gamepad.Buttons & GamepadButtonFlags.A) != 0;
             BButton = (_gamepad.Buttons & GamepadButtonFlags.B) != 0;
             XButton = (_gamepad.Buttons & GamepadButtonFlags.X) != 0;
-            YButton = (_gamepad.Buttons & GamepadButtonFlags.X) != 0;
+            YButton = (_gamepad.Buttons & GamepadButtonFlags.Y) != 0;
         }
 
         #endregion
