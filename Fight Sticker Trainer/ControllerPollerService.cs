@@ -32,10 +32,12 @@ public class ControllerPollerService : IHostedService, IDisposable
         if (Controller.IsConnected)
         {
             Console.WriteLine($"Xbox Controller is connected: {Controller.IsConnected}");
-            Console.WriteLine($"Xbox Controller A Button Pressed: {Controller.AButton}");
-            Console.WriteLine($"Xbox Controller Y Button Pressed: {Controller.YButton}");
-            Console.WriteLine($"Xbox Controller B Button Pressed: {Controller.BButton}");
-            Console.WriteLine($"Xbox Controller X Button Pressed: {Controller.XButton}");
+            Console.WriteLine($"Xbox Controller A Button Pressed: {Controller.A_Button}");
+            Console.WriteLine($"Xbox Controller Y Button Pressed: {Controller.Y_Button}");
+            Console.WriteLine($"Xbox Controller B Button Pressed: {Controller.B_Button}");
+            Console.WriteLine($"Xbox Controller X Button Pressed: {Controller.X_Button}");
+            Console.WriteLine($"Xbox Controller RB Button Pressed: {Controller.RB_Button}");
+            Console.WriteLine($"Xbox Controller LB Button Pressed: {Controller.LB_Button}");
         }
         else
         {

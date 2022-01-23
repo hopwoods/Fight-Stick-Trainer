@@ -13,8 +13,10 @@ public interface IXboxController: IController
     /// <summary>
     /// The A Button
     /// </summary>
-    bool AButton { get; set; }
-    bool BButton { get; set; }
-    bool XButton { get; set; }
-    bool YButton { get; set; }
+    bool A_Button { get; set; }
+    bool B_Button { get; set; }
+    bool X_Button { get; set; }
+    bool Y_Button { get; set; }
+    bool RB_Button { get; set; }
+    bool LB_Button { get; set; }
 }

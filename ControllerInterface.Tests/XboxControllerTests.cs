@@ -35,7 +35,7 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.AButton, Is.True);
+        Assert.That(Controller.A_Button, Is.True);
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.BButton, Is.True);
+        Assert.That(Controller.B_Button, Is.True);
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.XButton, Is.True);
+        Assert.That(Controller.X_Button, Is.True);
     }
 
     [Test]
@@ -68,7 +68,29 @@ public class XboxControllerTests
 
 
         Controller.Received().Update();
-        Assert.That(Controller.YButton, Is.True);
+        Assert.That(Controller.Y_Button, Is.True);
+    }
+
+    [Test]
+    public void ControllerRbButtonPressed()
+    {
+        Controller = CreateMockController(); ;
+        Controller.Update();
+
+
+        Controller.Received().Update();
+        Assert.That(Controller.RB_Button, Is.True);
+    }
+
+    [Test]
+    public void ControllerLbButtonPressed()
+    {
+        Controller = CreateMockController(); ;
+        Controller.Update();
+
+
+        Controller.Received().Update();
+        Assert.That(Controller.LB_Button, Is.True);
     }
 
 
@@ -79,10 +101,12 @@ public class XboxControllerTests
             .Do(x =>
             {
                 controller.IsConnected = true;
-                controller.AButton = true;
-                controller.BButton = true;
-                controller.XButton = true;
-                controller.YButton = true;
+                controller.A_Button = true;
+                controller.B_Button = true;
+                controller.X_Button = true;
+                controller.Y_Button = true;
+                controller.RB_Button = true;
+                controller.LB_Button = true;
             });
 
         return controller;

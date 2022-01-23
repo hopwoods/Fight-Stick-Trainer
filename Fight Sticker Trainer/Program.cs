@@ -3,9 +3,11 @@ using ControllerInterface.Controllers;
 using ControllerInterface.Factories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Configuration;
 
 using var host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((_, services) =>
+    .ConfigureServices((hostingContext, services) =>
         services
             .AddTransient<IControllerFactory, ControllerFactory>()
             .AddSingleton<IXboxController>(provider =>
@@ -14,6 +16,12 @@ using var host = Host.CreateDefaultBuilder(args)
                 return factory.CreateXboxController();
             })
             .AddHostedService<ControllerPollerService>()
+            .AddLogging(logging =>
+            {
+                logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                logging.AddConsole();
+                logging.AddDebug();
+            })
     )
     .Build();
 
