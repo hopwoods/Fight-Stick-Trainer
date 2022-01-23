@@ -1,4 +1,4 @@
-# Fight-Stick-Trainer
+# Fight Stick Trainer
 
 Enter a fighting game input string and practice with your fight stick.
 - Shows input history
