@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fight Sticker Trainer", "Fi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerInterface", "ControllerInterface\ControllerInterface.csproj", "{5976F73B-B102-4B55-B932-00408A94DCF2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{303526F5-BB04-4F4C-A6A2-A8C31BE020A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerInterface.Tests", "ControllerInterface.Tests\ControllerInterface.Tests.csproj", "{48E13E9E-D673-4960-8684-19387B47DD13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{5976F73B-B102-4B55-B932-00408A94DCF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5976F73B-B102-4B55-B932-00408A94DCF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5976F73B-B102-4B55-B932-00408A94DCF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48E13E9E-D673-4960-8684-19387B47DD13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48E13E9E-D673-4960-8684-19387B47DD13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48E13E9E-D673-4960-8684-19387B47DD13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48E13E9E-D673-4960-8684-19387B47DD13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{48E13E9E-D673-4960-8684-19387B47DD13} = {303526F5-BB04-4F4C-A6A2-A8C31BE020A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22DD1CFF-B600-4F17-A092-831D214C479A}
