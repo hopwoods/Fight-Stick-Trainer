@@ -17,7 +17,7 @@ public class ConsoleControllerEvents : IControllerEvents
         _utilities = utilities;
     }
 
-    public void OnControllerDisconnected(IXboxController controller)
+    public Task OnControllerDisconnected(IXboxController controller)
     {
         if (_disconnectedMessageCount == 0)
         {
@@ -29,9 +29,11 @@ public class ConsoleControllerEvents : IControllerEvents
 
         _connectedMessageCount = 0;
         _logger.LogDebug("Controller Disconnected");
+
+        return Task.CompletedTask;
     }
 
-    public void OnControllerConnected(IXboxController controller)
+    public Task OnControllerConnected(IXboxController controller)
     {
         if (_connectedMessageCount == 0)
         {
@@ -43,6 +45,8 @@ public class ConsoleControllerEvents : IControllerEvents
 
         _disconnectedMessageCount = 0;
         _logger.LogDebug("Controller Connected");
+
+        return Task.CompletedTask;
     }
     
     public void OnAButtonPressed(IXboxController controller)

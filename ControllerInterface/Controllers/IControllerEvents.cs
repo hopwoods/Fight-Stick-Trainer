@@ -6,13 +6,13 @@ public interface IControllerEvents
     /// Method to execute when the controller disconnects
     /// </summary>
     /// <param name="controller"></param>
-    void OnControllerDisconnected(IXboxController controller);
+    Task OnControllerDisconnected(IXboxController controller);
 
     /// <summary>
     /// Method to execute when the controller connects
     /// </summary>
     /// <param name="controller"></param>
-    void OnControllerConnected(IXboxController controller);
+    Task OnControllerConnected(IXboxController controller);
 
     /// <summary>
     /// Method to execute when the A button is pressed

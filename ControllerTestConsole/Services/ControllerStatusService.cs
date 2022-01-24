@@ -36,8 +36,8 @@ public class ControllerStatusService : IHostedService, IDisposable
     {
         if (_controllerWatcher != null)
         {
-            _controllerWatcher.ControllerConnected += _consoleControllerEvents.OnControllerConnected;
-            _controllerWatcher.ControllerDisconnected += _consoleControllerEvents.OnControllerDisconnected;
+            _controllerWatcher.ControllerConnected += controller => _consoleControllerEvents.OnControllerConnected(controller);
+            _controllerWatcher.ControllerDisconnected += controller => _consoleControllerEvents.OnControllerDisconnected(controller);
 
             _controllerWatcher.AButtonPressed += _consoleControllerEvents.OnAButtonPressed;
             _controllerWatcher.BButtonPressed += _consoleControllerEvents.OnBButtonPressed;
