@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using var host = Host.CreateDefaultBuilder(args)
+using var app = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostingContext, services) =>
         services
             .AddTransient<IUtilities, Utilities>()
@@ -35,9 +35,9 @@ using var host = Host.CreateDefaultBuilder(args)
     )
     .Build();
 
-RunProgram(host.Services);
+RunProgram(app.Services);
 
-await host.RunAsync();
+await app.RunAsync();
 
 
 static void RunProgram(IServiceProvider services)
