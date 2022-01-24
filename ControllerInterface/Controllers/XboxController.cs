@@ -13,8 +13,8 @@ namespace ControllerInterface.Controllers
 
         private Gamepad Gamepad => _lastState.Gamepad;
 
-        private readonly ILogger<XboxController> _logger;
         private State _lastState;
+        private readonly ILogger<XboxController> _logger;
         private long _lastMsRefreshed;
         private const long TicksPerMs = TimeSpan.TicksPerMillisecond;
 

@@ -1,26 +1,20 @@
 ﻿namespace ControllerInterface.Controllers
 {
-    public delegate void ControllerEvent(IXboxController controller);
-
     public class XboxControllerWatcher : IDisposable, IXboxControllerWatcher
     {
         #region Public Properties & Fields
 
         public event ControllerEvent? ControllerConnected;
         public event ControllerEvent? ControllerDisconnected;
-
         public event ControllerEvent? AButtonPressed;
         public event ControllerEvent? BButtonPressed;
         public event ControllerEvent? XButtonPressed;
         public event ControllerEvent? YButtonPressed;
-
         public event ControllerEvent? RbButtonPressed;
         public event ControllerEvent? LbButtonPressed;
-
         public event ControllerEvent? DpadUpButtonPressed;
         public event ControllerEvent? DpadDownButtonPressed;
         public event ControllerEvent? DpadLeftButtonPressed;
-
         public event ControllerEvent? DpadRightButtonPressed;
 
         #endregion
@@ -78,7 +72,6 @@
             if (controller.DpadDownButtonIsPressed) FireDpadDownButtonPressed(controller);
             if (controller.DpadLeftButtonIsPressed) FireDpadLeftButtonPressed(controller);
             if (controller.DpadRightButtonIsPressed) FireDpadRightButtonPressed(controller);
-
         }
 
         private void DetectConnection(IXboxController controller)
@@ -95,92 +88,87 @@
 
         #endregion
 
-        #region Connection Events
+        #region Event Triggers
 
-        private void FireConnected(IXboxController controller)
+        internal void FireConnected(IXboxController controller)
         {
             ControllerConnected?.Invoke(controller);
         }
-        private void FireDisconnected(IXboxController controller)
+
+        internal void FireDisconnected(IXboxController controller)
         {
             ControllerDisconnected?.Invoke(controller);
         }
 
-        #endregion
-
-        #region ButtonEvents
-
-        private void FireAButtonPressed(IXboxController controller)
+        internal void FireAButtonPressed(IXboxController controller)
         {
             AButtonPressed?.Invoke(controller);
         }
 
-        private void FireBButtonPressed(IXboxController controller)
+        internal void FireBButtonPressed(IXboxController controller)
         {
             BButtonPressed?.Invoke(controller);
         }
 
-        private void FireXButtonPressed(IXboxController controller)
+        internal void FireXButtonPressed(IXboxController controller)
         {
             XButtonPressed?.Invoke(controller);
         }
 
-        private void FireYButtonPressed(IXboxController controller)
+        internal void FireYButtonPressed(IXboxController controller)
         {
             YButtonPressed?.Invoke(controller);
         }
 
-        private void FireRbButtonPressed(IXboxController controller)
+        internal void FireRbButtonPressed(IXboxController controller)
         {
             RbButtonPressed?.Invoke(controller);
         }
 
-        private void FireLbButtonPressed(IXboxController controller)
+        internal void FireLbButtonPressed(IXboxController controller)
         {
             LbButtonPressed?.Invoke(controller);
         }
 
-        private void FireDpadUpButtonPressed(IXboxController controller)
+        internal void FireDpadUpButtonPressed(IXboxController controller)
         {
             DpadUpButtonPressed?.Invoke(controller);
         }
 
-        private void FireDpadDownButtonPressed(IXboxController controller)
+        internal void FireDpadDownButtonPressed(IXboxController controller)
         {
             DpadDownButtonPressed?.Invoke(controller);
         }
 
-        private void FireDpadLeftButtonPressed(IXboxController controller)
+        internal void FireDpadLeftButtonPressed(IXboxController controller)
         {
             DpadLeftButtonPressed?.Invoke(controller);
         }
 
-        private void FireDpadRightButtonPressed(IXboxController controller)
+        internal void FireDpadRightButtonPressed(IXboxController controller)
         {
             DpadRightButtonPressed?.Invoke(controller);
         }
 
-
         #endregion
+
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (disposedValue) return;
+            if (disposing)
             {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                    _stopWatching = true;
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
-                disposedValue = true;
+                // TODO: dispose managed state (managed objects).
+                _stopWatching = true;
             }
+
+            // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+            // TODO: set large fields to null.
+
+            disposedValue = true;
         }
 
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.

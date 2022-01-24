@@ -8,8 +8,10 @@ using Microsoft.Extensions.Logging;
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostingContext, services) =>
         services
+            .AddTransient<IUtilities, Utilities>()
             .AddTransient<IControllerFactory, ControllerFactory>()
             .AddTransient<IControllerWatcherFactory, ControllerWatcherFactory>()
+            .AddTransient<IControllerEvents, ConsoleControllerEvents>()
             .AddSingleton<IXboxController>(provider =>
             {
                 var factory = provider.GetRequiredService<IControllerFactory>();

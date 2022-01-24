@@ -10,17 +10,19 @@ public class ControllerStatusService : IHostedService, IDisposable
 {
     private IXboxController Controller { get; }
 
-    private readonly IConfiguration _configuration;
     private readonly ILogger<ControllerStatusService> _logger;
     private readonly IControllerWatcherFactory _watcherFactory;
     private IXboxControllerWatcher? _controllerWatcher;
+    private readonly IControllerEvents _consoleControllerEvents;
+    private readonly IUtilities _utilities;
 
-    public ControllerStatusService(ILogger<ControllerStatusService> logger, IXboxController controller, IControllerWatcherFactory watcherFactory, IConfiguration configuration)
+    public ControllerStatusService(ILogger<ControllerStatusService> logger, IXboxController controller, IControllerWatcherFactory watcherFactory, IControllerEvents consoleControllerEvents, IUtilities utilities)
     {
         Controller = controller;
         _logger = logger;
         _watcherFactory = watcherFactory;
-        _configuration = configuration;
+        _consoleControllerEvents = consoleControllerEvents;
+        _utilities = utilities;
     }
 
     public Task StartAsync(CancellationToken stoppingToken)
@@ -42,36 +44,28 @@ public class ControllerStatusService : IHostedService, IDisposable
 
         if (!Controller.IsConnected)
         {
-            PrintButtonValue("Controller Disconnected", ConsoleColor.DarkRed);
+            _utilities.PrintButtonValue("Controller Disconnected", ConsoleColor.DarkRed);
             Console.WriteLine();
-            return;
         }
 
-        PrintButtonValue("Controller Connected", ConsoleColor.DarkGreen);
+        _utilities.PrintButtonValue("Controller Connected", ConsoleColor.DarkGreen);
         Console.WriteLine();
 
-        _controllerWatcher.ControllerConnected += OnControllerConnected;
-        _controllerWatcher.ControllerDisconnected += OnControllerDisconnected;
+        _controllerWatcher.ControllerConnected += _consoleControllerEvents.OnControllerConnected;
+        _controllerWatcher.ControllerDisconnected += _consoleControllerEvents.OnControllerDisconnected;
 
-        _controllerWatcher.AButtonPressed += OnAButtonPressed;
-        _controllerWatcher.BButtonPressed += OnBButtonPressed;
-        _controllerWatcher.XButtonPressed += OnXButtonPressed;
-        _controllerWatcher.YButtonPressed += OnYButtonPressed;
+        _controllerWatcher.AButtonPressed += _consoleControllerEvents.OnAButtonPressed;
+        _controllerWatcher.BButtonPressed += _consoleControllerEvents.OnBButtonPressed;
+        _controllerWatcher.XButtonPressed += _consoleControllerEvents.OnXButtonPressed;
+        _controllerWatcher.YButtonPressed += _consoleControllerEvents.OnYButtonPressed;
 
-        _controllerWatcher.RbButtonPressed += OnRbButtonPressed;
-        _controllerWatcher.LbButtonPressed += OnLbButtonPressed;
+        _controllerWatcher.RbButtonPressed += _consoleControllerEvents.OnRbButtonPressed;
+        _controllerWatcher.LbButtonPressed += _consoleControllerEvents.OnLbButtonPressed;
 
-        _controllerWatcher.DpadUpButtonPressed += OnDpadUpButtonPressed;
-        _controllerWatcher.DpadDownButtonPressed += OnDpadDownButtonPressed;
-        _controllerWatcher.DpadLeftButtonPressed += OnDpadLeftButtonPressed;
-        _controllerWatcher.DpadRightButtonPressed += OnDpadRightButtonPressed;
-
-    }
-
-    private static void PrintButtonValue(string buttonName, ConsoleColor color)
-    {
-        Console.ForegroundColor = color;
-        Console.Write($"{buttonName}");
+        _controllerWatcher.DpadUpButtonPressed += _consoleControllerEvents.OnDpadUpButtonPressed;
+        _controllerWatcher.DpadDownButtonPressed += _consoleControllerEvents.OnDpadDownButtonPressed;
+        _controllerWatcher.DpadLeftButtonPressed += _consoleControllerEvents.OnDpadLeftButtonPressed;
+        _controllerWatcher.DpadRightButtonPressed += _consoleControllerEvents.OnDpadRightButtonPressed;
     }
 
     public Task StopAsync(CancellationToken stoppingToken)
@@ -84,56 +78,5 @@ public class ControllerStatusService : IHostedService, IDisposable
     public void Dispose()
     {
         _controllerWatcher?.Dispose();
-    }
-
-    private void OnControllerDisconnected(IXboxController controller)
-    {
-        _logger.LogDebug("Controller Disconnected ");
-    }
-
-    private void OnControllerConnected(IXboxController controller)
-    {
-        _logger.LogDebug("Controller Connected ");
-    }
-
-    private static void OnAButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("A", ConsoleColor.DarkGreen);
-    }
-    private static void OnBButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("B", ConsoleColor.DarkRed);
-    }
-    private static void OnXButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("X", ConsoleColor.DarkCyan);
-    }
-    private static void OnYButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("Y", ConsoleColor.DarkYellow);
-    }
-    private static void OnRbButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("RB", ConsoleColor.White);
-    }
-    private static void OnLbButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("LB", ConsoleColor.White);
-    }
-    private static void OnDpadUpButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("Up", ConsoleColor.White);
-    }
-    private static void OnDpadDownButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("Down", ConsoleColor.White);
-    }
-    private static void OnDpadLeftButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("Left", ConsoleColor.White);
-    }
-    private static void OnDpadRightButtonPressed(IXboxController controller)
-    {
-        PrintButtonValue("Right", ConsoleColor.White);
     }
 }
