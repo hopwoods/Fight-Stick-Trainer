@@ -2,5 +2,5 @@ namespace ControllerHost;
 
 public interface IUtilities
 {
-    void PrintButtonValue(string buttonName, ConsoleColor color);
+    void PrintValue(string buttonName, ConsoleColor color);
 }

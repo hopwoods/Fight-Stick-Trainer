@@ -17,50 +17,50 @@ public interface IXboxController: IController
     /// <summary>
     /// The A Button
     /// </summary>
-    bool AButtonIsPressed { get; }
+    Task<bool> AButtonIsPressed { get; }
 
     /// <summary>
     /// The B Button
     /// </summary>
-    bool BButtonIsPressed { get; }
+    Task<bool> BButtonIsPressed { get; }
 
     /// <summary>
     /// The X Button
     /// </summary>
-    bool XButtonIsPressed { get; }
+    Task<bool> XButtonIsPressed { get; }
 
     /// <summary>
     /// The Y Button
     /// </summary>
-    bool YButtonIsPressed { get; }
+    Task<bool> YButtonIsPressed { get; }
 
     /// <summary>
     /// The Right Shoulder Button
     /// </summary>
-    bool RbButtonIsPressed { get; }
+    Task<bool> RbButtonIsPressed { get; }
 
     /// <summary>
     /// The Left Shoulder Button
     /// </summary>
-    bool LbButtonIsPressed { get; }
+    Task<bool> LbButtonIsPressed { get; }
 
     /// <summary>
     /// Up on the DPad
     /// </summary>
-    bool DpadUpButtonIsPressed { get; }
+    Task<bool> DpadUpButtonIsPressed { get; }
 
     /// <summary>
     /// Down on the DPad
     /// </summary>
-    bool DpadDownButtonIsPressed { get; }
+    Task<bool> DpadDownButtonIsPressed { get; }
 
     /// <summary>
     /// Left on the DPad
     /// </summary>
-    bool DpadLeftButtonIsPressed { get; }
+    Task<bool> DpadLeftButtonIsPressed { get; }
 
     /// <summary>
     /// Right on the DPad
     /// </summary>
-    bool DpadRightButtonIsPressed { get; }
+    Task<bool> DpadRightButtonIsPressed { get; }
 }

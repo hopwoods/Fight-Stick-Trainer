@@ -26,51 +26,51 @@ public class ConsoleControllerEvents : IControllerEvents
     
     public void OnAButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("A", ConsoleColor.DarkGreen);
+        _utilities.PrintValue("A", ConsoleColor.DarkGreen);
     }
 
     public void OnBButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("B", ConsoleColor.DarkRed);
+        _utilities.PrintValue("B", ConsoleColor.DarkRed);
     }
 
     public void OnXButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("X", ConsoleColor.DarkCyan);
+        _utilities.PrintValue("X", ConsoleColor.DarkCyan);
     }
 
     public void OnYButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("Y", ConsoleColor.DarkYellow);
+        _utilities.PrintValue("Y", ConsoleColor.DarkYellow);
     }
 
     public void OnRbButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("RB", ConsoleColor.White);
+        _utilities.PrintValue("RB", ConsoleColor.White);
     }
 
     public void OnLbButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("LB", ConsoleColor.White);
+        _utilities.PrintValue("LB", ConsoleColor.White);
     }
 
     public void OnDpadUpButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("Up", ConsoleColor.White);
+        _utilities.PrintValue("Up", ConsoleColor.White);
     }
 
     public void OnDpadDownButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("Down", ConsoleColor.White);
+        _utilities.PrintValue("Down", ConsoleColor.White);
     }
 
     public void OnDpadLeftButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("Left", ConsoleColor.White);
+        _utilities.PrintValue("Left", ConsoleColor.White);
     }
 
     public void OnDpadRightButtonPressed(IXboxController controller)
     {
-        _utilities.PrintButtonValue("Right", ConsoleColor.White);
+        _utilities.PrintValue("Right", ConsoleColor.White);
     }
 }

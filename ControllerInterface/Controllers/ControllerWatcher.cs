@@ -30,21 +30,20 @@
         public XboxControllerWatcher(IXboxController controller)
         {
             _controller = controller;
-            ThreadPool.QueueUserWorkItem(o => WatcherLoop());
+            Task.Run(WatcherLoop);
         }
 
         #endregion
 
         #region Methods
 
-        private void WatcherLoop()
+        private async Task WatcherLoop()
         {
-            Thread.Sleep(1000);
             while (!_stopWatching)
             {
                 try
                 {
-                    DetectStates(_controller);
+                    await DetectStates(_controller);
                 }
                 catch (Exception e)
                 {
@@ -52,26 +51,26 @@
                     throw;
                 }
 
-                Thread.Sleep(_controller.RefreshIntervalMilliseconds);
+                await Task.Delay(_controller.RefreshIntervalMilliseconds);
             }
         }
 
-        private void DetectStates(IXboxController controller)
+        private async Task DetectStates(IXboxController controller)
         {
             DetectConnection(controller);
 
-            if (controller.AButtonIsPressed) FireAButtonPressed(controller);
-            if (controller.BButtonIsPressed) FireBButtonPressed(controller);
-            if (controller.XButtonIsPressed) FireXButtonPressed(controller);
-            if (controller.YButtonIsPressed) FireYButtonPressed(controller);
+            if (await controller.AButtonIsPressed) FireAButtonPressed(controller);
+            if (await controller.BButtonIsPressed) FireBButtonPressed(controller);
+            if (await controller.XButtonIsPressed) FireXButtonPressed(controller);
+            if (await controller.YButtonIsPressed) FireYButtonPressed(controller);
 
-            if (controller.RbButtonIsPressed) FireRbButtonPressed(controller);
-            if (controller.LbButtonIsPressed) FireLbButtonPressed(controller);
+            if (await controller.RbButtonIsPressed) FireRbButtonPressed(controller);
+            if (await controller.LbButtonIsPressed) FireLbButtonPressed(controller);
 
-            if (controller.DpadUpButtonIsPressed) FireDpadUpButtonPressed(controller);
-            if (controller.DpadDownButtonIsPressed) FireDpadDownButtonPressed(controller);
-            if (controller.DpadLeftButtonIsPressed) FireDpadLeftButtonPressed(controller);
-            if (controller.DpadRightButtonIsPressed) FireDpadRightButtonPressed(controller);
+            if (await controller.DpadUpButtonIsPressed) FireDpadUpButtonPressed(controller);
+            if (await controller.DpadDownButtonIsPressed) FireDpadDownButtonPressed(controller);
+            if (await controller.DpadLeftButtonIsPressed) FireDpadLeftButtonPressed(controller);
+            if (await controller.DpadRightButtonIsPressed) FireDpadRightButtonPressed(controller);
         }
 
         private void DetectConnection(IXboxController controller)

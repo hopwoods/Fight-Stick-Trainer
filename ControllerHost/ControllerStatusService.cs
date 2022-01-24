@@ -28,44 +28,48 @@ public class ControllerStatusService : IHostedService, IDisposable
     public Task StartAsync(CancellationToken stoppingToken)
     {
         _logger.LogDebug("Controller Status Service Started");
+        _controllerWatcher = _watcherFactory.CreateXBoxControllerWatcher(Controller);
         DoWork();
         return Task.CompletedTask;
     }
 
-    private void DoWork()
+    private async Task DoWork()
     {
         Console.WriteLine($"Polling Rate: {Controller.RefreshIntervalMilliseconds}");
 
-        _controllerWatcher = _watcherFactory.CreateXBoxControllerWatcher(Controller);
-
-        Console.WriteLine("Press any key to exit.");
-
-        if (_controllerWatcher == null) return;
+        if(_controllerWatcher == null) return;
 
         if (!Controller.IsConnected)
         {
-            _utilities.PrintButtonValue("Controller Disconnected", ConsoleColor.DarkRed);
+            _utilities.PrintValue("Controller Disconnected", ConsoleColor.DarkRed);
             Console.WriteLine();
         }
+        else
+        {
 
-        _utilities.PrintButtonValue("Controller Connected", ConsoleColor.DarkGreen);
-        Console.WriteLine();
+            _utilities.PrintValue("Controller Connected", ConsoleColor.DarkGreen);
+            Console.WriteLine();
 
-        _controllerWatcher.ControllerConnected += _consoleControllerEvents.OnControllerConnected;
-        _controllerWatcher.ControllerDisconnected += _consoleControllerEvents.OnControllerDisconnected;
+            if (!Console.KeyAvailable)
+            {
 
-        _controllerWatcher.AButtonPressed += _consoleControllerEvents.OnAButtonPressed;
-        _controllerWatcher.BButtonPressed += _consoleControllerEvents.OnBButtonPressed;
-        _controllerWatcher.XButtonPressed += _consoleControllerEvents.OnXButtonPressed;
-        _controllerWatcher.YButtonPressed += _consoleControllerEvents.OnYButtonPressed;
+                _controllerWatcher.ControllerConnected += _consoleControllerEvents.OnControllerConnected;
+                _controllerWatcher.ControllerDisconnected += _consoleControllerEvents.OnControllerDisconnected;
 
-        _controllerWatcher.RbButtonPressed += _consoleControllerEvents.OnRbButtonPressed;
-        _controllerWatcher.LbButtonPressed += _consoleControllerEvents.OnLbButtonPressed;
+                _controllerWatcher.AButtonPressed += _consoleControllerEvents.OnAButtonPressed;
+                _controllerWatcher.BButtonPressed += _consoleControllerEvents.OnBButtonPressed;
+                _controllerWatcher.XButtonPressed += _consoleControllerEvents.OnXButtonPressed;
+                _controllerWatcher.YButtonPressed += _consoleControllerEvents.OnYButtonPressed;
 
-        _controllerWatcher.DpadUpButtonPressed += _consoleControllerEvents.OnDpadUpButtonPressed;
-        _controllerWatcher.DpadDownButtonPressed += _consoleControllerEvents.OnDpadDownButtonPressed;
-        _controllerWatcher.DpadLeftButtonPressed += _consoleControllerEvents.OnDpadLeftButtonPressed;
-        _controllerWatcher.DpadRightButtonPressed += _consoleControllerEvents.OnDpadRightButtonPressed;
+                _controllerWatcher.RbButtonPressed += _consoleControllerEvents.OnRbButtonPressed;
+                _controllerWatcher.LbButtonPressed += _consoleControllerEvents.OnLbButtonPressed;
+
+                _controllerWatcher.DpadUpButtonPressed += _consoleControllerEvents.OnDpadUpButtonPressed;
+                _controllerWatcher.DpadDownButtonPressed += _consoleControllerEvents.OnDpadDownButtonPressed;
+                _controllerWatcher.DpadLeftButtonPressed += _consoleControllerEvents.OnDpadLeftButtonPressed;
+                _controllerWatcher.DpadRightButtonPressed += _consoleControllerEvents.OnDpadRightButtonPressed;
+            }
+        }
     }
 
     public Task StopAsync(CancellationToken stoppingToken)

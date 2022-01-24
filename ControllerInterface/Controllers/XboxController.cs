@@ -17,6 +17,7 @@ namespace ControllerInterface.Controllers
         private readonly ILogger<XboxController> _logger;
         private long _lastMsRefreshed;
         private const long TicksPerMs = TimeSpan.TicksPerMillisecond;
+        private readonly int _deBounceInterval;
 
         #endregion
 
@@ -27,6 +28,7 @@ namespace ControllerInterface.Controllers
             _logger = logger;
             Controller = new Controller(UserIndex.One);
             RefreshIntervalMilliseconds = int.Parse(configuration["ControllerSettings:RefreshIntervalMilliseconds"]);
+            _deBounceInterval = RefreshIntervalMilliseconds;
         }
 
         #endregion
@@ -68,6 +70,34 @@ namespace ControllerInterface.Controllers
             }
         }
 
+        /// <summary>
+        /// Checks if a button has been pressed then checks again after a DeBounce interval in milliseconds
+        /// </summary>
+        /// <param name="button"></param>
+        /// <returns>True if the button has been pressed</returns>
+        private async Task<bool> ButtonHasBeenPressedAsync(GamepadButtonFlags button)
+        {
+            EnsureRefresh();
+
+            //Has button press been initiated?
+            var buttonPressed = Gamepad.Buttons.HasFlag(button);
+
+            if (buttonPressed == false)
+                return false;
+
+            //Has button been pressed and released?
+            await Task.Delay(_deBounceInterval);
+            var buttonPressedAfterInterval = Gamepad.Buttons.HasFlag(button);
+
+            if (buttonPressed && !buttonPressedAfterInterval) return true;
+
+            //Hold Detection
+            await Task.Delay((int)(_deBounceInterval * 1.5));
+            var buttonPressedAfterHoldInterval = Gamepad.Buttons.HasFlag(button);
+
+            return buttonPressed && buttonPressedAfterHoldInterval;
+        }
+
         #endregion
 
         #region Public Fields & Properties
@@ -76,94 +106,18 @@ namespace ControllerInterface.Controllers
 
         public bool IsConnected => Controller.IsConnected;
 
-        public bool AButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.A);
-            }
-        }
-        public bool BButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.B);
-            }
-        }
+        public Task<bool> AButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.A);
+        public Task<bool> BButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.B);
+        public Task<bool> XButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.X);
+        public Task<bool> YButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.Y);
 
-        public bool XButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.X);
-            }
-        }
+        public Task<bool> RbButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.RightShoulder);
+        public Task<bool> LbButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.LeftShoulder);
 
-        public bool YButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.Y);
-            }
-        }
-
-        public bool RbButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder);
-            }
-        }
-
-        public bool LbButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder);
-            }
-        }
-
-        public bool DpadUpButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadUp);
-            }
-        }
-
-        public bool DpadDownButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadDown);
-            }
-        }
-
-        public bool DpadLeftButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadLeft);
-            }
-        }
-
-        public bool DpadRightButtonIsPressed
-        {
-            get
-            {
-                EnsureRefresh();
-                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadRight);
-            }
-        }
+        public Task<bool> DpadUpButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadUp);
+        public Task<bool> DpadDownButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadDown);
+        public Task<bool> DpadLeftButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadLeft);
+        public Task<bool> DpadRightButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadRight);
 
         #endregion
     }

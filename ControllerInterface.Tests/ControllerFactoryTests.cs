@@ -5,8 +5,6 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-
 namespace ControllerInterface.Tests;
 
 public class ControllerFactoryTests
