@@ -1,4 +1,4 @@
-namespace ControllerTestConsole;
+namespace ControllerTestConsole.Utilities;
 
 public interface IUtilities
 {

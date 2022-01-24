@@ -1,7 +1,8 @@
 using ControllerInterface.Controllers;
+using ControllerTestConsole.Utilities;
 using Microsoft.Extensions.Logging;
 
-namespace ControllerTestConsole;
+namespace ControllerTestConsole.Events;
 
 public class ConsoleControllerEvents : IControllerEvents
 {

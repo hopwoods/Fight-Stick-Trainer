@@ -3,7 +3,7 @@ using ControllerInterface.Factories;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ControllerTestConsole;
+namespace ControllerTestConsole.Services;
 
 public class ControllerStatusService : IHostedService, IDisposable
 {

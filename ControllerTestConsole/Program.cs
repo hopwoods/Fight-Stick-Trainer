@@ -1,6 +1,8 @@
 ﻿using ControllerInterface.Controllers;
 using ControllerInterface.Factories;
-using ControllerTestConsole;
+using ControllerTestConsole.Events;
+using ControllerTestConsole.Services;
+using ControllerTestConsole.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
