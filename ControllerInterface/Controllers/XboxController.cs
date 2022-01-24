@@ -18,6 +18,7 @@ namespace ControllerInterface.Controllers
         private long _lastMsRefreshed;
         private const long TicksPerMs = TimeSpan.TicksPerMillisecond;
         private readonly int _deBounceInterval;
+        private readonly int _heldButtonInterval;
 
         #endregion
 
@@ -29,6 +30,7 @@ namespace ControllerInterface.Controllers
             Controller = new Controller(UserIndex.One);
             RefreshIntervalMilliseconds = int.Parse(configuration["ControllerSettings:RefreshIntervalMilliseconds"]);
             _deBounceInterval = RefreshIntervalMilliseconds;
+            _heldButtonInterval = 45;
         }
 
         #endregion
@@ -92,7 +94,7 @@ namespace ControllerInterface.Controllers
             if (buttonPressed && !buttonPressedAfterInterval) return true;
 
             //Hold Detection
-            await Task.Delay((int)(_deBounceInterval * 1.5));
+            await Task.Delay(_heldButtonInterval);
             var buttonPressedAfterHoldInterval = Gamepad.Buttons.HasFlag(button);
 
             return buttonPressed && buttonPressedAfterHoldInterval;

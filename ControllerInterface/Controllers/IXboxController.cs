@@ -1,5 +1,3 @@
-using SharpDX.XInput;
-
 namespace ControllerInterface.Controllers;
 
 public interface IXboxController: IController
