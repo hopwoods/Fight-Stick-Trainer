@@ -19,11 +19,11 @@ public class XboxControllerTests
     public void ControllerIsConnected()
     {
         Controller = CreateMockController();
-        Controller.Update();
+        Controller.EnsureRefresh();
 
         var controllerIsConnected = Controller.IsConnected;
 
-        Controller.Received().Update();
+        Controller.Received().EnsureRefresh();
         Assert.That(controllerIsConnected, Is.True);
     }
 
@@ -31,131 +31,129 @@ public class XboxControllerTests
     public void ControllerAButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.AButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.AButtonIsPressed, Is.True);
     }
 
     [Test]
     public void ControllerBButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.BButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.BButtonIsPressed, Is.True);
     }
 
     [Test]
     public void ControllerXButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.XButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.XButtonIsPressed, Is.True);
     }
 
     [Test]
     public void ControllerYButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.YButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.YButtonIsPressed, Is.True);
     }
 
     [Test]
     public void ControllerRbButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.RbButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.RbButtonIsPressed, Is.True);
     }
 
     [Test]
     public void ControllerLbButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.LbButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.LbButtonIsPressed, Is.True);
     }
 
     [Test]
     public void ControllerDpadUpButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.DpadUpButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.DpadUpButtonIsPressed, Is.True);
     }
 
     [Test]
     public void ControllerDpadDownButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.DpadDownButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.DpadDownButtonIsPressed, Is.True);
     }
 
     [Test]
     public void ControllerDpadLeftButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.DpadLeftButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.DpadLeftButtonIsPressed, Is.True);
     }
 
     [Test]
     public void ControllerDpadRightButtonPressed()
     {
         Controller = CreateMockController(); ;
-        Controller.Update();
+        Controller.EnsureRefresh();
 
 
-        Controller.Received().Update();
-        Assert.That(Controller.DpadRightButton, Is.True);
+        Controller.Received().EnsureRefresh();
+        Assert.That(Controller.DpadRightButtonIsPressed, Is.True);
     }
 
 
     private static IXboxController CreateMockController()
     {
         var controller = Substitute.For<IXboxController>();
-        controller.When(xboxController => xboxController.Update())
-            .Do(x =>
-            {
-                controller.IsConnected = true;
-                controller.AButton = true;
-                controller.BButton = true;
-                controller.XButton = true;
-                controller.YButton = true;
-                controller.RbButton = true;
-                controller.LbButton = true;
-                controller.DpadUpButton = true;
-                controller.DpadDownButton = true;
-                controller.DpadLeftButton = true;
-                controller.DpadRightButton = true;
-            });
+        controller.IsConnected.Returns(true);
+
+        //Buttons
+        controller.AButtonIsPressed.Returns(true);
+        controller.BButtonIsPressed.Returns(true);
+        controller.XButtonIsPressed.Returns(true);
+        controller.YButtonIsPressed.Returns(true);
+        controller.RbButtonIsPressed.Returns(true);
+        controller.LbButtonIsPressed.Returns(true);
+        controller.DpadUpButtonIsPressed.Returns(true);
+        controller.DpadDownButtonIsPressed.Returns(true);
+        controller.DpadLeftButtonIsPressed.Returns(true);
+        controller.DpadRightButtonIsPressed.Returns(true);
 
         return controller;
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using SharpDX;
 using SharpDX.XInput;
 
@@ -6,74 +7,162 @@ namespace ControllerInterface.Controllers
 {
     public class XboxController: IXboxController
     {
-        #region Public Fields & Properties
-
-        public bool IsConnected { get; set; }
-        public bool AButton { get; set; }
-        public bool BButton { get; set; }
-        public bool XButton { get; set; }
-        public bool YButton { get; set; }
-        public bool RbButton { get; set; }
-        public bool LbButton { get; set; }
-        public bool DpadUpButton { get; set; }
-        public bool DpadDownButton { get; set; }
-        public bool DpadLeftButton { get; set; }
-        public bool DpadRightButton { get; set; }
-
-        #endregion
-
         #region Private Fields & Properties
 
+        private Controller Controller { get; }
+
+        private Gamepad Gamepad => _lastState.Gamepad;
+
         private readonly ILogger<XboxController> _logger;
-
-        private Controller Controller { get; set; }
-
-        private State _state;
-        private Gamepad _gamepad;
+        private State _lastState;
+        private long _lastMsRefreshed;
+        private const long TicksPerMs = TimeSpan.TicksPerMillisecond;
 
         #endregion
-
 
         #region Constructor
 
-        public XboxController(ILogger<XboxController> logger)
+        public XboxController(ILogger<XboxController> logger, IConfiguration configuration)
         {
             _logger = logger;
             Controller = new Controller(UserIndex.One);
+            RefreshIntervalMilliseconds = int.Parse(configuration["ControllerSettings:RefreshIntervalMilliseconds"]);
         }
 
         #endregion
 
         #region Methods
 
-        public void Update()
+        public void EnsureRefresh()
         {
+            var num = Environment.TickCount * TicksPerMs;
+
+            if (!IsConnected)
+            {
+                if ((num - _lastMsRefreshed) < 1000)
+                {
+                    return;
+                }
+            }
+
+            if ((num - _lastMsRefreshed) > RefreshIntervalMilliseconds)
+            {
+                RefreshControllerState();
+            }
+        }
+
+        private void RefreshControllerState()
+        {
+            _lastMsRefreshed = Environment.TickCount * TicksPerMs;
+
             try
             {
-                _state = Controller.GetState();
+                _lastState = Controller.GetState();
             }
             catch (SharpDXException e)
             {
-                _logger.LogInformation(e, "No Controller is connected.");
-                IsConnected = false;
-                return;
+                if (!e.Message.Contains("The device is not connected"))
+                {
+                    _logger.LogError(e, "An error occurred with the controller.");
+                }
             }
-            
-            _gamepad = _state.Gamepad;
+        }
 
-            IsConnected = Controller.IsConnected;
+        #endregion
 
-            //Buttons
-            AButton = (_gamepad.Buttons & GamepadButtonFlags.A) != 0;
-            BButton = (_gamepad.Buttons & GamepadButtonFlags.B) != 0;
-            XButton = (_gamepad.Buttons & GamepadButtonFlags.X) != 0;
-            YButton = (_gamepad.Buttons & GamepadButtonFlags.Y) != 0;
-            RbButton = (_gamepad.Buttons & GamepadButtonFlags.RightShoulder) != 0;
-            LbButton = (_gamepad.Buttons & GamepadButtonFlags.LeftShoulder) != 0;
-            DpadUpButton = (_gamepad.Buttons & GamepadButtonFlags.DPadUp) != 0;
-            DpadDownButton = (_gamepad.Buttons & GamepadButtonFlags.DPadDown) != 0;
-            DpadLeftButton = (_gamepad.Buttons & GamepadButtonFlags.DPadLeft) != 0;
-            DpadRightButton = (_gamepad.Buttons & GamepadButtonFlags.DPadRight) != 0;
+        #region Public Fields & Properties
+
+        public int RefreshIntervalMilliseconds { get; set; }
+
+        public bool IsConnected => Controller.IsConnected;
+
+        public bool AButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.A);
+            }
+        }
+        public bool BButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.B);
+            }
+        }
+
+        public bool XButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.X);
+            }
+        }
+
+        public bool YButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.Y);
+            }
+        }
+
+        public bool RbButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder);
+            }
+        }
+
+        public bool LbButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder);
+            }
+        }
+
+        public bool DpadUpButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadUp);
+            }
+        }
+
+        public bool DpadDownButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadDown);
+            }
+        }
+
+        public bool DpadLeftButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadLeft);
+            }
+        }
+
+        public bool DpadRightButtonIsPressed
+        {
+            get
+            {
+                EnsureRefresh();
+                return Gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadRight);
+            }
         }
 
         #endregion

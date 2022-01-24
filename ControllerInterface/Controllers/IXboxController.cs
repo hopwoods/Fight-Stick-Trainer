@@ -4,59 +4,63 @@ namespace ControllerInterface.Controllers;
 
 public interface IXboxController: IController
 {
+    /// <summary>
+    /// Interval in milliseconds to poll the controller
+    /// </summary>
+    int RefreshIntervalMilliseconds { get; set; }
 
     /// <summary>
     /// Is the controller plugged in and powered on
     /// </summary>
-    bool IsConnected { get; set; }
+    bool IsConnected { get; }
 
     /// <summary>
     /// The A Button
     /// </summary>
-    bool AButton { get; set; }
+    bool AButtonIsPressed { get; }
 
     /// <summary>
     /// The B Button
     /// </summary>
-    bool BButton { get; set; }
+    bool BButtonIsPressed { get; }
 
     /// <summary>
     /// The X Button
     /// </summary>
-    bool XButton { get; set; }
+    bool XButtonIsPressed { get; }
 
     /// <summary>
     /// The Y Button
     /// </summary>
-    bool YButton { get; set; }
+    bool YButtonIsPressed { get; }
 
     /// <summary>
     /// The Right Shoulder Button
     /// </summary>
-    bool RbButton { get; set; }
+    bool RbButtonIsPressed { get; }
 
     /// <summary>
     /// The Left Shoulder Button
     /// </summary>
-    bool LbButton { get; set; }
+    bool LbButtonIsPressed { get; }
 
     /// <summary>
     /// Up on the DPad
     /// </summary>
-    bool DpadUpButton { get; set; }
+    bool DpadUpButtonIsPressed { get; }
 
     /// <summary>
     /// Down on the DPad
     /// </summary>
-    bool DpadDownButton { get; set; }
+    bool DpadDownButtonIsPressed { get; }
 
     /// <summary>
     /// Left on the DPad
     /// </summary>
-    bool DpadLeftButton { get; set; }
+    bool DpadLeftButtonIsPressed { get; }
 
     /// <summary>
     /// Right on the DPad
     /// </summary>
-    bool DpadRightButton { get; set; }
+    bool DpadRightButtonIsPressed { get; }
 }
