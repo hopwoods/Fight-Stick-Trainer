@@ -1,1 +1,1 @@
-export { ControllerButtons } from './faceButtons'
+export { ControllerButtons } from './controllerButtons'
