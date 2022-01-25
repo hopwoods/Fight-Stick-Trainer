@@ -1,4 +1,6 @@
 using ControllerInterface.Controllers;
+using ControllerInterface.Dtos;
+using ControllerInterface.Events;
 using ControllerTestConsole.Utilities;
 using Microsoft.Extensions.Logging;
 
@@ -49,9 +51,10 @@ public class ConsoleControllerEvents : IControllerEvents
         return Task.CompletedTask;
     }
     
-    public void OnAButtonPressed(IXboxController controller)
+    public Task OnAButtonPressed(IXboxController controller)
     {
         _utilities.PrintValue(ControllerInputNames.AButton, ConsoleColor.DarkGreen);
+        return Task.CompletedTask;
     }
 
     public void OnBButtonPressed(IXboxController controller)

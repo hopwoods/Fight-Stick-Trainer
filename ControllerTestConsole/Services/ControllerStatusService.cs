@@ -1,5 +1,7 @@
 using ControllerInterface.Controllers;
+using ControllerInterface.Events;
 using ControllerInterface.Factories;
+using ControllerInterface.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -39,7 +41,7 @@ public class ControllerStatusService : IHostedService, IDisposable
             _controllerWatcher.ControllerConnected += controller => _consoleControllerEvents.OnControllerConnected(controller);
             _controllerWatcher.ControllerDisconnected += controller => _consoleControllerEvents.OnControllerDisconnected(controller);
 
-            _controllerWatcher.AButtonPressed += _consoleControllerEvents.OnAButtonPressed;
+            _controllerWatcher.AButtonPressed += controller => _consoleControllerEvents.OnAButtonPressed(controller);
             _controllerWatcher.BButtonPressed += _consoleControllerEvents.OnBButtonPressed;
             _controllerWatcher.XButtonPressed += _consoleControllerEvents.OnXButtonPressed;
             _controllerWatcher.YButtonPressed += _consoleControllerEvents.OnYButtonPressed;

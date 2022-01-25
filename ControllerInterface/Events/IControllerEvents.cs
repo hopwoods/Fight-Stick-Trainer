@@ -1,4 +1,6 @@
-namespace ControllerInterface.Controllers;
+using ControllerInterface.Controllers;
+
+namespace ControllerInterface.Events;
 
 public interface IControllerEvents
 {
@@ -18,7 +20,7 @@ public interface IControllerEvents
     /// Method to execute when the A button is pressed
     /// </summary>
     /// <param name="controller"></param>
-    void OnAButtonPressed(IXboxController controller);
+    Task OnAButtonPressed(IXboxController controller);
 
     /// <summary>
     /// Method to execute when the B button is pressed

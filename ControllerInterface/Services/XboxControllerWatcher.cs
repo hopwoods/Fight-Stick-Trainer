@@ -1,4 +1,7 @@
-﻿namespace ControllerInterface.Controllers
+﻿using ControllerInterface.Controllers;
+using ControllerInterface.Events;
+
+namespace ControllerInterface.Services
 {
     public class XboxControllerWatcher : IDisposable, IXboxControllerWatcher
     {

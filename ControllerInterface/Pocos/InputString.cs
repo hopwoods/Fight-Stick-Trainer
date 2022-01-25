@@ -1,4 +1,6 @@
-﻿namespace ControllerInterface.Controllers;
+﻿using ControllerInterface.Dtos;
+
+namespace ControllerInterface.Pocos;
 
 public class InputString : IInputString
 {

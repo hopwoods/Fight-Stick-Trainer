@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using ControllerInterface.Dtos;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace Server.Client
 {
@@ -32,7 +33,19 @@ namespace Server.Client
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occured sending controler connection state");
+                _logger.LogError(ex, "An error occurred sending controller connection state");
+            }
+        }
+
+        public async Task SendButtonPressedAsync(string inputName)
+        {
+            try
+            {
+                await _connection.InvokeAsync("SendButtonPressToClient", inputName);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred sending button {inputName} has been pressed");
             }
         }
 

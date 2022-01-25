@@ -1,22 +1,25 @@
 using ControllerInterface.Controllers;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
+using ControllerInterface.Dtos;
+using ControllerInterface.Events;
+using ControllerInterface.Pocos;
 using Server.Client;
-using Server.Hubs;
+using Server.Utilities;
 
 namespace Server;
 
-internal class ServerControllerEvents: IControllerEvents
+internal class ServerControllerEvents : IControllerEvents
 {
     private readonly ILogger<ServerControllerEvents> _logger;
     private readonly ITrainerHubClient _client;
     private readonly IInputString _inputString;
+    private readonly IUtilities _utilities;
 
-    public ServerControllerEvents(ILogger<ServerControllerEvents> logger, IInputString inputString, ITrainerHubClient client)
+    public ServerControllerEvents(ILogger<ServerControllerEvents> logger, IInputString inputString, ITrainerHubClient client, IUtilities utilities)
     {
         _logger = logger;
         _inputString = inputString;
         _client = client;
+        _utilities = utilities;
     }
 
     #region Implementation of IControllerEvents
@@ -34,72 +37,63 @@ internal class ServerControllerEvents: IControllerEvents
             _logger.LogError(e, "An error occurred while sending Controller State.");
             throw;
         }
-        
-    }
-    
-    public async Task OnControllerConnected(IXboxController controller)
-    {
-        try
-        {
-            _logger.LogInformation("Controller Event: OnControllerConnected triggered");
-            _logger.LogInformation("Sending Controller State to clients");
-            await _client.SendControllerConnectionStateAsync(controller.IsConnected);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "An error occurred while sending Controller State.");
-            throw;
-        }
+
     }
 
-    public void OnAButtonPressed(IXboxController controller)
+    public async Task OnControllerConnected(IXboxController controller)
     {
-        throw new NotImplementedException();
+        await _client.SendControllerConnectionStateAsync(controller.IsConnected);
     }
-    
+
+    public async Task OnAButtonPressed(IXboxController controller)
+    {
+        _utilities.PrintValue(ControllerInputNames.AButton, ConsoleColor.DarkGreen);
+        await _client.SendButtonPressedAsync(ControllerInputNames.AButton);
+    }
+
     public void OnBButtonPressed(IXboxController controller)
     {
-        throw new NotImplementedException();
+        _utilities.PrintValue(ControllerInputNames.BButton, ConsoleColor.DarkRed);
     }
 
     public void OnXButtonPressed(IXboxController controller)
     {
-        throw new NotImplementedException();
+        return;
     }
 
     public void OnYButtonPressed(IXboxController controller)
     {
-        throw new NotImplementedException();
+        return;
     }
 
     public void OnRbButtonPressed(IXboxController controller)
     {
-        throw new NotImplementedException();
+        return;
     }
 
     public void OnLbButtonPressed(IXboxController controller)
     {
-        throw new NotImplementedException();
+        return;
     }
 
     public void OnDpadUpButtonPressed(IXboxController controller)
     {
-        throw new NotImplementedException();
+        return;
     }
 
     public void OnDpadDownButtonPressed(IXboxController controller)
     {
-        throw new NotImplementedException();
+        return;
     }
 
     public void OnDpadLeftButtonPressed(IXboxController controller)
     {
-        throw new NotImplementedException();
+        return;
     }
 
     public void OnDpadRightButtonPressed(IXboxController controller)
     {
-        throw new NotImplementedException();
+        return;
     }
 
     #endregion

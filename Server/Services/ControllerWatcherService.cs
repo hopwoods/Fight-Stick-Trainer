@@ -1,5 +1,7 @@
 ﻿using ControllerInterface.Controllers;
+using ControllerInterface.Events;
 using ControllerInterface.Factories;
+using ControllerInterface.Services;
 
 namespace Server.Services
 {
@@ -37,7 +39,7 @@ namespace Server.Services
                 _controllerWatcher.ControllerConnected += controller => _controllerEvents.OnControllerConnected(controller);
                 _controllerWatcher.ControllerDisconnected += controller => _controllerEvents.OnControllerDisconnected(controller);
 
-                _controllerWatcher.AButtonPressed += _controllerEvents.OnAButtonPressed;
+                _controllerWatcher.AButtonPressed += controller => _controllerEvents.OnAButtonPressed(controller);
                 _controllerWatcher.BButtonPressed += _controllerEvents.OnBButtonPressed;
                 _controllerWatcher.XButtonPressed += _controllerEvents.OnXButtonPressed;
                 _controllerWatcher.YButtonPressed += _controllerEvents.OnYButtonPressed;

@@ -1,15 +1,22 @@
 using ControllerInterface.Controllers;
+using ControllerInterface.Events;
 using ControllerInterface.Factories;
+using ControllerInterface.Pocos;
+using ControllerInterface.Services;
+using ControllerTestConsole.Utilities;
 using Microsoft.AspNetCore.SignalR;
 using Server;
 using Server.Client;
 using Server.Hubs;
 using Server.Services;
+using Server.Utilities;
 
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
+    .AddSingleton<IUtilities, Utilities>()
     .AddSingleton<IInputString, InputString>()
     .AddSingleton<ITrainerHubClient, TrainerHubClient>()
     .AddTransient<IControllerFactory, ControllerFactory>()
@@ -29,8 +36,17 @@ builder.Services
     .AddLogging(logging =>
     {
         logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
-        logging.AddDebug();
+        //logging.AddDebug();
         logging.AddConsole();
+    }).AddCors(options =>
+    {
+        options.AddPolicy(name: myAllowSpecificOrigins, policyBuilder =>
+        {
+            policyBuilder
+                .WithOrigins("http://localhost:3000")
+                .AllowCredentials()
+                .AllowAnyHeader();
+        });
     })
     .AddHostedService<ControllerWatcherService>();
 
@@ -39,10 +55,9 @@ builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseCors(myAllowSpecificOrigins);
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<TrainerHub>("/hub");

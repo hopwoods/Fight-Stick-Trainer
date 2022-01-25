@@ -1,4 +1,4 @@
-﻿namespace ControllerInterface.Controllers;
+﻿namespace ControllerInterface.Dtos;
 
 public class ControllerInput
 {
