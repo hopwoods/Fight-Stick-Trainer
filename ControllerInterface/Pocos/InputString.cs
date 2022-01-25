@@ -4,19 +4,19 @@ namespace ControllerInterface.Pocos;
 
 public class InputString : IInputString
 {
-    private int _nextInputInString;
+    private int nextInputInString;
 
     #region Constructors
 
     public InputString()
     {
         Inputs = new List<ControllerInput>();
-        _nextInputInString = 0;
+        nextInputInString = 0;
     }
     public InputString(List<ControllerInput> inputs)
     {
         Inputs = inputs;
-        _nextInputInString = 0;
+        nextInputInString = 0;
     }
 
     #endregion
@@ -25,7 +25,7 @@ public class InputString : IInputString
 
     public void CheckInput(ControllerInputNames input)
     {
-        var currentInput = Inputs[_nextInputInString];
+        var currentInput = Inputs[nextInputInString];
         if (currentInput.InputName == input)
         {
             currentInput.InputHit = true;
@@ -38,13 +38,13 @@ public class InputString : IInputString
     private void SetNextInputInString()
     {
         var stringLength = Inputs.Count;
-        if (_nextInputInString < stringLength)
+        if (nextInputInString < stringLength)
         {
-            _nextInputInString++;
+            nextInputInString++;
         }
         else
         {
-            _nextInputInString = 0;
+            nextInputInString = 0;
         }
     }
 

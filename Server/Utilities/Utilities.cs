@@ -1,6 +1,4 @@
-using Server.Utilities;
-
-namespace ControllerTestConsole.Utilities;
+namespace Server.Utilities;
 
 public class Utilities : IUtilities
 {

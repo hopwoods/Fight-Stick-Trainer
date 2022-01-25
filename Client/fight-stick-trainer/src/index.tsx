@@ -1,12 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from './App'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import reportWebVitals from './reportWebVitals'
+import { SignalR } from './common/communication/signalR'
+import './index.css'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SignalR>
+      <App />
+    </SignalR>
   </React.StrictMode>,
   document.getElementById('root')
 );

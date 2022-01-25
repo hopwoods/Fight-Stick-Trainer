@@ -3,12 +3,10 @@ using ControllerInterface.Events;
 using ControllerInterface.Factories;
 using ControllerInterface.Pocos;
 using ControllerInterface.Services;
-using ControllerTestConsole.Utilities;
 using Microsoft.AspNetCore.SignalR;
 using Server;
 using Server.Client;
 using Server.Hubs;
-using Server.Services;
 using Server.Utilities;
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -36,7 +34,7 @@ builder.Services
     .AddLogging(logging =>
     {
         logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
-        //logging.AddDebug();
+        logging.AddDebug();
         logging.AddConsole();
     }).AddCors(options =>
     {

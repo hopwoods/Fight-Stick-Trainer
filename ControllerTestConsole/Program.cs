@@ -3,7 +3,6 @@ using ControllerInterface.Events;
 using ControllerInterface.Factories;
 using ControllerInterface.Services;
 using ControllerTestConsole.Events;
-using ControllerTestConsole.Services;
 using ControllerTestConsole.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,7 +32,7 @@ using var app = Host.CreateDefaultBuilder(args)
                 logging.AddDebug();
                 logging.AddConsole();
             })
-            .AddHostedService<ControllerStatusService>()
+            .AddHostedService<ControllerWatcherService>()
     )
     .Build();
 

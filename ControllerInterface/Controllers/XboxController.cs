@@ -11,14 +11,14 @@ namespace ControllerInterface.Controllers
 
         private Controller Controller { get; }
 
-        private Gamepad Gamepad => _lastState.Gamepad;
+        private Gamepad Gamepad => lastState.Gamepad;
 
-        private State _lastState;
-        private readonly ILogger<XboxController> _logger;
-        private long _lastMsRefreshed;
+        private State lastState;
+        private readonly ILogger<XboxController> logger;
+        private long lastMsRefreshed;
         private const long TicksPerMs = TimeSpan.TicksPerMillisecond;
-        private readonly int _deBounceInterval;
-        private readonly int _heldButtonInterval;
+        private readonly int deBounceInterval;
+        private readonly int heldButtonInterval;
 
         #endregion
 
@@ -26,11 +26,11 @@ namespace ControllerInterface.Controllers
 
         public XboxController(ILogger<XboxController> logger, IConfiguration configuration)
         {
-            _logger = logger;
+            this.logger = logger;
             Controller = new Controller(UserIndex.One);
             RefreshIntervalMilliseconds = int.Parse(configuration["ControllerSettings:RefreshIntervalMilliseconds"]);
-            _deBounceInterval = RefreshIntervalMilliseconds;
-            _heldButtonInterval = 45;
+            deBounceInterval = RefreshIntervalMilliseconds;
+            heldButtonInterval = 45;
         }
 
         #endregion
@@ -43,13 +43,13 @@ namespace ControllerInterface.Controllers
 
             if (!IsConnected)
             {
-                if ((num - _lastMsRefreshed) < 1000)
+                if ((num - lastMsRefreshed) < 1000)
                 {
                     return;
                 }
             }
 
-            if ((num - _lastMsRefreshed) > RefreshIntervalMilliseconds)
+            if ((num - lastMsRefreshed) > RefreshIntervalMilliseconds)
             {
                 RefreshControllerState();
             }
@@ -57,17 +57,17 @@ namespace ControllerInterface.Controllers
 
         private void RefreshControllerState()
         {
-            _lastMsRefreshed = Environment.TickCount * TicksPerMs;
+            lastMsRefreshed = Environment.TickCount * TicksPerMs;
 
             try
             {
-                _lastState = Controller.GetState();
+                lastState = Controller.GetState();
             }
             catch (SharpDXException e)
             {
                 if (!e.Message.Contains("The device is not connected"))
                 {
-                    _logger.LogError(e, "An error occurred with the controller.");
+                    logger.LogError(e, "An error occurred with the controller.");
                 }
             }
         }
@@ -88,13 +88,13 @@ namespace ControllerInterface.Controllers
                 return false;
 
             //Has button been pressed and released?
-            await Task.Delay(_deBounceInterval);
+            await Task.Delay(deBounceInterval);
             var buttonPressedAfterInterval = Gamepad.Buttons.HasFlag(button);
 
             if (buttonPressed && !buttonPressedAfterInterval) return true;
 
             //Hold Detection
-            await Task.Delay(_heldButtonInterval);
+            await Task.Delay(heldButtonInterval);
             var buttonPressedAfterHoldInterval = Gamepad.Buttons.HasFlag(button);
 
             return buttonPressed && buttonPressedAfterHoldInterval;

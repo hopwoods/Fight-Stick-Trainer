@@ -1,33 +1,53 @@
-import { InputButton } from './inputButton'
-import { useCallback, useEffect } from 'react'
-import { useStore } from '../store/appStore'
+import { ControllerButtons } from '../enums'
+import { FaceButton } from './faceButton'
+import { HubConnectionState } from '@microsoft/signalr'
+import { mergeStyleSets } from '@fluentui/react'
+import { useAppStore } from '../store/appStore'
+import { useCallback } from 'react'
+import { useSignalRStore } from '../common/communication/signalR'
+
+
 
 export function InputHistory() {
-    const inputHistory = useStore(useCallback(state => state.inputHistory, []));
-    const inputHistoryCount = useStore(useCallback(state => state.inputHistoryCount, []));
 
-    useEffect(() => {
-        console.log(inputHistory);
-        console.log(inputHistoryCount);
-    }, [inputHistory, inputHistoryCount])
+    const { hub } = useSignalRStore();
+    const isConnected = useAppStore(state => state.isControllerConnected);
 
-    const Inputs = useCallback(() => {
-        if (inputHistoryCount > 0) {
-            return <>
-                {
-                    inputHistory.map((inputName: string, index: number) => {
-                        return <InputButton key={index} inputName={inputName} />
-                    })
-                }
-            </>
+    const classes = mergeStyleSets({
+        inputHistory: {
+            maxHeight: '90%',
+            overflowX: 'hidden',
+            padding: '3vmin'
         }
-        else
-            return <></>
+    });
 
-    }, [inputHistory, inputHistoryCount])
+    if (isConnected && hub.state === HubConnectionState.Connected) {
+        return <div className={classes.inputHistory}>
+            <Inputs />
+        </div>
+    }
+    else if (hub.state === HubConnectionState.Disconnected) {
+        return <div className={classes.inputHistory}>
+            <h6>Unable to contact server. Please refresh.</h6>
+        </div>
+    }
+    return <></>
+}
 
+function Inputs() {
 
-    return <div className='Input-History'>
-        <Inputs />
-    </div>
+    const inputHistory = useAppStore(useCallback(state => state.inputHistory, []));
+    const inputHistoryCount = useAppStore(useCallback(state => state.inputHistoryCount, []));
+
+    if (inputHistoryCount > 0) {
+        return <>
+            {
+                inputHistory.map((inputName: ControllerButtons, index: number) => {
+                    return <FaceButton key={index} inputName={inputName} />
+                })
+            }
+        </>
+    }
+    else
+        return <></>
 }

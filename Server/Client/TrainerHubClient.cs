@@ -5,35 +5,35 @@ namespace Server.Client
 {
     public class TrainerHubClient : IDisposable, ITrainerHubClient
     {
-        private readonly HubConnection _connection;
-        private readonly ILogger<TrainerHubClient> _logger;
-        private bool _disposedValue;
+        private readonly HubConnection connection;
+        private readonly ILogger<TrainerHubClient> logger;
+        private bool disposedValue;
 
         public TrainerHubClient(ILogger<TrainerHubClient> logger)
         {
-            _logger = logger;
-            _connection = new HubConnectionBuilder()
+            this.logger = logger;
+            connection = new HubConnectionBuilder()
                 .WithUrl("https://localhost:7064/hub")
                 .Build();
 
-            _connection.Closed += async (Exception? error) =>
+            connection.Closed += async (Exception? error) =>
             {
                 await Task.Delay(new Random().Next(0, 5) * 1000);
-                await _connection.StartAsync();
+                await connection.StartAsync();
             };
 
-            _connection.StartAsync();
+            connection.StartAsync();
         }
 
         public async Task SendControllerConnectionStateAsync(bool isControllerConnected)
         {
             try
             {
-                await _connection.InvokeAsync("SendControllerConnectionStateToClient", isControllerConnected);
+                await connection.InvokeAsync("SendControllerConnectionStateToClient", isControllerConnected);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred sending controller connection state");
+                logger.LogError(ex, "An error occurred sending controller connection state");
             }
         }
 
@@ -41,27 +41,27 @@ namespace Server.Client
         {
             try
             {
-                await _connection.InvokeAsync("SendButtonPressToClient", inputName);
+                await connection.InvokeAsync("SendButtonPressToClient", inputName);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"An error occurred sending button {inputName} has been pressed");
+                logger.LogError(ex, $"An error occurred sending button {inputName} has been pressed");
             }
         }
 
         protected virtual async Task Dispose(bool disposing)
         {
-            if (!_disposedValue)
+            if (!disposedValue)
             {
                 if (disposing)
                 {
-                    await _connection.StopAsync();
-                    await _connection.DisposeAsync();
+                    await connection.StopAsync();
+                    await connection.DisposeAsync();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override finalizer
                 // TODO: set large fields to null
-                _disposedValue = true;
+                disposedValue = true;
             }
         }
 

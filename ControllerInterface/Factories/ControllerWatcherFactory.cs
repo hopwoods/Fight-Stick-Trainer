@@ -6,16 +6,16 @@ namespace ControllerInterface.Factories
 {
     public class ControllerWatcherFactory : IControllerWatcherFactory
     {
-        private readonly ILogger<ControllerWatcherFactory> _logger;
+        private readonly ILogger<ControllerWatcherFactory> logger;
 
         public ControllerWatcherFactory(ILogger<ControllerWatcherFactory> logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         public IXboxControllerWatcher CreateXBoxControllerWatcher(IXboxController controller)
         {
-            _logger.LogInformation("Created Controller Watcher");
+            logger.LogInformation("Created Controller Watcher");
             return new XboxControllerWatcher(controller);
         }
     }

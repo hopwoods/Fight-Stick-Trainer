@@ -1,37 +1,68 @@
-import * as signalR from '@microsoft/signalr'
+import microsoftXbox from '@iconify/icons-mdi/microsoft-xbox'
 import { ControllerConnectionState } from './components/controllerConnectionState'
+import { Icon } from '@iconify/react'
 import { InputHistory } from './components/inputHistory'
-import { useStore } from './store/appStore'
-import './App.css'
+import { mergeStyleSets } from '@fluentui/react'
 
 function App() {
 
-  const connection = new signalR.HubConnectionBuilder()
-    .withUrl("https://localhost:7064/hub")
-    .configureLogging(signalR.LogLevel.Information)
-    .build();
-
-  const setIsControllerConnected = useStore(state => state.setIsControllerConnected);
-  const addInputToHistory = useStore(state => state.addInputToHistory);
-
-  connection.on("ReceiveControllerConnectionState", (isConnected: boolean) => {
-    setIsControllerConnected(isConnected)
+  const classes = mergeStyleSets({
+    app: {
+      textAlign: 'center',
+      display: 'grid',
+      gridTemplateColumns: 'auto',
+      gridTemplateRows: '10vmin 90vmin',
+      backgroundColor: '#282c34',
+      fontFamily: "'Roboto', sans- serif"
+    },
+    appHeader: {
+      gridColumn: '1 / span 1',
+      gridRow: '1 / span 1',
+      display: 'grid',
+      gridTemplateColumns: 'auto 10vmin',
+      gridTemplateRows: '10vmin',
+      alignItems: 'center',
+      fontSize: 'calc(10px + 2vmin) !important',
+      color: 'white'
+    },
+    title: {
+      gridColumn: '1 / span 1',
+      gridRow: '1 / span 1',
+      justifySelf: 'start',
+      marginLeft: '3vmin'
+    },
+    controllerStatus: {
+      gridColumn: '2 / span 1',
+      gridRow: '1 / span 1',
+      justifySelf: 'end',
+      marginRight: '3vmin'
+    },
+    appContent: {
+      gridColumn: '1 / span 1',
+      gridRow: '2 / span 1',
+      display: 'grid',
+      gridTemplateColumns: 'auto',
+      gridTemplateRows: 'auto',
+      alignItems: 'center',
+      fontSize: 'calc(10px + 2vmin)',
+      color: 'white'
+    },
+    xboxLogo: {
+      position: 'relative',
+      top: '0.5vmin'
+    }
   });
-
-  connection.on("ReceiveButtonPress", (inputName: string) => {
-    console.log(`Button Pressed: ${inputName}`)
-    addInputToHistory(inputName);
-  });
-
-  connection.start().catch(err => (console.error(err)));
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Fight Stick Trainer</h1>
-        <h3>Controller Status: <ControllerConnectionState /></h3>
+    <div className={classes.app}>
+      <header className={classes.appHeader}>
+        <div className={classes.title}>
+          <span><Icon icon={microsoftXbox} className={classes.xboxLogo} /> Fight Stick Trainer</span>
+        </div>
+        <div className={classes.controllerStatus}>
+          <ControllerConnectionState /></div>
       </header>
-      <section className='App-content'>
+      <section className={classes.appContent}>
         <InputHistory />
       </section>
     </div>

@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Factories\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
