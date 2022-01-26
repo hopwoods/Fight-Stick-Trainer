@@ -13,18 +13,11 @@ using var app = Host.CreateDefaultBuilder(args)
         services
             .AddTransient<IUtilities, Utilities>()
             .AddTransient<IControllerFactory, ControllerFactory>()
-            .AddTransient<IControllerWatcherFactory, ControllerWatcherFactory>()
             .AddTransient<IControllerEvents, ConsoleControllerEvents>()
             .AddSingleton<IXboxController>(provider =>
             {
                 var factory = provider.GetRequiredService<IControllerFactory>();
                 return factory.CreateXboxController();
-            })
-            .AddSingleton<IXboxControllerWatcher>(provider =>
-            {
-                var controller = provider.GetRequiredService<IXboxController>();
-                var factory = provider.GetRequiredService<IControllerWatcherFactory>();
-                return factory.CreateXBoxControllerWatcher(controller);
             })
             .AddLogging(logging =>
             {

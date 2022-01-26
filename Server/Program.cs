@@ -5,7 +5,6 @@ using ControllerInterface.Pocos;
 using ControllerInterface.Services;
 using Microsoft.AspNetCore.SignalR;
 using Server;
-using Server.Client;
 using Server.Hubs;
 using Server.Utilities;
 
@@ -16,20 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddSingleton<IUtilities, Utilities>()
     .AddSingleton<IInputString, InputString>()
-    .AddSingleton<ITrainerHubClient, TrainerHubClient>()
     .AddTransient<IControllerFactory, ControllerFactory>()
-    .AddTransient<IControllerWatcherFactory, ControllerWatcherFactory>()
     .AddTransient<IControllerEvents, ServerControllerEvents>()
     .AddSingleton<IXboxController>(provider =>
     {
         var factory = provider.GetRequiredService<IControllerFactory>();
         return factory.CreateXboxController();
-    })
-    .AddSingleton<IXboxControllerWatcher>(provider =>
-    {
-        var controller = provider.GetRequiredService<IXboxController>();
-        var factory = provider.GetRequiredService<IControllerWatcherFactory>();
-        return factory.CreateXBoxControllerWatcher(controller);
     })
     .AddLogging(logging =>
     {
@@ -46,9 +37,8 @@ builder.Services
                 .AllowAnyHeader();
         });
     })
-    .AddHostedService<ControllerWatcherService>();
-
-builder.Services.AddSignalR();
+    .AddHostedService<ControllerWatcherService>()
+    .AddSignalR();
 
 var app = builder.Build();
 

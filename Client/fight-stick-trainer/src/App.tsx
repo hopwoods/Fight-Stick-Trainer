@@ -1,7 +1,9 @@
 import microsoftXbox from '@iconify/icons-mdi/microsoft-xbox'
+import { appTheme } from './styles/globalStyles'
 import { ControllerConnectionState } from './components/controllerConnectionState'
 import { Icon } from '@iconify/react'
 import { InputHistory } from './components/inputHistory'
+import { MainContent } from './components/mainContent'
 import { mergeStyleSets } from '@fluentui/react'
 
 function App() {
@@ -12,7 +14,7 @@ function App() {
       display: 'grid',
       gridTemplateColumns: 'auto',
       gridTemplateRows: '10vmin 90vmin',
-      backgroundColor: '#282c34',
+      backgroundColor: appTheme.palette.white,
       fontFamily: "'Roboto', sans- serif"
     },
     appHeader: {
@@ -23,7 +25,8 @@ function App() {
       gridTemplateRows: '10vmin',
       alignItems: 'center',
       fontSize: 'calc(10px + 2vmin) !important',
-      color: 'white'
+      color: 'white',
+      backgroundColor: appTheme.palette.neutralLighter
     },
     title: {
       gridColumn: '1 / span 1',
@@ -41,7 +44,7 @@ function App() {
       gridColumn: '1 / span 1',
       gridRow: '2 / span 1',
       display: 'grid',
-      gridTemplateColumns: 'auto',
+      gridTemplateColumns: '10vmin 1fr',
       gridTemplateRows: 'auto',
       alignItems: 'center',
       fontSize: 'calc(10px + 2vmin)',
@@ -64,6 +67,9 @@ function App() {
       </header>
       <section className={classes.appContent}>
         <InputHistory />
+        <MainContent>
+
+        </MainContent>
       </section>
     </div>
   );

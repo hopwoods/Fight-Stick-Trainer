@@ -3,20 +3,27 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Server.Hubs;
 
-internal class TrainerHub : Hub
+public class TrainerHub : Hub<ITrainerHub>
 {
+    private const string GroupName = "FrontEnd";
+
     public async Task SendInputStringToClient(IInputString inputString)
     {
-        await Clients.All.SendAsync("ReceiveInputString", inputString);
+        await Clients.Group(GroupName).ReceiveInputString(inputString);
     }
 
     public async Task SendControllerConnectionStateToClient(bool isControllerConnected)
     {
-        await Clients.All.SendAsync("ReceiveControllerConnectionState", isControllerConnected);
+        await Clients.Group(GroupName).ReceiveControllerConnectionState(isControllerConnected);
     }
 
     public async Task SendButtonPressToClient(string inputName)
     {
-        await Clients.All.SendAsync("ReceiveButtonPress", inputName);
+        await Clients.Group(GroupName).ReceiveButtonPress(inputName);
+    }
+
+    public Task JoinGroup()
+    {
+        return Groups.AddToGroupAsync(Context.ConnectionId, GroupName);
     }
 }

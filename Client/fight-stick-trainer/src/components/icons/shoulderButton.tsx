@@ -1,4 +1,4 @@
-import { ControllerButtons } from '../enums'
+import { ControllerButtons } from '../../enums'
 import { mergeStyleSets } from '@fluentui/react'
 
 function setColor(inputName: ControllerButtons) {

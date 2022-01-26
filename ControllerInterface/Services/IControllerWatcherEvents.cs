@@ -3,7 +3,10 @@ using ControllerInterface.Events;
 
 namespace ControllerInterface.Services;
 
-public interface IXboxControllerWatcher
+/// <summary>
+/// Event types that can be triggered by a <see cref="ControllerWatcherService"/>
+/// </summary>
+public interface IControllerWatcherEvents
 {
     /// <summary>
     /// Register a <see cref="ControllerEvent"/> for when the Controller is connected

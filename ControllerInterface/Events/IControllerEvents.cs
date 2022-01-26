@@ -2,6 +2,9 @@ using ControllerInterface.Controllers;
 
 namespace ControllerInterface.Events;
 
+/// <summary>
+/// Methods to execute when inputs on a controller have been performed.
+/// </summary>
 public interface IControllerEvents
 {
     /// <summary>

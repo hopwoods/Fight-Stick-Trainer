@@ -2,13 +2,19 @@ import App from './App'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import reportWebVitals from './reportWebVitals'
-import { SignalR } from './common/communication/signalR'
+import { AppStyling } from './styles/globalStyles'
+import { registerIcons } from './styles/registerIcons'
+import { SignalR } from './communication/signalR'
 import './index.css'
+
+registerIcons();
 
 ReactDOM.render(
   <React.StrictMode>
     <SignalR>
-      <App />
+      <AppStyling>
+        <App />
+      </AppStyling>
     </SignalR>
   </React.StrictMode>,
   document.getElementById('root')

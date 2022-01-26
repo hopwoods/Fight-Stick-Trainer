@@ -2,7 +2,8 @@ using ControllerInterface.Controllers;
 using ControllerInterface.Dtos;
 using ControllerInterface.Events;
 using ControllerInterface.Pocos;
-using Server.Client;
+using Microsoft.AspNetCore.SignalR;
+using Server.Hubs;
 using Server.Utilities;
 
 namespace Server;
@@ -10,16 +11,16 @@ namespace Server;
 internal class ServerControllerEvents : IControllerEvents
 {
     private readonly ILogger<ServerControllerEvents> logger;
-    private readonly ITrainerHubClient client;
     private readonly IInputString inputString;
     private readonly IUtilities utilities;
+    private readonly IHubContext<TrainerHub, ITrainerHub> trainerHub;
 
-    public ServerControllerEvents(ILogger<ServerControllerEvents> logger, IInputString inputString, ITrainerHubClient client, IUtilities utilities)
+    public ServerControllerEvents(ILogger<ServerControllerEvents> logger, IInputString inputString, IUtilities utilities, IHubContext<TrainerHub, ITrainerHub> trainerHub)
     {
         this.logger = logger;
         this.inputString = inputString;
-        this.client = client;
         this.utilities = utilities;
+        this.trainerHub = trainerHub;
     }
 
     #region Implementation of IControllerEvents
@@ -30,7 +31,7 @@ internal class ServerControllerEvents : IControllerEvents
         {
             logger.LogInformation("Controller Event: OnControllerDisconnected triggered");
             logger.LogInformation("Sending Controller State to clients");
-            await client.SendControllerConnectionStateAsync(controller.IsConnected);
+            await trainerHub.Clients.All.ReceiveControllerConnectionState(controller.IsConnected);
         }
         catch (Exception e)
         {
@@ -42,67 +43,77 @@ internal class ServerControllerEvents : IControllerEvents
 
     public async void OnControllerConnected(IXboxController controller)
     {
-        await client.SendControllerConnectionStateAsync(controller.IsConnected);
+        try
+        {
+            logger.LogInformation("Controller Event: OnControllerConnected triggered");
+            logger.LogInformation("Sending Controller State to clients");
+            await trainerHub.Clients.All.ReceiveControllerConnectionState(controller.IsConnected);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "An error occurred while sending Controller State.");
+            throw;
+        }
     }
 
     public async void OnAButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.AButton, ConsoleColor.DarkGreen);
-        await client.SendButtonPressedAsync(ControllerInputNames.AButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.AButton);
     }
 
     public async void OnBButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.BButton, ConsoleColor.DarkRed);
-        await client.SendButtonPressedAsync(ControllerInputNames.BButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.BButton);
     }
 
     public async void OnXButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.XButton, ConsoleColor.DarkCyan);
-        await client.SendButtonPressedAsync(ControllerInputNames.XButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.XButton);
     }
 
     public async void OnYButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.YButton, ConsoleColor.DarkYellow);
-        await client.SendButtonPressedAsync(ControllerInputNames.YButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.YButton);
     }
 
     public async void OnRbButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.RbButton, ConsoleColor.White);
-        await client.SendButtonPressedAsync(ControllerInputNames.RbButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.RbButton);
     }
 
     public async void OnLbButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.LbButton, ConsoleColor.White);
-        await client.SendButtonPressedAsync(ControllerInputNames.LbButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.LbButton);
     }
 
     public async void OnDpadUpButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.DpadUpButton, ConsoleColor.White);
-        await client.SendButtonPressedAsync(ControllerInputNames.DpadUpButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.DpadUpButton);
     }
 
     public async void OnDpadDownButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.DpadDownButton, ConsoleColor.White);
-        await client.SendButtonPressedAsync(ControllerInputNames.DpadDownButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.DpadDownButton);
     }
 
     public async void OnDpadLeftButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.DpadLeftButton, ConsoleColor.White);
-        await client.SendButtonPressedAsync(ControllerInputNames.DpadLeftButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.DpadLeftButton);
     }
 
     public async void OnDpadRightButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.DpadRightButton, ConsoleColor.White);
-        await client.SendButtonPressedAsync(ControllerInputNames.DpadRightButton);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.DpadRightButton);
     }
 
     #endregion
