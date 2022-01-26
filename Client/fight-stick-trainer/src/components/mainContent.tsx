@@ -29,26 +29,26 @@ export const MainContent: React.FunctionComponent = ({ children, ...props }) => 
     }
     else if (!isConnected && hub.state === HubConnectionState.Connected) {
         return <div className={classes.mainContent}>
-            <h3>No controller connected</h3>
+            <h3>No controller connected.</h3>
         </div>
     }
-    if (hub.state === HubConnectionState.Reconnecting) {
+    else if (hub.state === HubConnectionState.Reconnecting) {
         return <div className={classes.mainContent}>
             <h3>Reconnecting to server</h3>
             <Spinner size={SpinnerSize.large} />
         </div>
     }
-    if (hub.state === HubConnectionState.Disconnected) {
+    else if (hub.state === HubConnectionState.Disconnected) {
         return <div className={classes.mainContent}>
             <h3>Unable to connect to the server...Please Refresh</h3>
             <h5>If the problem persists, fix it!</h5>
         </div>
     }
-
-    return <div className={classes.mainContent}>
-        <h3>Unable to connect to the server...Please Refresh</h3>
-        <h5>If the problem persists, fix it!</h5>
-    </div>
+    else
+        return <div className={classes.mainContent}>
+            <h3>Unable to connect to the server...Please Refresh</h3>
+            <h5>If the problem persists, fix it!</h5>
+        </div>
 
 }
 

@@ -1,6 +1,6 @@
 import { ClearHistoryButton } from './buttons/clearHistoryButton'
 import { ControllerButtons } from '../enums'
-import { FaceButton } from './icons/faceButton'
+import { ControllerInputIcon } from './icons/controllerInputIcon'
 import { HubConnectionState } from '@microsoft/signalr'
 import { mergeStyleSets } from '@fluentui/react'
 import { useAppStore } from '../store/appStore'
@@ -23,15 +23,19 @@ export function InputHistory() {
             gridTemplateRows: '8vmin, auto',
             justifyContent: 'center',
             alignContent: 'start',
-            alignSelf: 'stretch'
+            alignSelf: 'stretch',
+            padding: 0
         },
         historyLabel: {
             position: 'relative',
             gridColumn: '1 / span 1',
             gridRow: '1 / span 1',
             fontSize: '2vmin',
-            paddingTop: '1vmin',
-            textShadow: '1px 1px 2px rgb(122 122 122 / 75%)'
+            padding: '0',
+            paddingTop: '1.5vmin',
+            textShadow: '1px 1px 2px rgb(122 122 122 / 75%)',
+            alignSelf: 'stretch',
+            placeItems: 'center'
         }
     })
 
@@ -60,12 +64,10 @@ function Inputs() {
             gridColumn: '1 / span 1',
             gridRow: '2 / span 1',
             overflow: 'hidden',
-            padding: '2vmin',
             display: 'grid',
-            gridTemplateColumns: '15vmin',
-            gridTemplateRows: 'repeat(10vmin)',
-            justifyContent: 'center',
-            alignContent: 'start',
+            gridTemplateColumns: '10vmin',
+            gridTemplateRows: 'repeat(21,4vmin)',
+            placeItems: 'center',
             alignSelf: 'stretch',
             boxShadow: 'inset -1px 0px 4px 0px rgb(0 0 0 / 50%)',
             borderTopRightRadius: '10px',
@@ -78,7 +80,8 @@ function Inputs() {
                 left: 0,
                 top: 0
             },
-            height: '82vmin',
+            height: '84vmin',
+            paddingTop: '1vmin'
         }
     })
 
@@ -89,7 +92,7 @@ function Inputs() {
         return <div className={classes.history}>
             {
                 inputHistory.map((inputName: ControllerButtons, index: number) => {
-                    return <FaceButton key={index} inputName={inputName} />
+                    return <ControllerInputIcon key={index} inputName={inputName} />
                 })
             }
         </div>

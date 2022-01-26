@@ -30,7 +30,7 @@ namespace ControllerInterface.Controllers
             Controller = new Controller(UserIndex.One);
             RefreshIntervalMilliseconds = int.Parse(configuration["ControllerSettings:RefreshIntervalMilliseconds"]);
             deBounceInterval = RefreshIntervalMilliseconds;
-            heldButtonInterval = 45;
+            heldButtonInterval = 65;
         }
 
         #endregion

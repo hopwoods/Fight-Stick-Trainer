@@ -9,4 +9,5 @@ export enum ControllerButtons {
     DpadDown = 'Down',
     DpadLeft = 'Left',
     DpadRight = 'Right',
+    Home = 'Home'
 }

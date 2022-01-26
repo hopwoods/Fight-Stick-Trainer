@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 
 function configureHubConnection() {
     const connection = new HubConnectionBuilder()
-        .withUrl("https://localhost:7064/hub")
+        .withUrl(`${process.env.REACT_APP_SERVER_URL}`)
         .configureLogging(LogLevel.Information)
         .withAutomaticReconnect()
         .build();
