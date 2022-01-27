@@ -13,7 +13,11 @@ export function YButtonIcon({ styles }: ControllerButtonIconProps) {
 
     return <span className={classes.root}>
         <svg width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" aria-hidden viewBox="0 0 512 512" role="img" preserveAspectRatio="xMidYMid meet">
-            <path d="M256,103.51c-84.08,0-152.49,68.41-152.49,152.49S171.92,408.49,256,408.49,408.49,340.08,408.49,256,340.08,103.51,256,103.51Zm16.24,188v61.21H239.52V291L178.14,177.51H214l41.79,84.41,42.51-84.41h35.59Z" fill="currentColor" />
+            <defs>
+                <style>{`.cls-1{fill:currentColor;}`}</style>
+            </defs>
+            <path className="cls-1" d="M256,83A173,173,0,1,0,429,256,173,173,0,0,0,256,83Zm0,326.93c-84.85,0-153.89-69-153.89-153.89s69-153.89,153.89-153.89,153.89,69,153.89,153.89S340.85,409.89,256,409.89Z" />
+            <path className="cls-1" d="M256,128.11A127.89,127.89,0,1,0,383.89,256,128,128,0,0,0,256,128.11Zm16.24,163.43v61.21H239.52V291L178.14,177.51H214l41.79,84.41,42.51-84.41h35.59Z" />
         </svg>
     </span>
 }
