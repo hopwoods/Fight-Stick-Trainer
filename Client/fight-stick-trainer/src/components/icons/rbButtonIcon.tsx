@@ -6,6 +6,7 @@ export function RbButtonIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {
+            displayName: 'rb-button-icon',
             color: 'Gainsboro',
         }
     }

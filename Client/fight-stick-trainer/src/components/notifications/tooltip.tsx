@@ -1,6 +1,7 @@
 import { appTheme } from '../../styles/globalStyles'
-import { ICalloutContentStyles, ICalloutProps, TooltipHost } from '@fluentui/react'
-import { TooltipProps } from '../../types'
+import { ICalloutContentStyles, ICalloutProps, ITooltipHostProps, TooltipHost } from '@fluentui/react'
+
+export type TooltipProps = ITooltipHostProps & {}
 
 export const Tooltip: React.FunctionComponent<TooltipProps> = ({ content, children, ...props }) => {
 
@@ -24,6 +25,4 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({ content, childr
     return <TooltipHost content={content} calloutProps={calloutProps} id='ControllerConnectedTooltip' tooltipProps={{ calloutProps: { styles: styles } }} {...props}>
         {children}
     </TooltipHost>
-
-
 }

@@ -1,6 +1,16 @@
 import create from 'zustand'
-import { AppStoreProps } from '../types'
 import { ControllerButtons } from '../enums'
+
+type AppStoreProps = {
+    isControllerConnected: boolean;
+
+    inputHistory: ControllerButtons[];
+    inputHistoryCount: number;
+    addInputToHistory: (inputName: ControllerButtons) => void;
+    clearInputHistory: () => void;
+
+    setIsControllerConnected: (connectionState: boolean) => void;
+}
 
 export const useAppStore = create<AppStoreProps>((set, get) => ({
 

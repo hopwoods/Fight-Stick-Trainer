@@ -1,11 +1,11 @@
-import { ClearHistoryButton } from './buttons/clearHistoryButton'
-import { ControllerButtons } from '../enums'
-import { ControllerInputIcon } from './icons/controllerInputIcon'
+import { ClearHistoryButton } from '../buttons/clearHistoryButton'
+import { ControllerButtons } from '../../enums'
+import { ControllerInputIcon } from '../icons/controllerInputIcon'
 import { HubConnectionState } from '@microsoft/signalr'
 import { mergeStyleSets } from '@fluentui/react'
-import { useAppStore } from '../store/appStore'
+import { useAppStore } from '../../store/appStore'
 import { useCallback } from 'react'
-import { useSignalRStore } from '../communication/signalR'
+import { useSignalRStore } from '../../communication/signalR'
 
 export function InputHistory() {
 

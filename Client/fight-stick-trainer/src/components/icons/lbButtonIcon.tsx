@@ -6,6 +6,7 @@ export function LbButtonIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {
+            displayName: 'lb-button-icon',
             color: 'Gainsboro',
         }
     }

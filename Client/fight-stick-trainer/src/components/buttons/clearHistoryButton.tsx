@@ -8,6 +8,7 @@ export function ClearHistoryButton() {
 
     const iconStyles: IIconStyles = {
         root: {
+            displayName: 'delete-history-button',
             fontSize: '2.5vmin',
             position: 'relative',
             top: '-3px'

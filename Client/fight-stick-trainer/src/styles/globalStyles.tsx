@@ -1,6 +1,5 @@
-import React from 'react'
-import { AppStylingProps } from '../types'
-import { createTheme, ThemeProvider } from '@fluentui/react'
+import React, { ReactNode } from 'react'
+import { createTheme, Theme, ThemeProvider } from '@fluentui/react'
 
 export const appTheme = createTheme({
     palette: {
@@ -28,6 +27,8 @@ export const appTheme = createTheme({
         white: '#282c34',
     }
 });
+
+type AppStylingProps = { theme?: Theme, children: ReactNode }
 
 export function AppStyling({ theme = appTheme, children }: AppStylingProps) {
     return (

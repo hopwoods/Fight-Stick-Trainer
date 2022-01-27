@@ -6,6 +6,7 @@ export function DpadUpButtonIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {
+            displayName: 'dpad-up-button-icon',
             color: 'Gainsboro',
         }
     }

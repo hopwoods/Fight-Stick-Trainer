@@ -6,6 +6,7 @@ export function XboxLogoIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {
+            displayName: 'xbox-logo-icon',
             color: 'white',
         }
     }

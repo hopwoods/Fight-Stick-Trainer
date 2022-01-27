@@ -6,6 +6,7 @@ export function YButtonIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {
+            displayName: 'y-button-icon',
             color: 'Yellow',
         }
     }

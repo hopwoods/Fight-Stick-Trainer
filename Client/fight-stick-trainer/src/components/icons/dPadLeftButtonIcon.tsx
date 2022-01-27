@@ -6,6 +6,7 @@ export function DpadLeftButtonIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {
+            displayName: 'dpad-left-button-icon',
             color: 'Gainsboro',
         }
     }

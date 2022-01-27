@@ -6,6 +6,7 @@ export function AButtonIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {
+            displayName: 'a-button-icon',
             color: 'limegreen',
         }
     }

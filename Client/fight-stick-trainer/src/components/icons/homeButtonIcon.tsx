@@ -6,6 +6,7 @@ export function HomeButtonIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {
+            displayName: 'home-button-icon',
             color: 'white',
         }
     }
