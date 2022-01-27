@@ -112,6 +112,14 @@ internal class ServerControllerEvents : IControllerEvents
     {
         await SendButtonPressToClients(ControllerInputNames.StartButton, ConsoleColor.White);
     }
+    public async void OnLeftStickButtonPressed(IXboxController controller)
+    {
+        await SendButtonPressToClients(ControllerInputNames.LeftStickButton, ConsoleColor.White);
+    }
+    public async void OnRightStickButtonPressed(IXboxController controller)
+    {
+        await SendButtonPressToClients(ControllerInputNames.RightStickButton, ConsoleColor.White);
+    }
 
     #endregion
 }

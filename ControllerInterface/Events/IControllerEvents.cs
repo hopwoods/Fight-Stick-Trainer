@@ -84,4 +84,16 @@ public interface IControllerEvents
     /// </summary>
     /// <param name="controller"></param>
     void OnStartButtonPressed(IXboxController controller);
+
+    /// <summary>
+    /// Method to execute when the Left Stick button is pressed
+    /// </summary>
+    /// <param name="controller"></param>
+    void OnLeftStickButtonPressed(IXboxController controller);
+
+    /// <summary>
+    /// Method to execute when the Right Stick button is pressed
+    /// </summary>
+    /// <param name="controller"></param>
+    void OnRightStickButtonPressed(IXboxController controller);
 }

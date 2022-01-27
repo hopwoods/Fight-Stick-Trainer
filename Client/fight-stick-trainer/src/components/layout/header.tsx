@@ -1,4 +1,3 @@
-import { appTheme } from '../../styles/globalStyles'
 import { ControllerStatusBar } from './controllerStatusBar'
 import { IControllerButtonStyles } from '../../types'
 import { IRawStyle, mergeStyleSets } from '@fluentui/react'
@@ -23,7 +22,9 @@ export function Header({ styles }: HeaderProps) {
             alignItems: 'center',
             fontSize: 'calc(10px + 2vmin)',
             color: 'white',
-            backgroundColor: appTheme.palette.neutralLighter
+            background: 'linear-gradient(180deg, rgba(40,44,58,1) 0%, rgba(50,54,62,1) 100%)',
+            borderBottom: '1px solid rgba(30,34,42,1)',
+            boxShadow: '2px 0 3px rgba(0,0,0,70%)'
         }
     }
 

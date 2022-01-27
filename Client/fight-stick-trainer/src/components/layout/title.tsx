@@ -17,8 +17,9 @@ export function Title({ styles }: TitleProps) {
         root: {
             displayName: 'title',
             justifySelf: 'start',
-            marginLeft: '3vmin',
-            height: '7vmin'
+            marginLeft: '2vmin',
+            height: '8vmin',
+            textShadow: '0px 0px 6px rgb(150,150,150)'
         }
     }
 
@@ -28,9 +29,9 @@ export function Title({ styles }: TitleProps) {
         root: {
             fontSize: '5vmin',
             position: 'relative',
-            top: '1.2vmin',
+            top: '1.4vmin',
             display: 'inline-block',
-            marginRight: '1rem'
+            marginRight: '0'
         }
     }
 

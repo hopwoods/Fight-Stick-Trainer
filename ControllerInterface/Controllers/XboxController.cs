@@ -77,7 +77,7 @@ namespace ControllerInterface.Controllers
         /// </summary>
         /// <param name="button"></param>
         /// <returns>True if the button has been pressed</returns>
-        private async Task<bool> ButtonHasBeenPressedAsync(GamepadButtonFlags button)
+        private async Task<bool> CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags button)
         {
             EnsureRefresh();
 
@@ -106,18 +106,20 @@ namespace ControllerInterface.Controllers
 
         public int RefreshIntervalMilliseconds { get; set; }
         public bool IsConnected => Controller.IsConnected;
-        public Task<bool> AButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.A);
-        public Task<bool> BButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.B);
-        public Task<bool> XButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.X);
-        public Task<bool> YButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.Y);
-        public Task<bool> RbButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.RightShoulder);
-        public Task<bool> LbButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.LeftShoulder);
-        public Task<bool> DpadUpButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadUp);
-        public Task<bool> DpadDownButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadDown);
-        public Task<bool> DpadLeftButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadLeft);
-        public Task<bool> DpadRightButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadRight);
-        public Task<bool> ViewButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.None);
-        public Task<bool> StartButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.Start);
+        public Task<bool> AButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.A);
+        public Task<bool> BButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.B);
+        public Task<bool> XButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.X);
+        public Task<bool> YButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.Y);
+        public Task<bool> RbButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.RightShoulder);
+        public Task<bool> LbButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.LeftShoulder);
+        public Task<bool> DpadUpButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.DPadUp);
+        public Task<bool> DpadDownButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.DPadDown);
+        public Task<bool> DpadLeftButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.DPadLeft);
+        public Task<bool> DpadRightButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.DPadRight);
+        public Task<bool> ViewButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.None);
+        public Task<bool> StartButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.Start);
+        public Task<bool> LeftStickButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.LeftThumb);
+        public Task<bool> RightStickButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.RightThumb);
 
         #endregion
     }

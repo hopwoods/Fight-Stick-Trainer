@@ -12,4 +12,6 @@ export enum ControllerButtons {
     Home = 'Home',
     View = 'View',
     Start = 'Start',
+    LsClick = 'LsClick',
+    RSClick = 'RsClick',
 }

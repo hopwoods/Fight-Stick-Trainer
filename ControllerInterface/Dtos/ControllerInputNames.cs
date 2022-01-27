@@ -14,4 +14,6 @@ public class ControllerInputNames
     public const string DpadRightButton = "Right";
     public const string ViewButton = "View";
     public const string StartButton = "Start";
+    public const string LeftStickButton = "LsClick";
+    public const string RightStickButton = "RsClick";
 }

@@ -71,4 +71,14 @@ public interface IXboxController: IController
     /// The Start / Menu Button
     /// </summary>
     Task<bool> StartButtonIsPressed { get; }
+
+    /// <summary>
+    /// The Left Stick Button
+    /// </summary>
+    Task<bool> LeftStickButtonIsPressed { get; }
+
+    /// <summary>
+    /// The Right Stick Button
+    /// </summary>
+    Task<bool> RightStickButtonIsPressed { get; }
 }

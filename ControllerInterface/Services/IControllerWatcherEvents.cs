@@ -73,5 +73,15 @@ public interface IControllerWatcherEvents
     /// </summary>
     public event ControllerEvent StartButtonPressed;
 
+    /// <summary>
+    /// Register a <see cref="ControllerEvent"/> for when the Left Stick button is pressed
+    /// </summary>
+    public event ControllerEvent LeftStickButtonPressed;
+
+    /// <summary>
+    /// Register a <see cref="ControllerEvent"/> for when the Right Stick button is pressed
+    /// </summary>
+    public event ControllerEvent RightStickButtonPressed;
+
     void Dispose();
 }

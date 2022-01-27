@@ -24,31 +24,36 @@ export const useSignalRStore = create<SignalRStoreProps>((set, get) => ({
     setStatusDescription(description: string) { set({ statusDescription: description }) },
 }));
 
-
 export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
 
     const { setIsControllerConnected, addInputToHistory } = useAppStore();
-    const { hub, setStatusText, setStatusDescription, setStarted } = useSignalRStore();
+    const { hub, setStatusText, setStatusDescription, setStarted, hubStarted } = useSignalRStore();
 
     const start = useCallback((connection: HubConnection) => {
-
         if (connection.state === HubConnectionState.Disconnected) {
-            connection.start()
+
+            console.info(`Started: ${hubStarted}`);
+            console.info(`Attempting to connect to hub`);
+
+            connection.start().then(() => {
+                if (connection.state === HubConnectionState.Connected) {
+                    connection.send("JoinGroup");
+                }
+            }).catch(err => (console.error(err)))
+
+        }
+    }, [hubStarted]);
+
+    const stop = useCallback((connection: HubConnection) => {
+        if (connection.state === HubConnectionState.Disconnected) {
+            connection.stop()
                 .then(() => {
-                    if (connection.state === HubConnectionState.Connected) {
-                        connection.send("JoinGroup");
-                        setStarted(true);
-                    }
+                    setStarted(false);
                 })
-                .catch(err => (console.error(err)))
+                .catch(err => (console.error(err)));
+
         }
     }, [setStarted]);
-
-    function stop(connection: HubConnection) {
-        if (connection.state === HubConnectionState.Disconnected) {
-            connection.stop().catch(err => (console.error(err)));
-        }
-    }
 
     useEffect(() => {
 
@@ -56,6 +61,8 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
             setStatusText("Reconnecting")
             setStatusDescription("Attempting to reconnect to the server")
             setIsControllerConnected(false);
+
+            console.info(`Started: ${hubStarted}`);
         })
 
         hub.onreconnected(() => {
@@ -63,12 +70,16 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
             setStatusText("")
             setStatusDescription("")
             setIsControllerConnected(false);
+
+            console.info(`Started: ${hubStarted}`);
         })
 
         hub.onclose(() => {
             setStatusText("Disconnected")
-            setStatusDescription("Unable to connect to the server...Please check to see if you are online")
+            setStatusDescription("Unable to connect to the server")
             setIsControllerConnected(false);
+
+            console.info(`Started: ${hubStarted}`);
         })
 
         hub.on("ReceiveControllerConnectionState", (isConnected: boolean) => {
@@ -80,14 +91,12 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
             addInputToHistory(inputName);
         });
 
-        start(hub);
+        setInterval(() => start(hub), 1000)
 
         return function cleanup() {
             stop(hub);
         }
-    }, [addInputToHistory, hub, setIsControllerConnected, setStarted, setStatusDescription, setStatusText, start])
-
-
+    }, [addInputToHistory, hub, hubStarted, setIsControllerConnected, setStarted, setStatusDescription, setStatusText, start, stop])
 
     return <>
         {children}

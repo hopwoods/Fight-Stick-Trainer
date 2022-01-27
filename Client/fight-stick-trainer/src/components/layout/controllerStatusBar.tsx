@@ -1,4 +1,4 @@
-import { ControllerConnectionState } from '../controllerConnectionState'
+import { ControllerConnectionState } from '../icons/controllerConnectionState'
 import { IRawStyle, mergeStyleSets } from '@fluentui/react'
 
 type ControllerStatusBarProps = React.ReactNode & {

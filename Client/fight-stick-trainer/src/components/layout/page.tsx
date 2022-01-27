@@ -24,7 +24,8 @@ export const Page: React.FC<PageProps> = ({ id, styles, children }) => {
             gridTemplateColumns: 'auto',
             gridTemplateRows: '10vmin 90vmin',
             backgroundColor: appTheme.palette.white,
-            fontFamily: "'Roboto', sans- serif"
+            fontFamily: "'Barlow Semi Condensed', sans- serif",
+            fontWeight: 300,
         }
     }
 

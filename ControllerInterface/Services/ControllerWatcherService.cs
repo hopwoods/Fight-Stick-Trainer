@@ -25,6 +25,8 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
     public event ControllerEvent? DpadLeftButtonPressed;
     public event ControllerEvent? DpadRightButtonPressed;
     public event ControllerEvent? StartButtonPressed;
+    public event ControllerEvent? LeftStickButtonPressed;
+    public event ControllerEvent? RightStickButtonPressed;
 
     #endregion
 
@@ -105,7 +107,12 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
         if (await controller.DpadDownButtonIsPressed) FireDpadDownButtonPressed(controller);
         if (await controller.DpadLeftButtonIsPressed) FireDpadLeftButtonPressed(controller);
         if (await controller.DpadRightButtonIsPressed) FireDpadRightButtonPressed(controller);
+
         if (await controller.StartButtonIsPressed) FireStartButtonPressed(controller);
+
+        if (await controller.LeftStickButtonIsPressed) FireLeftStickButtonPressed(controller);
+        if (await controller.RightStickButtonIsPressed) FireRightStickButtonPressed(controller);
+
     }
 
     /// <summary>
@@ -140,8 +147,11 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
         DpadDownButtonPressed += controller => controllerEvents.OnDpadDownButtonPressed(controller);
         DpadLeftButtonPressed += controllerEvents.OnDpadLeftButtonPressed;
         DpadRightButtonPressed += controllerEvents.OnDpadRightButtonPressed;
+
         StartButtonPressed += controllerEvents.OnStartButtonPressed;
 
+        LeftStickButtonPressed += controllerEvents.OnLeftStickButtonPressed;
+        RightStickButtonPressed += controllerEvents.OnRightStickButtonPressed;
     }
 
     #endregion
@@ -211,6 +221,16 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
     internal void FireStartButtonPressed(IXboxController controller)
     {
         StartButtonPressed?.Invoke(controller);
+    }
+
+    internal void FireLeftStickButtonPressed(IXboxController controller)
+    {
+        LeftStickButtonPressed?.Invoke(controller);
+    }
+
+    internal void FireRightStickButtonPressed(IXboxController controller)
+    {
+        RightStickButtonPressed?.Invoke(controller);
     }
 
     #endregion

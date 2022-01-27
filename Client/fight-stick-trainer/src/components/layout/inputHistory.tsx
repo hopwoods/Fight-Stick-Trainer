@@ -24,7 +24,7 @@ export function InputHistory() {
             justifyContent: 'center',
             alignContent: 'start',
             alignSelf: 'stretch',
-            padding: 0
+            padding: 0,
         },
         historyLabel: {
             position: 'relative',
@@ -72,7 +72,7 @@ function Inputs() {
             boxShadow: 'inset -1px 0px 4px 0px rgb(0 0 0 / 50%)',
             borderTopRightRadius: '10px',
             '&::after': {
-                background: 'linear-gradient(rgba(0, 0, 0, 0) 70%, rgb(40, 44, 52) 100%)',
+                background: 'linear-gradient(rgba(0, 0, 0, 0) 50%, rgb(30, 34, 42) 100%)',
                 content: "''",
                 height: '100%',
                 position: 'absolute',
@@ -81,7 +81,8 @@ function Inputs() {
                 top: 0
             },
             height: '84vmin',
-            paddingTop: '1vmin'
+            paddingTop: '1vmin',
+            backgroundColor: 'rgba(30,34,42,1)'
         }
     })
 

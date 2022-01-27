@@ -13,6 +13,8 @@ import {
     } from '../icons'
 import { ControllerButtons } from '../../enums'
 import { IControllerButtonStyles } from '../../types'
+import { LeftStickButtonIcon } from './leftStickButtonIcon'
+import { RightStickButtonIcon } from './rightStickButtonIcon'
 import { StartButtonIcon } from './startButtonIcon'
 import { ViewButtonIcon } from './viewButtonIcon'
 
@@ -47,6 +49,10 @@ function getButtonIcon(inputName: ControllerButtons) {
             return <ViewButtonIcon styles={customStyle} />
         case "Start":
             return <StartButtonIcon styles={customStyle} />
+        case "LsClick":
+            return <LeftStickButtonIcon styles={customStyle} />
+        case "RsClick":
+            return <RightStickButtonIcon styles={customStyle} />
 
         default:
             break;
