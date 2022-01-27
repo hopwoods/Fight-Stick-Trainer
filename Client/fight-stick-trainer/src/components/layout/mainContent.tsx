@@ -1,7 +1,16 @@
-import { ControllerWithButtonsIcons } from '../icons'
+import { ControllerConnectionState } from '../controllerConnectionState'
 import { HubConnectionState } from '@microsoft/signalr'
-import { IRawStyle, mergeStyleSets, Spinner, SpinnerSize } from '@fluentui/react'
+import {
+    IMessageBarStyles,
+    IRawStyle,
+    mergeStyleSets,
+    MessageBar,
+    MessageBarType,
+    Spinner,
+    SpinnerSize
+    } from '@fluentui/react'
 import { useAppStore } from '../../store/appStore'
+import { useCallback } from 'react'
 import { useSignalRStore } from '../../communication/signalR'
 
 type MainContentProps = {
@@ -13,7 +22,7 @@ export interface IMainContentStyles {
 }
 export const MainContent: React.FunctionComponent<MainContentProps> = ({ styles, children, ...props }) => {
 
-    const { hub } = useSignalRStore();
+    const { hub, statusText, statusDescription, hubStarted } = useSignalRStore();
     const isConnected = useAppStore(state => state.isControllerConnected);
 
     const defaultStyles: IMainContentStyles = {
@@ -30,34 +39,52 @@ export const MainContent: React.FunctionComponent<MainContentProps> = ({ styles,
 
     const classes = mergeStyleSets(defaultStyles, styles);
 
-    function showConnectionStateMessages() {
 
-        if (isConnected && hub.state === HubConnectionState.Connected) {
+    const showConnectionStateMessages = useCallback(() => {
+
+        const hubState = hub.state;
+
+        const messageBarStyles: IMessageBarStyles = {
+            content: {
+                fontSize: '4vmin'
+            }
+        }
+
+        console.log(`Hub connection is: ${hubState}`)
+        console.log(`Hub start is: ${hubStarted}`)
+
+        if (isConnected && hubState === HubConnectionState.Connected) {
             return children
         }
 
-        if (!isConnected && hub.state === HubConnectionState.Connected) {
-            return <h3>No controller connected.</h3>
+        if (!isConnected && hubState === HubConnectionState.Connected) {
+
+            const classes = mergeStyleSets({
+                notConnected: {
+                    displayName: "not-connected",
+                    textAlign: 'center'
+                }
+            })
+            return <div className={classes.notConnected}>
+                <div><ControllerConnectionState /></div>
+                <div>No Controller connected</div>
+            </div>
+
         }
 
-        if (hub.state === HubConnectionState.Connecting) {
-            return <ControllerWithButtonsIcons />
+        if (hubStarted && (hubState === HubConnectionState.Reconnecting || HubConnectionState.Disconnected || HubConnectionState.Disconnecting)) {
+            return <MessageBar messageBarType={MessageBarType.error} styles={messageBarStyles}>
+                {`${statusText} - ${statusDescription}`}
+                {hubState === HubConnectionState.Reconnecting ? <Spinner size={SpinnerSize.large} /> : <></>}
+            </MessageBar>
         }
 
-        if (hub.state === HubConnectionState.Reconnecting) {
-            return <>
-                <h3>Reconnecting to server</h3>
-                <Spinner size={SpinnerSize.large} />
-            </>
+        if (!hubStarted && hubState === HubConnectionState.Disconnected) {
+            return <MessageBar messageBarType={MessageBarType.error} styles={messageBarStyles}>
+                Disconnected - Unable to connect to the server...Please check to see if you are online
+            </MessageBar>
         }
-
-        if (hub.state === HubConnectionState.Disconnected || HubConnectionState.Disconnecting) {
-            return <>
-                <h3>Unable to connect to the server...Please Refresh</h3>
-                <h5>If the problem persists, fix it!</h5>
-            </>
-        }
-    }
+    }, [children, hub.state, hubStarted, isConnected, statusDescription, statusText]);
 
     const content = showConnectionStateMessages();
 
