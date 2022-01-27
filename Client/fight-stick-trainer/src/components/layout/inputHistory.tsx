@@ -66,7 +66,7 @@ function Inputs() {
             overflow: 'hidden',
             display: 'grid',
             gridTemplateColumns: '10vmin',
-            gridTemplateRows: 'repeat(21,4vmin)',
+            gridTemplateRows: 'repeat(18,4vmin)',
             placeItems: 'center',
             alignSelf: 'stretch',
             boxShadow: 'inset -1px 0px 4px 0px rgb(0 0 0 / 50%)',

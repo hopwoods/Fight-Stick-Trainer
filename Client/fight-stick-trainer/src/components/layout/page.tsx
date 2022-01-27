@@ -22,10 +22,11 @@ export const Page: React.FC<PageProps> = ({ id, styles, children }) => {
             textAlign: 'center',
             display: 'grid',
             gridTemplateColumns: 'auto',
-            gridTemplateRows: '10vmin 90vmin',
+            gridTemplateRows: '0.5vmin 10vmin 89.4vmin',
             backgroundColor: appTheme.palette.white,
             fontFamily: "'Barlow Semi Condensed', sans- serif",
             fontWeight: 300,
+            overflow: 'hidden'
         }
     }
 
@@ -34,6 +35,10 @@ export const Page: React.FC<PageProps> = ({ id, styles, children }) => {
     const headerStyles: Partial<IHeaderStyles> = {
         root: {
             gridColumn: '1 / span 1',
+            gridRow: '2 / span 1',
+        },
+        rainbow: {
+            gridColumn: '1 / span 1',
             gridRow: '1 / span 1',
         }
     }
@@ -41,7 +46,7 @@ export const Page: React.FC<PageProps> = ({ id, styles, children }) => {
     const contentStyles: Partial<IContentStyles> = {
         root: {
             gridColumn: '1 / span 1',
-            gridRow: '2 / span 1',
+            gridRow: '3 / span 1',
         }
     }
 

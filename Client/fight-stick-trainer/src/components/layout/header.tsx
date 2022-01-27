@@ -9,6 +9,7 @@ type HeaderProps = React.ReactNode & {
 
 export interface IHeaderStyles {
     root?: IRawStyle;
+    rainbow?: IRawStyle;
 }
 
 export function Header({ styles }: HeaderProps) {
@@ -25,6 +26,11 @@ export function Header({ styles }: HeaderProps) {
             background: 'linear-gradient(180deg, rgba(40,44,58,1) 0%, rgba(50,54,62,1) 100%)',
             borderBottom: '1px solid rgba(30,34,42,1)',
             boxShadow: '2px 0 3px rgba(0,0,0,70%)'
+        },
+        rainbow: {
+            alignSelf: 'stretch',
+            justifySelf: 'stretch',
+            background: 'linear-gradient(270deg, rgba(84,255,82,1) 0%, rgba(193,255,82,1) 20%, rgba(83,255,91,1) 40%, rgba(83,200,177,1) 60%, rgba(83,225,166,1) 80%, rgba(84,255,82,1) 100%)',
         }
     }
 
@@ -44,8 +50,11 @@ export function Header({ styles }: HeaderProps) {
 
     const classes = mergeStyleSets(defaultStyles, styles);
 
-    return <header className={classes.root}>
-        <Title styles={titleStyles} />
-        <ControllerStatusBar styles={controllerStatusBarStyles} />
-    </header>
+    return <>
+        <div className={classes.rainbow}></div>
+        <header className={classes.root}>
+            <Title styles={titleStyles} />
+            <ControllerStatusBar styles={controllerStatusBarStyles} />
+        </header>
+    </>
 }
