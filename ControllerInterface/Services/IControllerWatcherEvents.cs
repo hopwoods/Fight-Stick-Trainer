@@ -68,5 +68,10 @@ public interface IControllerWatcherEvents
     /// </summary>
     public event ControllerEvent DpadRightButtonPressed;
 
+    /// <summary>
+    /// Register a <see cref="ControllerEvent"/> for when the Start / View button is pressed
+    /// </summary>
+    public event ControllerEvent StartButtonPressed;
+
     void Dispose();
 }

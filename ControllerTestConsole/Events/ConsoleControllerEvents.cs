@@ -96,4 +96,9 @@ public class ConsoleControllerEvents : IControllerEvents
     {
         utilities.PrintValue(ControllerInputNames.DpadRightButton, ConsoleColor.White);
     }
+
+    public void OnStartButtonPressed(IXboxController controller)
+    {
+        utilities.PrintValue(ControllerInputNames.StartButton, ConsoleColor.White);
+    }
 }

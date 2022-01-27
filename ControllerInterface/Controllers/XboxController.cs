@@ -105,21 +105,19 @@ namespace ControllerInterface.Controllers
         #region Public Fields & Properties
 
         public int RefreshIntervalMilliseconds { get; set; }
-
         public bool IsConnected => Controller.IsConnected;
-
         public Task<bool> AButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.A);
         public Task<bool> BButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.B);
         public Task<bool> XButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.X);
         public Task<bool> YButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.Y);
-
         public Task<bool> RbButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.RightShoulder);
         public Task<bool> LbButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.LeftShoulder);
-
         public Task<bool> DpadUpButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadUp);
         public Task<bool> DpadDownButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadDown);
         public Task<bool> DpadLeftButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadLeft);
         public Task<bool> DpadRightButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.DPadRight);
+        public Task<bool> ViewButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.None);
+        public Task<bool> StartButtonIsPressed => ButtonHasBeenPressedAsync(GamepadButtonFlags.Start);
 
         #endregion
     }

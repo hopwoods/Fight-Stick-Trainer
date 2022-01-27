@@ -78,4 +78,10 @@ public interface IControllerEvents
     /// </summary>
     /// <param name="controller"></param>
     void OnDpadRightButtonPressed(IXboxController controller);
+
+    /// <summary>
+    /// Method to execute when the Start / Menu button is pressed
+    /// </summary>
+    /// <param name="controller"></param>
+    void OnStartButtonPressed(IXboxController controller);
 }

@@ -24,6 +24,7 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
     public event ControllerEvent? DpadDownButtonPressed;
     public event ControllerEvent? DpadLeftButtonPressed;
     public event ControllerEvent? DpadRightButtonPressed;
+    public event ControllerEvent? StartButtonPressed;
 
     #endregion
 
@@ -104,6 +105,7 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
         if (await controller.DpadDownButtonIsPressed) FireDpadDownButtonPressed(controller);
         if (await controller.DpadLeftButtonIsPressed) FireDpadLeftButtonPressed(controller);
         if (await controller.DpadRightButtonIsPressed) FireDpadRightButtonPressed(controller);
+        if (await controller.StartButtonIsPressed) FireStartButtonPressed(controller);
     }
 
     /// <summary>
@@ -138,6 +140,7 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
         DpadDownButtonPressed += controller => controllerEvents.OnDpadDownButtonPressed(controller);
         DpadLeftButtonPressed += controllerEvents.OnDpadLeftButtonPressed;
         DpadRightButtonPressed += controllerEvents.OnDpadRightButtonPressed;
+        StartButtonPressed += controllerEvents.OnStartButtonPressed;
 
     }
 
@@ -203,6 +206,11 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
     internal void FireDpadRightButtonPressed(IXboxController controller)
     {
         DpadRightButtonPressed?.Invoke(controller);
+    }
+
+    internal void FireStartButtonPressed(IXboxController controller)
+    {
+        StartButtonPressed?.Invoke(controller);
     }
 
     #endregion

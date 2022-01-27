@@ -61,4 +61,14 @@ public interface IXboxController: IController
     /// Right on the DPad
     /// </summary>
     Task<bool> DpadRightButtonIsPressed { get; }
+
+    /// <summary>
+    /// The View Button
+    /// </summary>
+    Task<bool> ViewButtonIsPressed { get; }
+
+    /// <summary>
+    /// The Start / Menu Button
+    /// </summary>
+    Task<bool> StartButtonIsPressed { get; }
 }

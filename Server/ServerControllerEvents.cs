@@ -116,5 +116,11 @@ internal class ServerControllerEvents : IControllerEvents
         await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.DpadRightButton);
     }
 
+    public async void OnStartButtonPressed(IXboxController controller)
+    {
+        utilities.PrintValue(ControllerInputNames.StartButton, ConsoleColor.White);
+        await trainerHub.Clients.All.ReceiveButtonPress(ControllerInputNames.StartButton);
+    }
+
     #endregion
 }

@@ -13,6 +13,8 @@ import {
     } from '../icons'
 import { ControllerButtons } from '../../enums'
 import { IControllerButtonStyles } from '../../types'
+import { StartButtonIcon } from './startButtonIcon'
+import { ViewButtonIcon } from './viewButtonIcon'
 
 function getButtonIcon(inputName: ControllerButtons) {
 
@@ -41,6 +43,10 @@ function getButtonIcon(inputName: ControllerButtons) {
             return <DpadRightButtonIcon styles={customStyle} />
         case "Home":
             return <HomeButtonIcon styles={customStyle} />
+        case "View":
+            return <ViewButtonIcon styles={customStyle} />
+        case "Start":
+            return <StartButtonIcon styles={customStyle} />
 
         default:
             break;
