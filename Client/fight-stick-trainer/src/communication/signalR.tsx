@@ -61,6 +61,7 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
             setStatusText("Reconnecting")
             setStatusDescription("Attempting to reconnect to the server")
             setIsControllerConnected(false);
+            setIsControllerWireless(false);
 
             console.info(`Started: ${hubStarted}`);
         })
@@ -70,6 +71,7 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
             setStatusText("")
             setStatusDescription("")
             setIsControllerConnected(false);
+            setIsControllerWireless(false);
 
             console.info(`Started: ${hubStarted}`);
         })
@@ -78,6 +80,7 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
             setStatusText("Disconnected")
             setStatusDescription("Unable to connect to the server")
             setIsControllerConnected(false);
+            setIsControllerWireless(false);
 
             console.info(`Started: ${hubStarted}`);
         })

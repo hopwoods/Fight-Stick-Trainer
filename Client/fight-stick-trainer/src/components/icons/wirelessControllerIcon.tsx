@@ -18,7 +18,7 @@ const Tooltip = lazy(() => import('../notifications/tooltip'));
 
 export default function WirelessControllerIcon({ styles }: WirelessControllerProps) {
 
-    const isControllerWireless = useAppStore(state => state.isControllerWireless)
+    const { isControllerWireless, isControllerConnected } = useAppStore()
     const { hub } = useSignalRStore();
 
     const defaultStyles: IWirelessControllerIconStyles = {
@@ -31,7 +31,7 @@ export default function WirelessControllerIcon({ styles }: WirelessControllerPro
 
     const classes = mergeStyleSets(defaultStyles, styles);
 
-    if (isControllerWireless && hub.state === HubConnectionState.Connected)
+    if (isControllerConnected && isControllerWireless && hub.state === HubConnectionState.Connected)
         return <Tooltip content="The controller is wireless" id='ControllerIsWirelessTooltip'>
             <span className={classes.root}><Icon icon={gameWireless} /></span>
         </Tooltip>
