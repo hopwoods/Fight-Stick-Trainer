@@ -22,7 +22,7 @@ export const Footer: React.FunctionComponent<FooterProps> = ({ styles, children 
             alignContent: 'center',
             justifySelf: 'end',
             fontSize: '1.75vmin',
-            color: '#757575',
+            color: '#aaa',
             textAlign: 'right',
             paddingRight: '2vmin'
         }

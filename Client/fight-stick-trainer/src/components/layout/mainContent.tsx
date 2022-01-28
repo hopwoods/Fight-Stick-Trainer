@@ -24,7 +24,8 @@ export const MainContent: React.FunctionComponent<MainContentProps> = ({ styles,
             placeItems: 'center',
             placeContent: 'center',
             placeSelf: 'stretch',
-            height: '100%'
+            height: '100%',
+            background: 'radial-gradient(at 50% 178%, rgb(0 153 61 / 18%) 15%, rgb(33 42 46 / 60%) 75%, rgb(40 44 52) 100%)'
         }
     }
     const alertContent = showConnectionStateMessages();
@@ -47,7 +48,7 @@ export const MainContent: React.FunctionComponent<MainContentProps> = ({ styles,
 
     if (controllerIsConnected && hubState === HubConnectionState.Connected) {
         return <div className={classes.root}>
-            <div>{children}</div>
+            <>{children}</>
             <Footer styles={footerStyles} />
         </div>
     }

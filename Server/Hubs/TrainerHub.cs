@@ -1,7 +1,4 @@
-﻿using ControllerInterface.Pocos;
-using Microsoft.AspNetCore.SignalR;
-
-namespace Server.Hubs;
+﻿namespace Server.Hubs;
 
 public class TrainerHub : Hub<ITrainerHub>
 {

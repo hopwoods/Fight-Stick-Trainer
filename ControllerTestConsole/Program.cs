@@ -1,17 +1,7 @@
-﻿using ControllerInterface.Controllers;
-using ControllerInterface.Events;
-using ControllerInterface.Factories;
-using ControllerInterface.Services;
-using ControllerTestConsole.Events;
-using ControllerTestConsole.Utilities;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-using var app = Host.CreateDefaultBuilder(args)
+﻿using var app = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostingContext, services) =>
         services
-            .AddTransient<IUtilities, Utilities>()
+            .AddTransient<IUtilities, ControllerTestConsole.Utilities.Utilities>()
             .AddTransient<IControllerFactory, ControllerFactory>()
             .AddTransient<IControllerEvents, ConsoleControllerEvents>()
             .AddSingleton<IXboxController>(provider =>

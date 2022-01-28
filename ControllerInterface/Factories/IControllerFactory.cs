@@ -1,6 +1,4 @@
-﻿using ControllerInterface.Controllers;
-
-namespace ControllerInterface.Factories
+﻿namespace ControllerInterface.Factories
 {
     public interface IControllerFactory
     {

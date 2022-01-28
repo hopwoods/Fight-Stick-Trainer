@@ -1,7 +1,4 @@
-﻿using ControllerInterface.Controllers;
-using ControllerInterface.Events;
-
-namespace ControllerInterface.Services;
+﻿namespace ControllerInterface.Services;
 
 /// <summary>
 /// Event types that can be triggered by a <see cref="ControllerWatcherService"/>

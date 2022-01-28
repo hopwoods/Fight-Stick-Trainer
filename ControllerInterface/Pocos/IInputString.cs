@@ -1,6 +1,4 @@
-﻿using ControllerInterface.Dtos;
-
-namespace ControllerInterface.Pocos;
+﻿namespace ControllerInterface.Pocos;
 
 public interface IInputString
 {

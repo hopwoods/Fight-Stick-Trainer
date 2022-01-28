@@ -1,5 +1,3 @@
-using ControllerInterface.Controllers;
-
 namespace ControllerInterface.Events;
 
 /// <summary>

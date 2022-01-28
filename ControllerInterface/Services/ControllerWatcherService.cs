@@ -1,9 +1,4 @@
-﻿using ControllerInterface.Controllers;
-using ControllerInterface.Events;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-namespace ControllerInterface.Services;
+﻿namespace ControllerInterface.Services;
 
 /// <summary>
 /// Background service that watches for controller inputs and fires related events.

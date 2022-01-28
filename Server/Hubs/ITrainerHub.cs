@@ -1,6 +1,4 @@
-﻿using ControllerInterface.Pocos;
-
-namespace Server.Hubs;
+﻿namespace Server.Hubs;
 
 public interface ITrainerHub
 {

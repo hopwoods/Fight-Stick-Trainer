@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using SharpDX;
-using SharpDX.XInput;
-
-namespace ControllerInterface.Controllers
+﻿namespace ControllerInterface.Controllers
 {
     public class XboxController: IXboxController
     {

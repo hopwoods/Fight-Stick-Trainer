@@ -1,6 +1,3 @@
-﻿using ControllerInterface.Controllers;
+﻿namespace ControllerInterface.Events;
 
-namespace ControllerInterface.Events
-{
-    public delegate void ControllerEvent(IXboxController controller);
-}
+public delegate void ControllerEvent(IXboxController controller);

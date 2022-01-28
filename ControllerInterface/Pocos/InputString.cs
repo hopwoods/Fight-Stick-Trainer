@@ -1,6 +1,4 @@
-﻿using ControllerInterface.Dtos;
-
-namespace ControllerInterface.Pocos;
+﻿namespace ControllerInterface.Pocos;
 
 public class InputString : IInputString
 {
@@ -48,5 +46,5 @@ public class InputString : IInputString
         }
     }
 
-    
+
 }

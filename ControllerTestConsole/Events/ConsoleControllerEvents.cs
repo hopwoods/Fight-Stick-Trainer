@@ -1,9 +1,3 @@
-using ControllerInterface.Controllers;
-using ControllerInterface.Dtos;
-using ControllerInterface.Events;
-using ControllerTestConsole.Utilities;
-using Microsoft.Extensions.Logging;
-
 namespace ControllerTestConsole.Events;
 
 public class ConsoleControllerEvents : IControllerEvents
@@ -46,7 +40,7 @@ public class ConsoleControllerEvents : IControllerEvents
         disconnectedMessageCount = 0;
         logger.LogDebug("Controller Connected");
     }
-    
+
     public void OnAButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.AButton, ConsoleColor.DarkGreen);
