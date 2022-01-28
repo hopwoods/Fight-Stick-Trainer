@@ -15,30 +15,25 @@ public class ConsoleControllerEvents : IControllerEvents
 
     public void OnControllerDisconnected(IXboxController controller)
     {
-        if (disconnectedMessageCount == 0)
-        {
-            utilities.WriteLine();
-            utilities.PrintValue("Controller Disconnected", ConsoleColor.DarkRed);
-            utilities.WriteLine();
-            disconnectedMessageCount++;
-        }
+        utilities.WriteLine();
+        utilities.PrintValue("Controller Disconnected", ConsoleColor.DarkRed);
+        utilities.WriteLine();
 
-        connectedMessageCount = 0;
         logger.LogDebug("Controller Disconnected");
     }
 
     public void OnControllerConnected(IXboxController controller)
     {
-        if (connectedMessageCount == 0)
-        {
-            utilities.WriteLine();
-            utilities.PrintValue("Controller Connected", ConsoleColor.DarkGreen);
-            utilities.WriteLine();
-            connectedMessageCount++;
-        }
-
-        disconnectedMessageCount = 0;
+        utilities.WriteLine();
+        utilities.PrintValue("Controller Connected", ConsoleColor.DarkGreen);
+        utilities.WriteLine();
         logger.LogDebug("Controller Connected");
+    }
+
+    public void OnControllerIsWireless(IXboxController controller)
+    {
+        utilities.PrintValue("Controller Is Wireless", ConsoleColor.DarkMagenta);
+        logger.LogDebug("Controller Is Wireless");
     }
 
     public void OnAButtonPressed(IXboxController controller)
@@ -104,5 +99,15 @@ public class ConsoleControllerEvents : IControllerEvents
     public void OnRightStickButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.RightStickButton, ConsoleColor.White);
+    }
+
+    public void OnRightTriggerPressed(IXboxController controller)
+    {
+        utilities.PrintValue(ControllerInputNames.RightTrigger, ConsoleColor.White);
+    }
+
+    public void OnLeftTriggerPressed(IXboxController controller)
+    {
+        utilities.PrintValue(ControllerInputNames.LeftTrigger, ConsoleColor.White);
     }
 }

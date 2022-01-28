@@ -16,4 +16,6 @@ public class ControllerInputNames
     public const string StartButton = "Start";
     public const string LeftStickButton = "LsClick";
     public const string RightStickButton = "RsClick";
+    public const string RightTrigger = "RTrigger";
+    public const string LeftTrigger = "LTrigger";
 }

@@ -26,3 +26,5 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({ content, childr
         {children}
     </TooltipHost>
 }
+
+export default Tooltip;

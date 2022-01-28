@@ -1,9 +1,9 @@
 import { appTheme } from '../../styles/globalStyles'
-import { Content, IContentStyles } from './content'
-import { Header, IHeaderStyles } from './header'
-import { IMainContentStyles, MainContent } from './mainContent'
-import { InputHistory } from './inputHistory'
+import { IContentStyles } from './content'
+import { IHeaderStyles } from './header'
+import { IMainContentStyles } from './mainContent'
 import { IRawStyle, mergeStyleSets } from '@fluentui/react'
+import { lazy } from 'react'
 
 type PageProps = React.ReactNode & {
     id: string;
@@ -13,6 +13,11 @@ type PageProps = React.ReactNode & {
 interface IPageStyles {
     root: IRawStyle;
 }
+
+const Header = lazy(() => import('./header'));
+const Content = lazy(() => import('./content'));
+const InputHistory = lazy(() => import('./inputHistory'));
+const MainContent = lazy(() => import('./mainContent'));
 
 export const Page: React.FC<PageProps> = ({ id, styles, children }) => {
 
@@ -25,6 +30,7 @@ export const Page: React.FC<PageProps> = ({ id, styles, children }) => {
             gridTemplateRows: '0.5vmin 10vmin 89.4vmin',
             backgroundColor: appTheme.palette.white,
             fontFamily: "'Barlow Semi Condensed', sans- serif",
+            fontDisplay: 'swap',
             fontWeight: 300,
             overflow: 'hidden'
         }
@@ -69,3 +75,5 @@ export const Page: React.FC<PageProps> = ({ id, styles, children }) => {
     </div>
 
 }
+
+export default Page;

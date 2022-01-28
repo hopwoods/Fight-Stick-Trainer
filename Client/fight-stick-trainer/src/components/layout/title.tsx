@@ -1,7 +1,8 @@
 import { IControllerButtonStyles } from '../../types'
 import { IRawStyle, mergeStyleSets } from '@fluentui/react'
-import { XboxLogoIcon } from '../icons'
+import { lazy } from 'react'
 
+const XboxLogoIcon = lazy(() => import('../icons/xBoxLogoIcon'));
 
 type TitleProps = React.ReactNode & {
     styles?: ITitleStyles;
@@ -40,3 +41,5 @@ export function Title({ styles }: TitleProps) {
         <span>Fight Stick Trainer</span>
     </div>
 }
+
+export default Title;

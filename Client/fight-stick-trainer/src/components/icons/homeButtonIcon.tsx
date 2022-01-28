@@ -2,7 +2,7 @@ import { baseIconStyles } from '.'
 import { ControllerButtonIconProps, IControllerButtonStyles } from '../../types'
 import { mergeStyleSets } from '@fluentui/react'
 
-export function HomeButtonIcon({ styles }: ControllerButtonIconProps) {
+export default function HomeButtonIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {

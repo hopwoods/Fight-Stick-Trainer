@@ -18,6 +18,12 @@ public interface IControllerEvents
     void OnControllerConnected(IXboxController controller);
 
     /// <summary>
+    /// Method to execute when the controller has wireless capability
+    /// </summary>
+    /// <param name="controller"></param>
+    void OnControllerIsWireless(IXboxController controller);
+
+    /// <summary>
     /// Method to execute when the A button is pressed
     /// </summary>
     /// <param name="controller"></param>
@@ -94,4 +100,16 @@ public interface IControllerEvents
     /// </summary>
     /// <param name="controller"></param>
     void OnRightStickButtonPressed(IXboxController controller);
+
+    /// <summary>
+    /// Method to execute when the Right trigger is pressed
+    /// </summary>
+    /// <param name="controller"></param>
+    void OnRightTriggerPressed(IXboxController controller);
+
+    /// <summary>
+    /// Method to execute when the Left trigger is pressed
+    /// </summary>
+    /// <param name="controller"></param>
+    void OnLeftTriggerPressed(IXboxController controller);
 }

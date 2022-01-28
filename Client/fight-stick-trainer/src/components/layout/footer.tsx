@@ -1,6 +1,6 @@
 import { appTheme } from '../../styles/globalStyles'
 import { IRawStyle, Link, mergeStyleSets } from '@fluentui/react'
-import { Tooltip } from '../notifications/tooltip'
+import { lazy } from 'react'
 
 type FooterProps = React.ReactNode & {
     styles?: IFooterStyles;
@@ -9,6 +9,8 @@ type FooterProps = React.ReactNode & {
 export interface IFooterStyles {
     root?: IRawStyle;
 }
+
+const Tooltip = lazy(() => import('../notifications/tooltip'));
 
 export const Footer: React.FunctionComponent<FooterProps> = ({ styles, children }) => {
 
@@ -41,3 +43,5 @@ export const Footer: React.FunctionComponent<FooterProps> = ({ styles, children 
         </div>
     </footer>
 }
+
+export default Footer;

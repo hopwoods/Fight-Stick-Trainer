@@ -1,5 +1,5 @@
-import { ControllerConnectionState } from '../icons/controllerConnectionState'
 import { IRawStyle, mergeStyleSets } from '@fluentui/react'
+import { lazy } from 'react'
 
 type ControllerStatusBarProps = React.ReactNode & {
     styles?: IControllerStatusBarStyles;
@@ -8,6 +8,9 @@ type ControllerStatusBarProps = React.ReactNode & {
 export interface IControllerStatusBarStyles {
     root?: IRawStyle;
 }
+
+const ControllerConnectionState = lazy(() => import('../icons/controllerConnectionState'));
+const WirelessControllerIcon = lazy(() => import('../icons/wirelessControllerIcon'));
 
 export function ControllerStatusBar({ styles }: ControllerStatusBarProps) {
 
@@ -30,5 +33,8 @@ export function ControllerStatusBar({ styles }: ControllerStatusBarProps) {
 
     return <div className={classes.root}>
         <ControllerConnectionState />
+        <WirelessControllerIcon />
     </div>
 }
+
+export default ControllerStatusBar

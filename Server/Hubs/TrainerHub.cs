@@ -14,6 +14,11 @@ public class TrainerHub : Hub<ITrainerHub>
         await Clients.Group(GroupName).ReceiveControllerConnectionState(isControllerConnected);
     }
 
+    public async Task SendControllerWirelessCapabilityToClient(bool isControllerWireless)
+    {
+        await Clients.Group(GroupName).ReceiveControllerWirelessCapability(isControllerWireless);
+    }
+
     public async Task SendButtonPressToClient(string inputName)
     {
         await Clients.Group(GroupName).ReceiveButtonPress(inputName);

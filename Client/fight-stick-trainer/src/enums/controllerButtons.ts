@@ -14,4 +14,6 @@ export enum ControllerButtons {
     Start = 'Start',
     LsClick = 'LsClick',
     RSClick = 'RsClick',
+    LTrigger = 'LTrigger',
+    RTrigger = 'RTrigger',
 }

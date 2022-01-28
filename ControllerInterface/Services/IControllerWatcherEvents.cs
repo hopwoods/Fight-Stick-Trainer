@@ -16,6 +16,11 @@ public interface IControllerWatcherEvents
     public event ControllerEvent ControllerDisconnected;
 
     /// <summary>
+    /// Register a <see cref="ControllerEvent"/> for when the Controller is wireless
+    /// </summary>
+    public event ControllerEvent ControllerIsWireless;
+
+    /// <summary>
     /// Register a <see cref="ControllerEvent"/> for when the A button is pressed
     /// </summary>
     public event ControllerEvent AButtonPressed;
@@ -79,6 +84,16 @@ public interface IControllerWatcherEvents
     /// Register a <see cref="ControllerEvent"/> for when the Right Stick button is pressed
     /// </summary>
     public event ControllerEvent RightStickButtonPressed;
+
+    /// <summary>
+    /// Register a <see cref="ControllerEvent"/> for when the Right Trigger is pressed
+    /// </summary>
+    public event ControllerEvent RightTriggerPressed;
+
+    /// <summary>
+    /// Register a <see cref="ControllerEvent"/> for when the Left Trigger is pressed
+    /// </summary>
+    public event ControllerEvent LeftTriggerPressed;
 
     void Dispose();
 }

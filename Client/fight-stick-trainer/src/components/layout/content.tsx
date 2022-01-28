@@ -24,7 +24,9 @@ export const Content: React.FunctionComponent<ContentProps> = ({ styles, childre
 
     const classes = mergeStyleSets(defaultStyles, styles);
 
-    return <article className={classes.root}>
+    return <section className={classes.root}>
         {children}
-    </article>
+    </section>
 }
+
+export default Content;

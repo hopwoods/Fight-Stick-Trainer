@@ -1,8 +1,12 @@
-import { ConnectionAlert, IConnectionAlertStyles } from '../notifications/connectionAlert'
-import { Footer, IFooterStyles } from './footer'
 import { HubConnectionState } from '@microsoft/signalr'
+import { IConnectionAlertStyles } from '../notifications/connectionAlert'
+import { IFooterStyles } from './footer'
 import { IRawStyle, mergeStyleSets } from '@fluentui/react'
+import { lazy } from 'react'
 import { useConnectionStateMessage } from './mainContent.vm'
+
+const Footer = lazy(() => import('./footer'));
+const ConnectionAlert = lazy(() => import('../notifications/connectionAlert'));
 
 type MainContentProps = {
     styles?: IMainContentStyles;
@@ -11,6 +15,7 @@ type MainContentProps = {
 export interface IMainContentStyles {
     root?: IRawStyle;
 }
+
 export const MainContent: React.FunctionComponent<MainContentProps> = ({ styles, children, ...props }) => {
 
     const { showConnectionStateMessages, controllerIsConnected, hubState } = useConnectionStateMessage();
@@ -60,3 +65,5 @@ export const MainContent: React.FunctionComponent<MainContentProps> = ({ styles,
         <Footer styles={footerStyles} />
     </div>
 }
+
+export default MainContent;

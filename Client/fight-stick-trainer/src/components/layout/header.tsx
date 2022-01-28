@@ -1,7 +1,7 @@
-import { ControllerStatusBar } from './controllerStatusBar'
 import { IControllerButtonStyles } from '../../types'
 import { IRawStyle, mergeStyleSets } from '@fluentui/react'
-import { ITitleStyles, Title } from './title'
+import { ITitleStyles } from './title'
+import { lazy } from 'react'
 
 type HeaderProps = React.ReactNode & {
     styles?: IHeaderStyles;
@@ -11,6 +11,9 @@ export interface IHeaderStyles {
     root?: IRawStyle;
     rainbow?: IRawStyle;
 }
+
+const Title = lazy(() => import('./title'));
+const ControllerStatusBar = lazy(() => import('./controllerStatusBar'));
 
 export function Header({ styles }: HeaderProps) {
 
@@ -58,3 +61,5 @@ export function Header({ styles }: HeaderProps) {
         </header>
     </>
 }
+
+export default Header;

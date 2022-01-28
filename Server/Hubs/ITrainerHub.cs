@@ -17,6 +17,13 @@ public interface ITrainerHub
     Task ReceiveControllerConnectionState(bool isControllerConnected);
 
     /// <summary>
+    /// Client receives a <see cref="bool"/> indicating if the controller is wireless
+    /// </summary>
+    /// <param name="isTheControllerWireless">Wireless capability of the controller</param>
+    /// <returns></returns>
+    Task ReceiveControllerWirelessCapability(bool isTheControllerWireless);
+
+    /// <summary>
     /// Clint receives a notification of button press and the name of that button.
     /// </summary>
     /// <param name="inputName">Name of the button</param>

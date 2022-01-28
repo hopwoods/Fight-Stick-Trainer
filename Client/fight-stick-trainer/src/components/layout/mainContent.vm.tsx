@@ -1,9 +1,11 @@
-import { ControllerConnectionState, IControllerConnectionStateStyles } from '../icons/controllerConnectionState'
 import { HubConnectionState } from '@microsoft/signalr'
+import { IControllerConnectionStateStyles } from '../icons/controllerConnectionState'
+import { lazy, useCallback } from 'react'
 import { Spinner, SpinnerSize } from '@fluentui/react'
 import { useAppStore } from '../../store/appStore'
-import { useCallback } from 'react'
 import { useSignalRStore } from '../../communication/signalR'
+
+const ControllerConnectionState = lazy(() => import('../icons/controllerConnectionState'));
 
 export function useConnectionStateMessage() {
 

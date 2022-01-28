@@ -3,7 +3,7 @@ import microsoftXboxControllerOff from '@iconify/icons-mdi/microsoft-xbox-contro
 import { HubConnectionState } from '@microsoft/signalr'
 import { Icon } from '@iconify/react'
 import { IRawStyle, mergeStyleSets } from '@fluentui/react'
-import { Tooltip } from '../notifications/tooltip'
+import { lazy } from 'react'
 import { useAppStore } from '../../store/appStore'
 import { useSignalRStore } from '../../communication/signalR'
 
@@ -15,7 +15,9 @@ export interface IControllerConnectionStateStyles {
     root: IRawStyle;
 }
 
-export function ControllerConnectionState({ styles }: ControllerConnectionStateProps) {
+const Tooltip = lazy(() => import('../notifications/tooltip'));
+
+export default function ControllerConnectionState({ styles }: ControllerConnectionStateProps) {
 
     const isConnected = useAppStore(state => state.isControllerConnected)
     const { hub } = useSignalRStore();

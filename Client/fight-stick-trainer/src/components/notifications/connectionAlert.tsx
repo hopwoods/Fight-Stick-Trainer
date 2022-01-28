@@ -30,3 +30,5 @@ export const ConnectionAlert: React.FunctionComponent<ConnectionAlertProps> = ({
         {children}
     </div>
 }
+
+export default ConnectionAlert;

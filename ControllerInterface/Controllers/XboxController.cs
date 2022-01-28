@@ -84,6 +84,9 @@
 
             //Has button been pressed and released?
             await Task.Delay(deBounceInterval);
+
+            EnsureRefresh();
+
             var buttonPressedAfterInterval = Gamepad.Buttons.HasFlag(button);
 
             if (buttonPressed && !buttonPressedAfterInterval) return true;
@@ -95,12 +98,62 @@
             return buttonPressed && buttonPressedAfterHoldInterval;
         }
 
+        /// <summary>
+        /// Checks if a trigger has been pressed then checks again after a DeBounce interval in milliseconds
+        /// </summary>
+        /// <returns>True if the button has been pressed</returns>
+        private async Task<bool> CheckIfTriggerHasBeenPressedAsync(string trigger)
+{
+    
+            EnsureRefresh();
+
+            var triggerValue = trigger switch
+            {
+                ControllerInputNames.LeftTrigger => Gamepad.LeftTrigger,
+                ControllerInputNames.RightTrigger => Gamepad.RightTrigger,
+                _ => 0,
+            };
+            var triggerValueWithThreshold = (triggerValue > 0) ? (triggerValue - Gamepad.TriggerThreshold) : 0;
+
+            //Has button press been initiated?
+            var buttonPressed = triggerValueWithThreshold > 0;
+
+            if (buttonPressed == false)
+                return false;
+
+            //Has button been pressed and released?
+            await Task.Delay(deBounceInterval * 2);
+
+            EnsureRefresh();
+            var buttonPressedAfterInterval = triggerValueWithThreshold <= 0;
+
+            if (buttonPressed && !buttonPressedAfterInterval) return true;
+
+            //Hold Detection
+            EnsureRefresh();
+            await Task.Delay(heldButtonInterval * 2);
+            var buttonPressedAfterHoldInterval = triggerValueWithThreshold > 0;
+
+            return buttonPressed && buttonPressedAfterHoldInterval;
+        }
+
         #endregion
 
         #region Public Fields & Properties
 
         public int RefreshIntervalMilliseconds { get; set; }
         public bool IsConnected => Controller.IsConnected;
+        public bool IsWireless
+        {
+            get
+            {
+                if (!Controller.IsConnected) return false;
+                var capabilities = Controller.GetCapabilities(DeviceQueryType.Gamepad);
+                return capabilities.Flags.HasFlag(CapabilityFlags.Wireless);
+
+            }
+        }
+
         public Task<bool> AButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.A);
         public Task<bool> BButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.B);
         public Task<bool> XButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.X);
@@ -115,6 +168,8 @@
         public Task<bool> StartButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.Start);
         public Task<bool> LeftStickButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.LeftThumb);
         public Task<bool> RightStickButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.RightThumb);
+        public Task<bool> RightTriggerIsPressed => CheckIfTriggerHasBeenPressedAsync(ControllerInputNames.RightTrigger);
+        public Task<bool> LeftTriggerIsPressed => CheckIfTriggerHasBeenPressedAsync(ControllerInputNames.LeftTrigger);
 
         #endregion
     }

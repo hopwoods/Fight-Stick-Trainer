@@ -13,6 +13,11 @@ public interface IXboxController: IController
     bool IsConnected { get; }
 
     /// <summary>
+    /// Is the controller wirelessly connected
+    /// </summary>
+    bool IsWireless { get; }
+
+    /// <summary>
     /// The A Button
     /// </summary>
     Task<bool> AButtonIsPressed { get; }
@@ -81,4 +86,14 @@ public interface IXboxController: IController
     /// The Right Stick Button
     /// </summary>
     Task<bool> RightStickButtonIsPressed { get; }
+
+    /// <summary>
+    /// The Right Trigger
+    /// </summary>
+    Task<bool> RightTriggerIsPressed { get; }
+
+    /// <summary>
+    /// The Left Trigger
+    /// </summary>
+    Task<bool> LeftTriggerIsPressed { get; }
 }

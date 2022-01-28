@@ -2,11 +2,11 @@ import { baseIconStyles } from '.'
 import { ControllerButtonIconProps, IControllerButtonStyles } from '../../types'
 import { mergeStyleSets } from '@fluentui/react'
 
-export default function LeftStickButtonIcon({ styles }: ControllerButtonIconProps) {
+export default function LeftTriggerIcon({ styles }: ControllerButtonIconProps) {
 
     const defaultStyles: IControllerButtonStyles = {
         root: {
-            displayName: 'left-stick-button-icon',
+            displayName: 'left-trigger-icon',
             color: 'Gainsboro',
         }
     }
@@ -17,8 +17,7 @@ export default function LeftStickButtonIcon({ styles }: ControllerButtonIconProp
             <defs>
                 <style>{`.cls-1{fill:currentColor;}`}</style>
             </defs>
-            <path className="cls-1" d="M415.84,191.87H94.16A38,38,0,0,0,56.23,229.8v12.33a38,38,0,0,0,37.93,37.93h76V387.79a25.61,25.61,0,0,0,25.54,25.54H316.28a25.61,25.61,0,0,0,25.54-25.54V280.06h74a38,38,0,0,0,37.93-37.93V229.8A38,38,0,0,0,415.84,191.87ZM295.21,359.06H216.79V249.45h25.32v87.38h53.1Z" />
-            <polygon className="cls-1" points="173.87 98.67 255.67 167.2 338.13 98.67 173.87 98.67" />
+            <path className="cls-1" d="M404.07,376.92a30.76,30.76,0,0,1-1.95-2.73c-60.72-96.54-25.86-219-17.11-245.72.92-2.79,15.68-30.76-13.66-35.17-2.54-.38-5-1.09-7.57-1.09H139.45a26.66,26.66,0,0,0-25,17.14c-17.16,45.89-14.79,123-14.45,131.94,0,.58.06,1.15.11,1.72C112.4,382.06,233.75,414.53,254.94,419.15a26.82,26.82,0,0,0,5.79.64H385.27a26.56,26.56,0,0,0,10.48-2.11C424.22,405.38,408.31,382.29,404.07,376.92ZM247.72,290.51h-70V192.63H200.3v78h47.42Zm68.93-78H286.87v78H264.26v-78H234.35V192.63h82.3Z" />
         </svg>
     </span>
 }

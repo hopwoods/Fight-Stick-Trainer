@@ -1,8 +1,9 @@
 import { IconButton, IIconStyles } from '@fluentui/react'
-import { Tooltip } from '../notifications/tooltip'
+import { lazy } from 'react'
 import { useAppStore } from '../../store/appStore'
 
-export function ClearHistoryButton() {
+const Tooltip = lazy(() => import('../notifications/tooltip'));
+export default function ClearHistoryButton() {
 
     const { clearInputHistory } = useAppStore();
 

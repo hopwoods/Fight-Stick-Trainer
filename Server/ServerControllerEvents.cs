@@ -9,6 +9,8 @@ internal class ServerControllerEvents : IControllerEvents
     private readonly IUtilities utilities;
     private readonly IHubContext<TrainerHub, ITrainerHub> trainerHub;
 
+    private const string GroupName = "FrontEnd";
+
     #endregion
 
     #region Constructor
@@ -60,6 +62,15 @@ internal class ServerControllerEvents : IControllerEvents
     {
         await SendControllerConnectionStateToClient(controller, "OnControllerDisconnected");
     }
+
+    public async void OnControllerIsWireless(IXboxController controller)
+    {
+        logger.LogInformation($"Controller Event: OnIsWireless triggered");
+        logger.LogInformation($"Sending OnIsWireless notification to clients");
+        utilities.PrintValue($"Wireless {controller.IsWireless}", ConsoleColor.White);
+        await trainerHub.Clients.All.ReceiveControllerWirelessCapability(controller.IsWireless);
+    }
+
     public async void OnAButtonPressed(IXboxController controller)
     {
         await SendButtonPressToClients(ControllerInputNames.AButton, ConsoleColor.DarkGreen);
@@ -111,6 +122,16 @@ internal class ServerControllerEvents : IControllerEvents
     public async void OnRightStickButtonPressed(IXboxController controller)
     {
         await SendButtonPressToClients(ControllerInputNames.RightStickButton, ConsoleColor.White);
+    }
+
+    public async void OnRightTriggerPressed(IXboxController controller)
+    {
+        await SendButtonPressToClients(ControllerInputNames.RightTrigger, ConsoleColor.White);
+    }
+
+    public async void OnLeftTriggerPressed(IXboxController controller)
+    {
+        await SendButtonPressToClients(ControllerInputNames.LeftTrigger, ConsoleColor.White);
     }
 
     #endregion

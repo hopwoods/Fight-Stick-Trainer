@@ -26,7 +26,7 @@ export const useSignalRStore = create<SignalRStoreProps>((set, get) => ({
 
 export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
 
-    const { setIsControllerConnected, addInputToHistory } = useAppStore();
+    const { setIsControllerConnected, addInputToHistory, setIsControllerWireless } = useAppStore();
     const { hub, setStatusText, setStatusDescription, setStarted, hubStarted } = useSignalRStore();
 
     const start = useCallback((connection: HubConnection) => {
@@ -85,6 +85,10 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
         hub.on("ReceiveControllerConnectionState", (isConnected: boolean) => {
             setIsControllerConnected(isConnected)
         });
+        hub.on("ReceiveControllerWirelessCapability", (isWireless: boolean) => {
+            console.info(`Wireless = ${isWireless}`)
+            setIsControllerWireless(isWireless)
+        });
 
         hub.on("ReceiveButtonPress", (inputName: ControllerButtons) => {
             console.log(`Button Pressed: ${inputName}`)
@@ -96,7 +100,7 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
         return function cleanup() {
             stop(hub);
         }
-    }, [addInputToHistory, hub, hubStarted, setIsControllerConnected, setStarted, setStatusDescription, setStatusText, start, stop])
+    }, [addInputToHistory, hub, hubStarted, setIsControllerConnected, setIsControllerWireless, setStarted, setStatusDescription, setStatusText, start, stop])
 
     return <>
         {children}
@@ -113,4 +117,4 @@ function configureHubConnection() {
     return connection;
 }
 
-
+export default SignalR;

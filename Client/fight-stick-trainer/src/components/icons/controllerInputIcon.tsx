@@ -1,22 +1,23 @@
-import {
-    AButtonIcon,
-    BButtonIcon,
-    DpadDownButtonIcon,
-    DpadLeftButtonIcon,
-    DpadRightButtonIcon,
-    DpadUpButtonIcon,
-    HomeButtonIcon,
-    LbButtonIcon,
-    RbButtonIcon,
-    XButtonIcon,
-    YButtonIcon
-    } from '../icons'
+import AButtonIcon from './aButtonIcon'
+import BButtonIcon from './bButtonIcon'
+import DpadDownButtonIcon from './dPadDownButtonIcon'
+import DpadLeftButtonIcon from './dPadLeftButtonIcon'
+import DpadRightButtonIcon from './dPadRightButtonIcon'
+import DpadUpButtonIcon from './dPadUpButtonIcon'
+import HomeButtonIcon from './homeButtonIcon'
+import LbButtonIcon from './lbButtonIcon'
+import LeftStickButtonIcon from './leftStickButtonIcon'
+import LeftTriggerIcon from './leftTriggerIcon'
+import RbButtonIcon from './rbButtonIcon'
+import RightStickButtonIcon from './rightStickButtonIcon'
+import RightTriggerIcon from './rightTriggerIcon'
+import StartButtonIcon from './startButtonIcon'
+import ViewButtonIcon from './viewButtonIcon'
+import XButtonIcon from './xButtonIcon'
+import YButtonIcon from './yButtonIcon'
 import { ControllerButtons } from '../../enums'
 import { IControllerButtonStyles } from '../../types'
-import { LeftStickButtonIcon } from './leftStickButtonIcon'
-import { RightStickButtonIcon } from './rightStickButtonIcon'
-import { StartButtonIcon } from './startButtonIcon'
-import { ViewButtonIcon } from './viewButtonIcon'
+
 
 function getButtonIcon(inputName: ControllerButtons) {
 
@@ -53,14 +54,17 @@ function getButtonIcon(inputName: ControllerButtons) {
             return <LeftStickButtonIcon styles={customStyle} />
         case "RsClick":
             return <RightStickButtonIcon styles={customStyle} />
+        case "LTrigger":
+            return <LeftTriggerIcon styles={customStyle} />
+        case "RTrigger":
+            return <RightTriggerIcon styles={customStyle} />
 
         default:
             break;
     }
 }
 
-export function ControllerInputIcon({ inputName }: { inputName: ControllerButtons }) {
+export default function ControllerInputIcon({ inputName }: { inputName: ControllerButtons }) {
     const icon = getButtonIcon(inputName);
     return <>{icon}</>
 }
-
