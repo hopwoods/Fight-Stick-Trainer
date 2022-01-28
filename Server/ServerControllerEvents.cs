@@ -67,7 +67,6 @@ internal class ServerControllerEvents : IControllerEvents
     {
         logger.LogInformation($"Controller Event: OnIsWireless triggered");
         logger.LogInformation($"Sending OnIsWireless notification to clients");
-        utilities.PrintValue($"Wireless {controller.IsWireless}", ConsoleColor.White);
         await trainerHub.Clients.All.ReceiveControllerWirelessCapability(controller.IsWireless);
     }
 

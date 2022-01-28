@@ -89,7 +89,6 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
             setIsControllerConnected(isConnected)
         });
         hub.on("ReceiveControllerWirelessCapability", (isWireless: boolean) => {
-            console.info(`Wireless = ${isWireless}`)
             setIsControllerWireless(isWireless)
         });
 

@@ -14,6 +14,7 @@
         private const long TicksPerMs = TimeSpan.TicksPerMillisecond;
         private readonly int deBounceInterval;
         private readonly int heldButtonInterval;
+        private BatteryInformation batteryInfo;
 
         #endregion
 
@@ -26,6 +27,7 @@
             RefreshIntervalMilliseconds = int.Parse(configuration["ControllerSettings:RefreshIntervalMilliseconds"]);
             deBounceInterval = RefreshIntervalMilliseconds;
             heldButtonInterval = 65;
+            
         }
 
         #endregion
@@ -44,10 +46,10 @@
                 }
             }
 
-            if ((num - lastMsRefreshed) > RefreshIntervalMilliseconds)
-            {
-                RefreshControllerState();
-            }
+            if ((num - lastMsRefreshed) <= RefreshIntervalMilliseconds) return;
+
+            RefreshControllerState();
+            batteryInfo = Controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
         }
 
         private void RefreshControllerState()

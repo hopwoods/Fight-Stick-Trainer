@@ -32,8 +32,8 @@ export function ControllerStatusBar({ styles }: ControllerStatusBarProps) {
     const classes = mergeStyleSets(defaultStyles, styles);
 
     return <div className={classes.root}>
-        <ControllerConnectionState />
         <WirelessControllerIcon />
+        <ControllerConnectionState />
     </div>
 }
 

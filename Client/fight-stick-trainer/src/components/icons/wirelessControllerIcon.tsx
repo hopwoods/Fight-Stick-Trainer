@@ -1,4 +1,4 @@
-import gameWireless from '@iconify/icons-carbon/game-wireless'
+import wifiIcon from '@iconify/icons-mdi/wifi'
 import { HubConnectionState } from '@microsoft/signalr'
 import { Icon } from '@iconify/react'
 import { IRawStyle, mergeStyleSets } from '@fluentui/react'
@@ -25,7 +25,7 @@ export default function WirelessControllerIcon({ styles }: WirelessControllerPro
         root: {
             displayName: 'wirelees-controller-icon',
             fontSize: '4vmin',
-            color: 'white'
+            color: 'lawnGreen'
         }
     }
 
@@ -33,7 +33,7 @@ export default function WirelessControllerIcon({ styles }: WirelessControllerPro
 
     if (isControllerConnected && isControllerWireless && hub.state === HubConnectionState.Connected)
         return <Tooltip content="The controller is wireless" id='ControllerIsWirelessTooltip'>
-            <span className={classes.root}><Icon icon={gameWireless} /></span>
+            <span className={classes.root}><Icon icon={wifiIcon} /></span>
         </Tooltip>
     else
         return <></>
