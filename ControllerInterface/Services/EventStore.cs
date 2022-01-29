@@ -1,1 +1,3 @@
-namespace ControllerInterface.Services
+namespace ControllerInterface.Services;
+
+public class EventStore : IEventStore 
