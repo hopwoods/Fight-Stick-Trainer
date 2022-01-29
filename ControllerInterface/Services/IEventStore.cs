@@ -1,9 +1,6 @@
 namespace ControllerInterface.Services;
 
-public interface IEventStore {
-    
-    Dictionary<EventType, ComtrollerEvent> Events {get; set;}
-    
-    void RegisterEvents(Controller controller);
-    
+public interface IEventStore
+{
+    void FireEvent(EventType eventType, IXboxController controller);
 }

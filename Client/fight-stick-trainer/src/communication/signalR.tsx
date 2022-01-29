@@ -6,20 +6,16 @@ import { useCallback, useEffect } from 'react'
 
 type SignalRStoreProps = {
     hub: HubConnection,
-    hubStarted: boolean;
     statusDescription: string;
     statusText: string;
-    setStarted: (value: boolean) => void;
     setStatusText: (text: string) => void;
     setStatusDescription: (description: string) => void;
 }
 
 export const useSignalRStore = create<SignalRStoreProps>((set, get) => ({
     hub: configureHubConnection(),
-    hubStarted: false,
     statusText: "",
     statusDescription: "",
-    setStarted(value: boolean) { set({ hubStarted: value }) },
     setStatusText(text: string) { set({ statusText: text }) },
     setStatusDescription(description: string) { set({ statusDescription: description }) },
 }));
@@ -27,67 +23,60 @@ export const useSignalRStore = create<SignalRStoreProps>((set, get) => ({
 export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
 
     const { setIsControllerConnected, addInputToHistory, setIsControllerWireless } = useAppStore();
-    const { hub, setStatusText, setStatusDescription, setStarted, hubStarted } = useSignalRStore();
+    const { hub, setStatusText, setStatusDescription } = useSignalRStore();
 
     const start = useCallback((connection: HubConnection) => {
         if (connection.state === HubConnectionState.Disconnected) {
 
-            console.info(`Started: ${hubStarted}`);
+            console.info(`Started: ${connection.state}`);
             console.info(`Attempting to connect to hub`);
 
             connection.start().then(() => {
                 if (connection.state === HubConnectionState.Connected) {
-                    connection.send("JoinGroup");
+                    console.info(`Started: ${connection.state}`);
                 }
             }).catch(err => (console.error(err)))
 
         }
-    }, [hubStarted]);
+    }, []);
 
     const stop = useCallback((connection: HubConnection) => {
         if (connection.state === HubConnectionState.Disconnected) {
             connection.stop()
                 .then(() => {
-                    setStarted(false);
+                    console.info(`Hub stopped`)
+                    console.info(`Hub Connected: ${connection.state}`)
                 })
                 .catch(err => (console.error(err)));
 
         }
-    }, [setStarted]);
+    }, []);
 
     useEffect(() => {
 
         hub.onreconnecting(() => {
             setStatusText("Reconnecting")
-            setStatusDescription("Attempting to reconnect to the server")
-            setIsControllerConnected(false);
-            setIsControllerWireless(false);
-
-            console.info(`Started: ${hubStarted}`);
+            setStatusDescription("Attempting to reconnect to the server");
+            console.info(`Hub Connected: ${hub.state}`)
         })
 
         hub.onreconnected(() => {
-            setStarted(true);
+            ;
             setStatusText("")
             setStatusDescription("")
-            setIsControllerConnected(false);
-            setIsControllerWireless(false);
-
-            console.info(`Started: ${hubStarted}`);
+            console.info(`Hub Connected: ${hub.state}`)
         })
 
         hub.onclose(() => {
             setStatusText("Disconnected")
             setStatusDescription("Unable to connect to the server")
-            setIsControllerConnected(false);
-            setIsControllerWireless(false);
-
-            console.info(`Started: ${hubStarted}`);
+            console.info(`Hub Connected: ${hub.state}`)
         })
 
         hub.on("ReceiveControllerConnectionState", (isConnected: boolean) => {
             setIsControllerConnected(isConnected)
         });
+
         hub.on("ReceiveControllerWirelessCapability", (isWireless: boolean) => {
             setIsControllerWireless(isWireless)
         });
@@ -102,7 +91,7 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
         return function cleanup() {
             stop(hub);
         }
-    }, [addInputToHistory, hub, hubStarted, setIsControllerConnected, setIsControllerWireless, setStarted, setStatusDescription, setStatusText, start, stop])
+    }, [addInputToHistory, hub, setIsControllerConnected, setIsControllerWireless, setStatusDescription, setStatusText, start, stop])
 
     return <>
         {children}

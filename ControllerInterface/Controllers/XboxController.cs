@@ -1,6 +1,6 @@
 ﻿namespace ControllerInterface.Controllers
 {
-    public class XboxController: IXboxController
+    public class XboxController : IXboxController
     {
         #region Private Fields & Properties
 
@@ -27,7 +27,7 @@
             RefreshIntervalMilliseconds = int.Parse(configuration["ControllerSettings:RefreshIntervalMilliseconds"]);
             deBounceInterval = RefreshIntervalMilliseconds;
             heldButtonInterval = 65;
-            
+            EnsureRefresh();
         }
 
         #endregion
@@ -36,20 +36,28 @@
 
         public void EnsureRefresh()
         {
-            var num = Environment.TickCount * TicksPerMs;
-
-            if (!IsConnected)
+            try
             {
-                if ((num - lastMsRefreshed) < 1000)
+                var num = Environment.TickCount * TicksPerMs;
+
+                if (!IsConnected)
                 {
-                    return;
+                    if ((num - lastMsRefreshed) < 1000)
+                    {
+                        return;
+                    }
                 }
+
+                if ((num - lastMsRefreshed) <= RefreshIntervalMilliseconds) return;
+
+                RefreshControllerState();
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, "An error occurred with the controller.");
+                throw;
             }
 
-            if ((num - lastMsRefreshed) <= RefreshIntervalMilliseconds) return;
-
-            RefreshControllerState();
-            batteryInfo = Controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
         }
 
         private void RefreshControllerState()
@@ -58,14 +66,18 @@
 
             try
             {
-                lastState = Controller.GetState();
+                if (IsConnected)
+                {
+                    lastState = Controller.GetState();
+                    batteryInfo = Controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
+                    logger.LogDebug($"Battery - Level: {batteryInfo.BatteryLevel}, Type: {batteryInfo.BatteryType}");
+                }
+                    
             }
             catch (SharpDXException e)
             {
-                if (!e.Message.Contains("The device is not connected"))
-                {
-                    logger.LogError(e, "An error occurred with the controller.");
-                }
+                logger.LogError(e, "An error occurred with the controller.");
+                throw;
             }
         }
 
@@ -105,8 +117,8 @@
         /// </summary>
         /// <returns>True if the button has been pressed</returns>
         private async Task<bool> CheckIfTriggerHasBeenPressedAsync(string trigger)
-{
-    
+        {
+
             EnsureRefresh();
 
             var triggerValue = trigger switch
@@ -124,7 +136,7 @@
                 return false;
 
             //Has button been pressed and released?
-            await Task.Delay(deBounceInterval * 2);
+            await Task.Delay(deBounceInterval * 3);
 
             EnsureRefresh();
             var buttonPressedAfterInterval = triggerValueWithThreshold <= 0;
@@ -168,6 +180,7 @@
         public Task<bool> DpadRightButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.DPadRight);
         public Task<bool> ViewButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.None);
         public Task<bool> StartButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.Start);
+        public Task<bool> BackButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.Back);
         public Task<bool> LeftStickButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.LeftThumb);
         public Task<bool> RightStickButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.RightThumb);
         public Task<bool> RightTriggerIsPressed => CheckIfTriggerHasBeenPressedAsync(ControllerInputNames.RightTrigger);

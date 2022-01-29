@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ControllerInterface.Controllers;
 using NSubstitute;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ public class XboxControllerTests
     }
 
     [Test]
-    public void ControllerIsConnected()
+    public void ControllerIsConnectedAsync()
     {
         Controller = CreateMockController();
         Controller.EnsureRefresh();
@@ -26,113 +27,113 @@ public class XboxControllerTests
     }
 
     [Test]
-    public void ControllerAButtonPressed()
+    public async Task ControllerAButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.AButtonIsPressed, Is.True);
+        Assert.That(await Controller.AButtonIsPressed, Is.True);
     }
 
     [Test]
-    public void ControllerBButtonPressed()
+    public async Task ControllerBButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.BButtonIsPressed, Is.True);
+        Assert.That(await Controller.BButtonIsPressed, Is.True);
     }
 
     [Test]
-    public void ControllerXButtonPressed()
+    public async Task ControllerXButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.XButtonIsPressed, Is.True);
+        Assert.That(await Controller.XButtonIsPressed, Is.True);
     }
 
     [Test]
-    public void ControllerYButtonPressed()
+    public async Task ControllerYButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.YButtonIsPressed, Is.True);
+        Assert.That(await Controller.YButtonIsPressed, Is.True);
     }
 
     [Test]
-    public void ControllerRbButtonPressed()
+    public async Task ControllerRbButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.RbButtonIsPressed, Is.True);
+        Assert.That(await Controller.RbButtonIsPressed, Is.True);
     }
 
     [Test]
-    public void ControllerLbButtonPressed()
+    public async Task ControllerLbButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.LbButtonIsPressed, Is.True);
+        Assert.That(await Controller.LbButtonIsPressed, Is.True);
     }
 
     [Test]
-    public void ControllerDpadUpButtonPressed()
+    public async Task ControllerDpadUpButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.DpadUpButtonIsPressed, Is.True);
+        Assert.That(await Controller.DpadUpButtonIsPressed, Is.True);
     }
 
     [Test]
-    public void ControllerDpadDownButtonPressed()
+    public async Task ControllerDpadDownButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.DpadDownButtonIsPressed, Is.True);
+        Assert.That(await Controller.DpadDownButtonIsPressed, Is.True);
     }
 
     [Test]
-    public void ControllerDpadLeftButtonPressed()
+    public async Task ControllerDpadLeftButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.DpadLeftButtonIsPressed, Is.True);
+        Assert.That(await Controller.DpadLeftButtonIsPressed, Is.True);
     }
 
     [Test]
-    public void ControllerDpadRightButtonPressed()
+    public async Task ControllerDpadRightButtonPressed()
     {
         Controller = CreateMockController(); ;
         Controller.EnsureRefresh();
 
 
         Controller.Received().EnsureRefresh();
-        Assert.That(Controller.DpadRightButtonIsPressed, Is.True);
+        Assert.That(await Controller.DpadRightButtonIsPressed, Is.True);
     }
 
 

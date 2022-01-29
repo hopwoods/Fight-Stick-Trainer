@@ -4,9 +4,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services
     .AddSingleton<IUtilities, Utilities>()
+    .AddSingleton<IEventStore, EventStore>()
     .AddSingleton<IInputString, InputString>()
     .AddTransient<IControllerFactory, ControllerFactory>()
-    .AddTransient<IControllerEvents, ServerControllerEvents>()
+    .AddSingleton<IControllerEvents, ServerControllerEvents>()
     .AddSingleton<IXboxController>(provider =>
     {
         var factory = provider.GetRequiredService<IControllerFactory>();

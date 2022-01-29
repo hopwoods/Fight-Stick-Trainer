@@ -90,6 +90,12 @@ public interface IControllerEvents
     void OnStartButtonPressed(IXboxController controller);
 
     /// <summary>
+    /// Method to execute when the Back / View button is pressed
+    /// </summary>
+    /// <param name="controller"></param>
+    void OnBackButtonPressed(IXboxController controller);
+
+    /// <summary>
     /// Method to execute when the Left Stick button is pressed
     /// </summary>
     /// <param name="controller"></param>

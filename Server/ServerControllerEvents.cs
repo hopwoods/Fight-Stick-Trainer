@@ -114,6 +114,12 @@ internal class ServerControllerEvents : IControllerEvents
     {
         await SendButtonPressToClients(ControllerInputNames.StartButton, ConsoleColor.White);
     }
+
+    public async void OnBackButtonPressed(IXboxController controller)
+    {
+        await SendButtonPressToClients(ControllerInputNames.ViewButton, ConsoleColor.White);
+    }
+
     public async void OnLeftStickButtonPressed(IXboxController controller)
     {
         await SendButtonPressToClients(ControllerInputNames.LeftStickButton, ConsoleColor.White);

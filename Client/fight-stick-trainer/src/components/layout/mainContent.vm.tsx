@@ -9,7 +9,7 @@ const ControllerConnectionState = lazy(() => import('../icons/controllerConnecti
 
 export function useConnectionStateMessage() {
 
-    const { hub, statusText, statusDescription, hubStarted } = useSignalRStore();
+    const { hub, statusText, statusDescription } = useSignalRStore();
     const controllerIsConnected = useAppStore(state => state.isControllerConnected);
     const hubState = hub.state;
 
@@ -21,7 +21,7 @@ export function useConnectionStateMessage() {
             }
         }
 
-        if (!hubStarted && hubState === HubConnectionState.Disconnected) {
+        if (hubState === HubConnectionState.Disconnected) {
             return <div>Disconnected - Unable to connect to the server </div>
         }
 
@@ -32,13 +32,13 @@ export function useConnectionStateMessage() {
             </>
         }
 
-        if (hubStarted && (hubState === HubConnectionState.Reconnecting || HubConnectionState.Disconnected || HubConnectionState.Disconnecting)) {
+        if (hubState === HubConnectionState.Reconnecting || HubConnectionState.Disconnected || HubConnectionState.Disconnecting) {
             return <>
                 {`${statusText} - ${statusDescription}`}
                 {hubState === HubConnectionState.Reconnecting ? <Spinner size={SpinnerSize.large} styles={{ root: { marginTop: '2vmin' } }} /> : <></ >}
             </>
         }
-    }, [hubStarted, hubState, controllerIsConnected, statusDescription, statusText]);
+    }, [hubState, controllerIsConnected, statusDescription, statusText]);
 
     return { showConnectionStateMessages, controllerIsConnected, hubState }
 }

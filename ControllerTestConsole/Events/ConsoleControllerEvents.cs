@@ -91,6 +91,11 @@ public class ConsoleControllerEvents : IControllerEvents
         utilities.PrintValue(ControllerInputNames.StartButton, ConsoleColor.White);
     }
 
+    public void OnBackButtonPressed(IXboxController controller)
+    {
+        utilities.PrintValue(ControllerInputNames.ViewButton, ConsoleColor.White);
+    }
+
     public void OnLeftStickButtonPressed(IXboxController controller)
     {
         utilities.PrintValue(ControllerInputNames.LeftStickButton, ConsoleColor.White);

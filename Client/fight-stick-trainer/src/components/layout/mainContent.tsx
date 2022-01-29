@@ -57,13 +57,13 @@ export const MainContent: React.FunctionComponent<MainContentProps> = ({ styles,
             <Footer styles={footerStyles} />
         </div>
     }
-
-    return <div className={classes.root} >
-        <ConnectionAlert styles={connectionAlertStyles}>
-            {alertContent}
-        </ConnectionAlert>
-        <Footer styles={footerStyles} />
-    </div>
+    else
+        return <div className={classes.root} >
+            <ConnectionAlert styles={connectionAlertStyles}>
+                {alertContent}
+            </ConnectionAlert>
+            <Footer styles={footerStyles} />
+        </div>
 }
 
 export default MainContent;

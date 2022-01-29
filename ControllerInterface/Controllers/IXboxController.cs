@@ -78,6 +78,11 @@ public interface IXboxController: IController
     Task<bool> StartButtonIsPressed { get; }
 
     /// <summary>
+    /// The Back / View Button
+    /// </summary>
+    Task<bool> BackButtonIsPressed { get; }
+
+    /// <summary>
     /// The Left Stick Button
     /// </summary>
     Task<bool> LeftStickButtonIsPressed { get; }
@@ -96,4 +101,6 @@ public interface IXboxController: IController
     /// The Left Trigger
     /// </summary>
     Task<bool> LeftTriggerIsPressed { get; }
+
+    
 }

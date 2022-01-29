@@ -3,45 +3,22 @@
 /// <summary>
 /// Background service that watches for controller inputs and fires related events.
 /// </summary>
-public class ControllerWatcherService : BackgroundService, IControllerWatcherEvents
+public class ControllerWatcherService : BackgroundService
 {
-    #region Public Properties & Fields
-
-    public event ControllerEvent? ControllerConnected;
-    public event ControllerEvent? ControllerDisconnected;
-    public event ControllerEvent? ControllerIsWireless;
-    public event ControllerEvent? AButtonPressed;
-    public event ControllerEvent? BButtonPressed;
-    public event ControllerEvent? XButtonPressed;
-    public event ControllerEvent? YButtonPressed;
-    public event ControllerEvent? RbButtonPressed;
-    public event ControllerEvent? LbButtonPressed;
-    public event ControllerEvent? DpadUpButtonPressed;
-    public event ControllerEvent? DpadDownButtonPressed;
-    public event ControllerEvent? DpadLeftButtonPressed;
-    public event ControllerEvent? DpadRightButtonPressed;
-    public event ControllerEvent? StartButtonPressed;
-    public event ControllerEvent? LeftStickButtonPressed;
-    public event ControllerEvent? RightStickButtonPressed;
-    public event ControllerEvent? RightTriggerPressed;
-    public event ControllerEvent? LeftTriggerPressed;
-
-    #endregion
-
     #region Private Properties & Fields
+
     private readonly IXboxController controllerBeingWatched;
-    private readonly IControllerEvents controllerEvents;
     private readonly ILogger<ControllerWatcherService> logger;
+    private readonly IEventStore eventStore;
 
     #endregion
 
     #region Constructor
-    public ControllerWatcherService(IXboxController controllerBeingWatched, IControllerEvents controllerEvents, ILogger<ControllerWatcherService> logger)
+    public ControllerWatcherService(IXboxController controllerBeingWatched, ILogger<ControllerWatcherService> logger, IEventStore eventStore)
     {
         this.controllerBeingWatched = controllerBeingWatched;
-        this.controllerEvents = controllerEvents;
         this.logger = logger;
-        RegisterEvents();
+        this.eventStore = eventStore;
     }
 
     #endregion
@@ -75,7 +52,7 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
     #endregion
 
     #region Private Methods
-    
+
     /// <summary>
     /// When the controller state changes, fire the associated events.
     /// </summary>
@@ -95,32 +72,32 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
     private async Task DetectButtonPresses(IXboxController controller)
     {
         // Face Buttons
-        if (await controller.AButtonIsPressed) FireAButtonPressed(controller);
-        if (await controller.BButtonIsPressed) FireBButtonPressed(controller);
-        if (await controller.XButtonIsPressed) FireXButtonPressed(controller);
-        if (await controller.YButtonIsPressed) FireYButtonPressed(controller);
+        if (await controller.AButtonIsPressed) eventStore.FireEvent(EventType.AButtonPressed, controller);
+        if (await controller.BButtonIsPressed) eventStore.FireEvent(EventType.BButtonPressed, controller);
+        if (await controller.XButtonIsPressed) eventStore.FireEvent(EventType.XButtonPressed, controller);
+        if (await controller.YButtonIsPressed) eventStore.FireEvent(EventType.YButtonPressed, controller);
 
         //Shoulder Buttons
-        if (await controller.RbButtonIsPressed) FireRbButtonPressed(controller);
-        if (await controller.LbButtonIsPressed) FireLbButtonPressed(controller);
+        if (await controller.RbButtonIsPressed) eventStore.FireEvent(EventType.RbButtonPressed, controller);
+        if (await controller.LbButtonIsPressed) eventStore.FireEvent(EventType.LbButtonPressed, controller);
 
         // DPad Buttons
-        if (await controller.DpadUpButtonIsPressed) FireDpadUpButtonPressed(controller);
-        if (await controller.DpadDownButtonIsPressed) FireDpadDownButtonPressed(controller);
-        if (await controller.DpadLeftButtonIsPressed) FireDpadLeftButtonPressed(controller);
-        if (await controller.DpadRightButtonIsPressed) FireDpadRightButtonPressed(controller);
+        if (await controller.DpadUpButtonIsPressed) eventStore.FireEvent(EventType.DpadUpButtonPressed, controller);
+        if (await controller.DpadDownButtonIsPressed) eventStore.FireEvent(EventType.DpadDownButtonPressed, controller);
+        if (await controller.DpadLeftButtonIsPressed) eventStore.FireEvent(EventType.DpadLeftButtonPressed, controller);
+        if (await controller.DpadRightButtonIsPressed) eventStore.FireEvent(EventType.DpadRightButtonPressed, controller);
 
-        // Start / Menu Button
-        if (await controller.StartButtonIsPressed) FireStartButtonPressed(controller);
+        // Start / Menu & Back / View Buttons
+        if (await controller.StartButtonIsPressed) eventStore.FireEvent(EventType.StartButtonPressed, controller);
+        if (await controller.BackButtonIsPressed) eventStore.FireEvent(EventType.BackButtonPressed, controller);
 
         // Analogue Stick Buttons
-        if (await controller.LeftStickButtonIsPressed) FireLeftStickButtonPressed(controller);
-        if (await controller.RightStickButtonIsPressed) FireRightStickButtonPressed(controller);
+        if (await controller.LeftStickButtonIsPressed) eventStore.FireEvent(EventType.LeftStickButtonPressed, controller);
+        if (await controller.RightStickButtonIsPressed) eventStore.FireEvent(EventType.RightStickButtonPressed, controller);
 
         // Triggers
-        if (await controller.RightTriggerIsPressed) FireRightTriggerPressed(controller);
-        if (await controller.LeftTriggerIsPressed) FireLeftTriggerPressed(controller);
-
+        if (await controller.RightTriggerIsPressed) eventStore.FireEvent(EventType.RightTriggerPressed, controller);
+        if (await controller.LeftTriggerIsPressed) eventStore.FireEvent(EventType.LeftTriggerPressed, controller);
     }
 
     /// <summary>
@@ -129,157 +106,18 @@ public class ControllerWatcherService : BackgroundService, IControllerWatcherEve
     /// <param name="controller">The controller being watched</param>
     private void DetectConnection(IXboxController controller)
     {
-        if (controller.IsConnected) 
-            FireConnected(controller);
-        else
-            FireDisconnected(controller);
-    }    
-    
+        eventStore.FireEvent(controller.IsConnected ? EventType.ControllerConnected : EventType.ControllerDisconnected, controller);
+    }
+
     /// <summary>
     /// Watch for the controller capabilities being set
     /// </summary>
     /// <param name="controller">The controller being watched</param>
     private void DetectCapabilities(IXboxController controller)
     {
-        if (controller.IsWireless) 
-            FireIsWireless(controller);
-    }
-
-    /// <summary>
-    /// Register the methods which get called when a event is fired
-    /// </summary>
-    private void RegisterEvents()
-    {
-        // Controller connection
-        ControllerConnected += controllerEvents.OnControllerConnected;
-        ControllerDisconnected += controllerEvents.OnControllerDisconnected;
-
-        // Controller Capabilities
-        ControllerIsWireless += controllerEvents.OnControllerIsWireless;
-
-        // Face Buttons
-        AButtonPressed += controllerEvents.OnAButtonPressed;
-        BButtonPressed += controllerEvents.OnBButtonPressed;
-        XButtonPressed += controllerEvents.OnXButtonPressed;
-        YButtonPressed += controllerEvents.OnYButtonPressed;
-
-        // Shoulder Buttons
-        RbButtonPressed += controllerEvents.OnRbButtonPressed;
-        LbButtonPressed += controllerEvents.OnLbButtonPressed;
-
-        // Dpad Buttons
-        DpadUpButtonPressed += controllerEvents.OnDpadUpButtonPressed;
-        DpadDownButtonPressed += controller => controllerEvents.OnDpadDownButtonPressed(controller);
-        DpadLeftButtonPressed += controllerEvents.OnDpadLeftButtonPressed;
-        DpadRightButtonPressed += controllerEvents.OnDpadRightButtonPressed;
-
-        // Start / Menu Button
-        StartButtonPressed += controllerEvents.OnStartButtonPressed;
-
-        // Analogue Stick Buttons
-        LeftStickButtonPressed += controllerEvents.OnLeftStickButtonPressed;
-        RightStickButtonPressed += controllerEvents.OnRightStickButtonPressed;
-
-        // Triggers
-        LeftTriggerPressed += controllerEvents.OnLeftTriggerPressed;
-        RightTriggerPressed += controllerEvents.OnRightTriggerPressed;
+        if (controller.IsWireless)
+            eventStore.FireEvent(EventType.ControllerIsWireless, controller);
     }
 
     #endregion
-
-    #region Event Triggers
-
-    private void FireConnected(IXboxController controller)
-    {
-        ControllerConnected?.Invoke(controller);
-    }
-
-    private void FireDisconnected(IXboxController controller)
-    {
-        ControllerDisconnected?.Invoke(controller);
-    }
-
-    private void FireIsWireless(IXboxController controller)
-    {
-        ControllerIsWireless?.Invoke(controller);
-    }
-
-    private void FireAButtonPressed(IXboxController controller)
-    {
-        AButtonPressed?.Invoke(controller);
-    }
-
-    private void FireBButtonPressed(IXboxController controller)
-    {
-        BButtonPressed?.Invoke(controller);
-    }
-
-    private void FireXButtonPressed(IXboxController controller)
-    {
-        XButtonPressed?.Invoke(controller);
-    }
-
-    private void FireYButtonPressed(IXboxController controller)
-    {
-        YButtonPressed?.Invoke(controller);
-    }
-
-    private void FireRbButtonPressed(IXboxController controller)
-    {
-        RbButtonPressed?.Invoke(controller);
-    }
-
-    private void FireLbButtonPressed(IXboxController controller)
-    {
-        LbButtonPressed?.Invoke(controller);
-    }
-
-    private void FireDpadUpButtonPressed(IXboxController controller)
-    {
-        DpadUpButtonPressed?.Invoke(controller);
-    }
-
-    private void FireDpadDownButtonPressed(IXboxController controller)
-    {
-        DpadDownButtonPressed?.Invoke(controller);
-    }
-
-    private void FireDpadLeftButtonPressed(IXboxController controller)
-    {
-        DpadLeftButtonPressed?.Invoke(controller);
-    }
-
-    private void FireDpadRightButtonPressed(IXboxController controller)
-    {
-        DpadRightButtonPressed?.Invoke(controller);
-    }
-
-    private void FireStartButtonPressed(IXboxController controller)
-    {
-        StartButtonPressed?.Invoke(controller);
-    }
-
-    private void FireLeftStickButtonPressed(IXboxController controller)
-    {
-        LeftStickButtonPressed?.Invoke(controller);
-    }
-
-    private void FireRightStickButtonPressed(IXboxController controller)
-    {
-        RightStickButtonPressed?.Invoke(controller);
-    }
-
-    private void FireRightTriggerPressed(IXboxController controller)
-    {
-        RightTriggerPressed?.Invoke(controller);
-    }
-
-    private void FireLeftTriggerPressed(IXboxController controller)
-    {
-        LeftTriggerPressed?.Invoke(controller);
-    }
-
-    #endregion
-
-
 }
