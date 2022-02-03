@@ -1,8 +1,10 @@
 import create from 'zustand'
+import { BatteryInformation } from '../types'
 import { ControllerButtons } from '../enums'
 import { HubConnection, HubConnectionBuilder, HubConnectionState, LogLevel } from '@microsoft/signalr'
 import { useAppStore } from '../store/appStore'
 import { useCallback, useEffect } from 'react'
+
 
 type SignalRStoreProps = {
     hub: HubConnection,
@@ -22,7 +24,7 @@ export const useSignalRStore = create<SignalRStoreProps>((set, get) => ({
 
 export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
 
-    const { setIsControllerConnected, addInputToHistory, setIsControllerWireless } = useAppStore();
+    const { setIsControllerConnected, addInputToHistory, setIsControllerWireless, setBatteryInformation } = useAppStore();
     const { hub, setStatusText, setStatusDescription } = useSignalRStore();
 
     const start = useCallback((connection: HubConnection) => {
@@ -57,11 +59,9 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
         hub.onreconnecting(() => {
             setStatusText("Reconnecting")
             setStatusDescription("Attempting to reconnect to the server");
-            console.info(`Hub Connected: ${hub.state}`)
         })
 
         hub.onreconnected(() => {
-            ;
             setStatusText("")
             setStatusDescription("")
             console.info(`Hub Connected: ${hub.state}`)
@@ -70,7 +70,6 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
         hub.onclose(() => {
             setStatusText("Disconnected")
             setStatusDescription("Unable to connect to the server")
-            console.info(`Hub Connected: ${hub.state}`)
         })
 
         hub.on("ReceiveControllerConnectionState", (isConnected: boolean) => {
@@ -79,6 +78,10 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
 
         hub.on("ReceiveControllerWirelessCapability", (isWireless: boolean) => {
             setIsControllerWireless(isWireless)
+        });
+
+        hub.on("ReceiveBatteryInformation", (batteryInformation: BatteryInformation) => {
+            setBatteryInformation(batteryInformation);
         });
 
         hub.on("ReceiveButtonPress", (inputName: ControllerButtons) => {
@@ -91,7 +94,7 @@ export const SignalR: React.FunctionComponent = ({ children, ...props }) => {
         return function cleanup() {
             stop(hub);
         }
-    }, [addInputToHistory, hub, setIsControllerConnected, setIsControllerWireless, setStatusDescription, setStatusText, start, stop])
+    }, [addInputToHistory, hub, setBatteryInformation, setIsControllerConnected, setIsControllerWireless, setStatusDescription, setStatusText, start, stop])
 
     return <>
         {children}

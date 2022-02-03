@@ -18,9 +18,10 @@ export const ConnectionAlert: React.FunctionComponent<ConnectionAlertProps> = ({
             boxShadow: '5px 5px 15px rgba(0,0,0,50%)',
             margin: '3vmin',
             padding: '2vmin',
-            background: 'linear-gradient(180deg, rgba(63,68,78,1) 0%, rgba(78,84,95,1) 100%)',
+            background: 'linear-gradient(180deg, rgba(43,48,58,1) 0%, rgba(58,64,75,1) 100%)',
             borderRadius: '5px',
-            fontSize: '2vmin'
+            fontSize: '2vmin',
+            border: '1px solid #202020'
         }
     }
 

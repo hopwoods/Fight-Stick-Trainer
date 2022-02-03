@@ -1,13 +1,12 @@
 namespace Server;
 
-internal class ServerControllerEvents : IControllerEvents
+public class ServerControllerEvents : IControllerEvents
 {
     #region Private Fields
 
     private readonly ILogger<ServerControllerEvents> logger;
-    private readonly IInputString inputString;
     private readonly IUtilities utilities;
-    private readonly IHubContext<TrainerHub, ITrainerHub> trainerHub;
+    private readonly IHubContext<TrainerHub, ITrainerHub> trainerHubContext;
 
     private const string GroupName = "FrontEnd";
 
@@ -15,12 +14,11 @@ internal class ServerControllerEvents : IControllerEvents
 
     #region Constructor
 
-    public ServerControllerEvents(ILogger<ServerControllerEvents> logger, IInputString inputString, IUtilities utilities, IHubContext<TrainerHub, ITrainerHub> trainerHub)
+    public ServerControllerEvents(ILogger<ServerControllerEvents> logger, IUtilities utilities, IHubContext<TrainerHub, ITrainerHub> trainerHubContext)
     {
         this.logger = logger;
-        this.inputString = inputString;
         this.utilities = utilities;
-        this.trainerHub = trainerHub;
+        this.trainerHubContext = trainerHubContext;
     }
 
     #endregion
@@ -33,7 +31,7 @@ internal class ServerControllerEvents : IControllerEvents
         {
             logger.LogInformation($"Controller Event: {eventName} triggered");
             logger.LogInformation("Sending Controller State to clients");
-            await trainerHub.Clients.All.ReceiveControllerConnectionState(controller.IsConnected);
+            await trainerHubContext.Clients.All.ReceiveControllerConnectionState(controller.IsConnected);
         }
         catch (Exception e)
         {
@@ -47,7 +45,7 @@ internal class ServerControllerEvents : IControllerEvents
         logger.LogInformation($"Controller Event: On{inputName}ButtonPressed triggered");
         logger.LogInformation($"Sending Button Press {inputName} notification to clients");
         utilities.PrintValue(inputName, color);
-        await trainerHub.Clients.All.ReceiveButtonPress(inputName);
+        await trainerHubContext.Clients.All.ReceiveButtonPress(inputName);
     }
 
     #endregion
@@ -67,7 +65,19 @@ internal class ServerControllerEvents : IControllerEvents
     {
         logger.LogInformation($"Controller Event: OnIsWireless triggered");
         logger.LogInformation($"Sending OnIsWireless notification to clients");
-        await trainerHub.Clients.All.ReceiveControllerWirelessCapability(controller.IsWireless);
+        await trainerHubContext.Clients.All.ReceiveControllerWirelessCapability(controller.IsWireless);
+    }
+
+    public async void OnUpdateBatteryInformation(IXboxController controller)
+    {
+        logger.LogInformation($"Controller Event: Battery Info Updated - Level: {controller.BatteryInformation.BatteryLevel}, Type - {controller.BatteryInformation.BatteryType}");
+        logger.LogInformation($"Sending Battery Update notification to clients");
+        var batteryInfoDto = new BatteryInformationDto
+        {
+            BatteryType = controller.BatteryInformation.BatteryType,
+            BatteryLevel = controller.BatteryInformation.BatteryLevel
+        };
+        await trainerHubContext.Clients.All.ReceiveBatteryInformation(batteryInfoDto);
     }
 
     public async void OnAButtonPressed(IXboxController controller)

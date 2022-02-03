@@ -4,9 +4,6 @@ public class ConsoleControllerEvents : IControllerEvents
 {
     private readonly ILogger<ConsoleControllerEvents> logger;
     private readonly IUtilities utilities;
-    private int disconnectedMessageCount = 0;
-    private int connectedMessageCount = 0;
-
     public ConsoleControllerEvents(ILogger<ConsoleControllerEvents> logger, IUtilities utilities)
     {
         this.logger = logger;
@@ -34,6 +31,12 @@ public class ConsoleControllerEvents : IControllerEvents
     {
         utilities.PrintValue("Controller Is Wireless", ConsoleColor.DarkMagenta);
         logger.LogDebug("Controller Is Wireless");
+    }
+
+    public void OnUpdateBatteryInformation(IXboxController controller)
+    {
+        utilities.PrintValue($"Battery Info: Level - {controller.BatteryInformation.BatteryLevel}, Type - {controller.BatteryInformation.BatteryType}", ConsoleColor.White);
+        logger.LogDebug($"Battery Info: Level - {controller.BatteryInformation.BatteryLevel}, Type - {controller.BatteryInformation.BatteryType}");
     }
 
     public void OnAButtonPressed(IXboxController controller)

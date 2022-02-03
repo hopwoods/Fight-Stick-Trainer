@@ -17,6 +17,8 @@ public interface IXboxController: IController
     /// </summary>
     bool IsWireless { get; }
 
+    public BatteryInformation BatteryInformation { get; }
+
     /// <summary>
     /// The A Button
     /// </summary>

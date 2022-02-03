@@ -15,6 +15,7 @@ public class EventStore : IEventStore {
             { EventType.ControllerConnected, ControllerConnected },
             { EventType.ControllerDisconnected, ControllerDisconnected },
             { EventType.ControllerIsWireless, ControllerIsWireless },
+            { EventType.UpdateBatteryInformation, UpdatedBatteryInformation },
 
             { EventType.AButtonPressed, AButtonPressed },
             { EventType.BButtonPressed, BButtonPressed },
@@ -54,6 +55,7 @@ public class EventStore : IEventStore {
 
         // Controller Capabilities
         ControllerIsWireless += controllerEvents.OnControllerIsWireless;
+        UpdatedBatteryInformation += controllerEvents.OnUpdateBatteryInformation;
 
         // Face Buttons
         AButtonPressed += controllerEvents.OnAButtonPressed;
@@ -87,6 +89,7 @@ public class EventStore : IEventStore {
     private event ControllerEvent? ControllerConnected;
     private event ControllerEvent? ControllerDisconnected;
     private event ControllerEvent? ControllerIsWireless;
+    private event ControllerEvent? UpdatedBatteryInformation;
     private event ControllerEvent? AButtonPressed;
     private event ControllerEvent? BButtonPressed;
     private event ControllerEvent? XButtonPressed;

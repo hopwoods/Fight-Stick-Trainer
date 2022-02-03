@@ -29,7 +29,7 @@ builder.Services
         });
     })
     .AddHostedService<ControllerWatcherService>()
-    .AddSignalR();
+    .AddSignalR().AddJsonProtocol();
 
 var app = builder.Build();
 

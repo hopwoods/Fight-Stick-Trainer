@@ -5,6 +5,7 @@ public enum EventType
     ControllerConnected,
     ControllerDisconnected,
     ControllerIsWireless,
+    UpdateBatteryInformation,
     AButtonPressed,
     BButtonPressed,
     XButtonPressed,

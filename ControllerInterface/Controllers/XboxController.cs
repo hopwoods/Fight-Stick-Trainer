@@ -66,13 +66,12 @@
 
             try
             {
-                if (IsConnected)
-                {
-                    lastState = Controller.GetState();
-                    batteryInfo = Controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
-                    logger.LogDebug($"Battery - Level: {batteryInfo.BatteryLevel}, Type: {batteryInfo.BatteryType}");
-                }
-                    
+                if (!IsConnected) return;
+
+                lastState = Controller.GetState();
+                batteryInfo = Controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
+                logger.LogDebug($"Battery - Level: {batteryInfo.BatteryLevel}, Type: {batteryInfo.BatteryType}");
+
             }
             catch (SharpDXException e)
             {
@@ -161,13 +160,26 @@
         {
             get
             {
-                if (!Controller.IsConnected) return false;
+                if (!IsConnected) return false;
                 var capabilities = Controller.GetCapabilities(DeviceQueryType.Gamepad);
                 return capabilities.Flags.HasFlag(CapabilityFlags.Wireless);
 
             }
         }
 
+        public BatteryInformation BatteryInformation
+        {
+            get
+            {
+                if (!IsConnected)
+                {
+                    return batteryInfo;
+                }
+
+                RefreshControllerState();
+                return batteryInfo;
+            }
+        }
         public Task<bool> AButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.A);
         public Task<bool> BButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.B);
         public Task<bool> XButtonIsPressed => CheckIfButtonHasBeenPressedAsync(GamepadButtonFlags.X);

@@ -1,4 +1,6 @@
-﻿namespace Server.Hubs;
+﻿using SharpDX.XInput;
+
+namespace Server.Hubs;
 
 public interface ITrainerHub
 {
@@ -29,6 +31,13 @@ public interface ITrainerHub
     /// <param name="inputName">Name of the button</param>
     /// <returns></returns>
     Task ReceiveButtonPress(string inputName);
+
+    /// <summary>
+    /// Clint receives a <see cref="BatteryInformation"/> object with the current battery status
+    /// </summary>
+    /// <param name="batteryInformation">Information on the battery level and type</param>
+    /// <returns></returns>
+    Task ReceiveBatteryInformation(BatteryInformationDto batteryInformation);
 
     Task JoinGroup();
 

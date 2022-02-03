@@ -24,6 +24,12 @@ public interface IControllerEvents
     void OnControllerIsWireless(IXboxController controller);
 
     /// <summary>
+    /// Method to execute when the controller battery information is retrieved
+    /// </summary>
+    /// <param name="controller"></param>
+    void OnUpdateBatteryInformation(IXboxController controller);
+
+    /// <summary>
     /// Method to execute when the A button is pressed
     /// </summary>
     /// <param name="controller"></param>

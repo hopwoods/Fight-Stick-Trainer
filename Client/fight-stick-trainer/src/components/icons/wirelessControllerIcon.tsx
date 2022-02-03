@@ -1,7 +1,7 @@
 import wifiIcon from '@iconify/icons-mdi/wifi'
 import { HubConnectionState } from '@microsoft/signalr'
 import { Icon } from '@iconify/react'
-import { IRawStyle, mergeStyleSets } from '@fluentui/react'
+import { IRawStyle, mergeStyleSets } from '@fluentui/react/lib/Styling'
 import { lazy } from 'react'
 import { useAppStore } from '../../store/appStore'
 import { useSignalRStore } from '../../communication/signalR'

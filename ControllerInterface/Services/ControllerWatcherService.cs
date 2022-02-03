@@ -117,6 +117,8 @@ public class ControllerWatcherService : BackgroundService
     {
         if (controller.IsWireless)
             eventStore.FireEvent(EventType.ControllerIsWireless, controller);
+
+        eventStore.FireEvent(EventType.UpdateBatteryInformation, controller);
     }
 
     #endregion

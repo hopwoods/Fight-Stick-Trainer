@@ -11,6 +11,7 @@ export interface IControllerStatusBarStyles {
 
 const ControllerConnectionState = lazy(() => import('../icons/controllerConnectionState'));
 const WirelessControllerIcon = lazy(() => import('../icons/wirelessControllerIcon'));
+const BatteryInfoIcon = lazy(() => import('../icons/batteryInfoIcon'));
 
 export function ControllerStatusBar({ styles }: ControllerStatusBarProps) {
 
@@ -32,8 +33,10 @@ export function ControllerStatusBar({ styles }: ControllerStatusBarProps) {
     const classes = mergeStyleSets(defaultStyles, styles);
 
     return <div className={classes.root}>
+        <BatteryInfoIcon />
         <WirelessControllerIcon />
         <ControllerConnectionState />
+
     </div>
 }
 

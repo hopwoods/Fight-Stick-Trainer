@@ -1,5 +1,6 @@
 import create from 'zustand'
-import { ControllerButtons } from '../enums'
+import { BatteryInformation } from '../types'
+import { BatteryLevel, BatteryType, ControllerButtons } from '../enums'
 
 type AppStoreProps = {
     isControllerConnected: boolean;
@@ -7,6 +8,9 @@ type AppStoreProps = {
 
     isControllerWireless: boolean;
     setIsControllerWireless: (isWireless: boolean) => void;
+    
+    batteryInfo: BatteryInformation;
+    setBatteryInformation: (batteryInformation: BatteryInformation) => void;
 
     inputHistory: ControllerButtons[];
     inputHistoryCount: number;
@@ -23,6 +27,13 @@ export const useAppStore = create<AppStoreProps>((set, get) => ({
     //Controller Wireless
     isControllerWireless: false,
     setIsControllerWireless(isWireless: boolean) { set({ isControllerWireless: isWireless }) },
+
+    // Battery Info
+    batteryInfo: {
+        BatteryType: BatteryType.Disconnected,
+        BatteryLevel: BatteryLevel.Empty
+    },
+    setBatteryInformation(batteryInformation: BatteryInformation) { set({ batteryInfo: batteryInformation }) },
 
     //Input History
     inputHistory: [],

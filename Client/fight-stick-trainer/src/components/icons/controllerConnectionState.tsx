@@ -38,7 +38,7 @@ export default function ControllerConnectionState({ styles }: ControllerConnecti
             <span className={classes.root}><Icon icon={microsoftXboxController} /></span>
         </Tooltip>
     else
-        return <Tooltip content="The controller not connected" id='ControllerDisconnectedTooltip'>
+        return <Tooltip content="The controller is not connected" id='ControllerDisconnectedTooltip'>
             <span className={classes.root}><Icon icon={microsoftXboxControllerOff} /></span>
         </Tooltip>
 }
