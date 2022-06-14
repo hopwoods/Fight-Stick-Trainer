@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace ControllerInterface.Tests;
 
+[TestFixture]
 public class XboxControllerTests
 {
     public IXboxController? Controller { get; private set; }

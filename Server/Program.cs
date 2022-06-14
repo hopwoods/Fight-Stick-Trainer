@@ -1,3 +1,5 @@
+using Server.Events;
+
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,8 @@ builder.Services
         logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
         logging.AddDebug();
         logging.AddConsole();
-    }).AddCors(options =>
+    })
+    .AddCors(options =>
     {
         options.AddPolicy(name: myAllowSpecificOrigins, policyBuilder =>
         {
@@ -29,7 +32,8 @@ builder.Services
         });
     })
     .AddHostedService<ControllerWatcherService>()
-    .AddSignalR().AddJsonProtocol();
+    .AddSignalR()
+    .AddJsonProtocol();
 
 var app = builder.Build();
 

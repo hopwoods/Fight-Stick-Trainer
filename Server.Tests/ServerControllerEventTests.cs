@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using Server.Events;
 using Server.Hubs;
 using Server.Utilities;
 using SharpDX.XInput;
 using System.Threading.Tasks;
 
 namespace Server.Tests;
+[TestFixture]
 public class ServerControllerEventTests
 {
     private Mock<IHubContext<TrainerHub, ITrainerHub>>? hubContext;

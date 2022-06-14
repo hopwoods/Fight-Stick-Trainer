@@ -1,4 +1,4 @@
-namespace Server;
+namespace Server.Events;
 
 public class ServerControllerEvents : IControllerEvents
 {

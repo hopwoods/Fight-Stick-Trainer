@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace ControllerInterface.Tests;
 
+[TestFixture]
 public class ControllerFactoryTests
 {
     public IControllerFactory? Factory { get; private set; }
