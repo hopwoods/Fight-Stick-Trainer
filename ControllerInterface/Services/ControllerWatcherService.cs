@@ -115,9 +115,7 @@ public class ControllerWatcherService : BackgroundService
     /// <param name="controller">The controller being watched</param>
     private void DetectCapabilities(IXboxController controller)
     {
-        if (controller.IsWireless)
-            eventStore.FireEvent(EventType.ControllerIsWireless, controller);
-
+        eventStore.FireEvent(EventType.ControllerIsWireless, controller);
         eventStore.FireEvent(EventType.UpdateBatteryInformation, controller);
     }
 

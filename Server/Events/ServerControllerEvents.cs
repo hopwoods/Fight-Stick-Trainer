@@ -58,7 +58,7 @@ public class ServerControllerEvents : IControllerEvents
     }
     public async void OnControllerConnected(IXboxController controller)
     {
-        await SendControllerConnectionStateToClient(controller, "OnControllerDisconnected");
+        await SendControllerConnectionStateToClient(controller, "OnControllerConnected");
     }
 
     public async void OnControllerIsWireless(IXboxController controller)

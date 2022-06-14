@@ -69,8 +69,8 @@
                 if (!IsConnected) return;
 
                 lastState = Controller.GetState();
-                batteryInfo = Controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
-                logger.LogDebug($"Battery - Level: {batteryInfo.BatteryLevel}, Type: {batteryInfo.BatteryType}");
+                //batteryInfo = Controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
+                //logger.LogDebug($"Battery - Level: {batteryInfo.BatteryLevel}, Type: {batteryInfo.BatteryType}");
 
             }
             catch (SharpDXException e)
